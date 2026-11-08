@@ -263,6 +263,75 @@ final class Z
         return $this->then(static fn (int|float $v): int|float => $v > 0 ? $v : self::fail('too_small'));
     }
 
+    /** Zod 4 z.uuid()/z.string().uuid() deseni. */
+    public function uuid(): self
+    {
+        return $this->regex('/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/');
+    }
+
+    private const ISO_DATE = '((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))';
+
+    /** z.iso.date(). */
+    public function isoDate(): self
+    {
+        return $this->regex('/^'.self::ISO_DATE.'$/');
+    }
+
+    /** z.iso.datetime() / z.string().datetime(); $offset: {offset:true}. */
+    public function isoDatetime(bool $offset = false): self
+    {
+        $tz = $offset ? '(Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)' : 'Z';
+
+        return $this->regex('/^'.self::ISO_DATE.'T(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?'.$tz.'$/');
+    }
+
+    /** z.coerce.number(): JS Number() donusumu, NaN reddedilir. */
+    public static function coerceNumber(): self
+    {
+        return new self(static function (mixed $v): int|float {
+            if ($v === self::undef()) {
+                self::fail('invalid_type');
+            }
+            if (is_array($v)) {
+                $v = $v === [] ? 0 : (count($v) === 1 ? $v[0] : 'NaN');
+            }
+            if (is_bool($v)) {
+                return $v ? 1 : 0;
+            }
+            if ($v === null) {
+                return 0;
+            }
+            if (is_int($v) || is_float($v)) {
+                return is_finite((float) $v) ? $v : self::fail('invalid_type');
+            }
+            if (! is_string($v)) {
+                self::fail('invalid_type');
+            }
+            $t = Js::trim($v);
+            if ($t === '') {
+                return 0;
+            }
+            if (preg_match('/^0[xX][0-9a-fA-F]+$/D', $t) === 1) {
+                return (int) hexdec(substr($t, 2));
+            }
+            if (preg_match('/^0[bB][01]+$/D', $t) === 1) {
+                return (int) bindec(substr($t, 2));
+            }
+            if (preg_match('/^0[oO][0-7]+$/D', $t) === 1) {
+                return (int) octdec(substr($t, 2));
+            }
+            if (preg_match('/^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/D', $t) !== 1) {
+                self::fail('invalid_type');
+            }
+            $n = (float) $t;
+            if (! is_finite($n)) {
+                self::fail('invalid_type');
+            }
+
+            return $n == floor($n) && abs($n) <= 9007199254740991 ? (int) $n : $n;
+        });
+    }
+
     public function refine(Closure $check, string $message = 'Invalid input'): self
     {
         return $this->then(static fn (mixed $v): mixed => $check($v) ? $v : self::fail('custom', $message));
