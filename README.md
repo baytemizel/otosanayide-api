@@ -1,58 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# otosanayide-api
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Otosanayide web ve mobil istemcilerinin kullandığı HTTP API. Laravel 13, PHP 8.3, yalnız MySQL 8.4. Next.js route'larının (`apps/web/src/app/api`, kaynak repo) aynı sözleşmeyle yeniden yazımıdır; karar kayıtları kaynak repoda `docs/decision-log.md` K170 ve sonrası.
 
-## About Laravel
+Durum: kod hazırlığı. Hiçbir MySQL sunucusunda çalıştırılmadı, canlı kabul yapılmadı.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Geliştirme
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+```
+```bash
+composer test
+```
+```bash
+composer analyse
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+`composer test` veritabanına bağlanmaz. Gerçek MySQL gerektiren testler `tests/Mysql` altındadır ve yalnız `otosanayide_test` üzerinde çalışır:
 
-## Contributing
+```bash
+DB_USERNAME=... DB_PASSWORD=... composer test:mysql
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Sözleşme kontrolü, Pest'in `storage/contract` altına yazdığı yanıtları kaynak repodaki `packages/core` ayrıştırıcılarından geçirir:
 
-## Code of Conduct
+```bash
+cd scripts/contract && npm ci && npm run check
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Belgeler
 
-## Security Vulnerabilities
+- [Route paritesi](docs/ROUTE_PARITY.md): her method için durum, controller, test.
+- [Şema haritası](docs/SCHEMA_MAP.md), [F5](docs/schema/f5.md) ve [F6](docs/schema/f6.md) tabloları.
+- [Giriş uçları](docs/AUTH_API.md), [OpenAPI](docs/openapi.yaml), [Dağıtım](docs/DEPLOY.md).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Üretmek için: `python3 scripts/parity.py`, `python3 scripts/openapi.py`.
 
-## License
+## Kurallar
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Dış çıktı yalnız `{"error":"..."}`; yanıtlar `App\Http\Api` ile üretilir.
+- Kontrol sırası kaynak handler ile aynıdır: origin, sorgu, içerik türü, jeton, e-posta doğrulaması, hız sınırı, bayrak, gövde.
+- Yazımlar `App\Support\Tx` + `lockForUpdate`; transaction içinde dış çağrı yok; belirsiz dış sonuç yeniden gönderilmez.
+- Şema yalnız migration ile değişir; uygulama kullanıcısı DML yetkilidir.
+- Sır, `.env`, gerçek işletme verisi commit edilmez.

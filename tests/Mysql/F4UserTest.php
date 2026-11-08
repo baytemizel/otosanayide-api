@@ -59,6 +59,7 @@ it('stores favorites per account, never by client id (IDOR)', function () {
     [, $authB] = userToken('b@example.com');
     api($this, 'POST', '/api/me/favorites', $authA, ['businessId' => 'b1', 'adding' => true])->assertOk()->assertExactJson(['saved' => true]);
     api($this, 'GET', '/api/me/favorites?businessId=b1', $authA)->assertExactJson(['saved' => true]);
+    contract('live-favorites-page', 'favorites-page', api($this, 'GET', '/api/me/favorites', $authA)->assertOk()->json());
     api($this, 'GET', '/api/me/favorites?businessId=b1', $authB)->assertExactJson(['saved' => false]);
     api($this, 'POST', '/api/me/favorites', $authB, ['businessId' => 'b1', 'adding' => true, 'userId' => $a])->assertStatus(400);
 });
@@ -68,6 +69,7 @@ it('hides vehicles from other accounts and caps at 50', function () {
     [, $authB] = userToken('b@example.com');
     $v = ['resource' => 'vehicles', 'value' => ['brand' => 'BMW', 'model' => 'X', 'year' => 2020, 'fuel' => 'Dizel', 'mileage' => 5]];
     $id = api($this, 'POST', '/api/me', $authA, $v)->assertStatus(201)->json('id');
+    contract('live-account', 'account', api($this, 'GET', '/api/me', $authA)->assertOk()->json());
     expect(collect(api($this, 'GET', '/api/me', $authB)->json('vehicles')))->toBeEmpty();
     api($this, 'PATCH', '/api/me', $authB, ['resource' => 'vehicles', 'id' => $id, 'value' => $v['value']])->assertStatus(409);
     foreach (range(2, 50) as $i) {
@@ -99,6 +101,8 @@ it('runs the request lifecycle, forbids strangers and never double books a slot'
     api($this, 'PATCH', '/api/requests', $o, ['businessId' => 'b1', 'value' => ['id' => $id, 'version' => 1, 'action' => 'offer', 'text' => 'İşçilik dahil teklifimiz', 'price' => 500]])->assertOk();
     api($this, 'PATCH', '/api/requests', $o, ['businessId' => 'b1', 'value' => ['id' => $id, 'version' => 1, 'action' => 'decline', 'text' => 'Eski sürüm ile deneme']])->assertStatus(409);
     api($this, 'PATCH', '/api/requests', $c, ['id' => $id, 'version' => 2, 'action' => 'accept'])->assertOk();
+    contract('live-requests', 'requests', api($this, 'GET', '/api/requests', $c)->assertOk()->json());
+    contract('live-owner-requests', 'owner-requests', api($this, 'GET', '/api/requests?businessId=b1', $o)->assertOk()->json(), ['businessId' => 'b1']);
     expect(DB::table('notification_jobs')->count())->toBe(3)->and(DB::table('request_history')->count())->toBe(2);
     expect($customer)->toBeString();
 });

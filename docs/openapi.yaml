@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Otosanayide API
   version: 0.1.0
-  description: Route listesinden uretildi. Govde semalari icin kaynak Zod semalari ve docs/ROUTE_PARITY.md esastir; yanit semalari tasinmadi.
+  description: Route listesinden uretildi. Yanit semalari yalniz sozlesme ornegi olan uclarda vardir ve ornekten cikarilir; istek govdesi kurallari kaynak Zod semalarindadir (app/Support/Z tasimalari). Durum icin docs/ROUTE_PARITY.md.
 servers:
   - url: /
 components:
@@ -28,6 +28,11 @@ paths:
   "/api/ad-events":
     post:
       summary: "ClosedFeatureController (bekliyor)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -47,6 +52,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -66,6 +76,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -85,6 +100,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -124,6 +144,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -133,6 +158,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -143,6 +173,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -162,6 +197,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -191,6 +231,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -210,6 +255,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -240,6 +290,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -259,6 +314,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -287,6 +347,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -306,6 +371,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -325,6 +395,11 @@ paths:
       summary: "AdminNotificationsController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -344,6 +419,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -357,12 +437,47 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "scope":
+                          type: string
+                        "status":
+                          type: string
+                        "version":
+                          type: integer
+                        "createdAtMs":
+                          type: integer
+                        "updatedAtMs":
+                          type: integer
+                        "reason":
+                          type: ['null', string, number, object]
+                        "ownerUid":
+                          type: string
+                  "next":
+                    type: ['null', string, number, object]
+                  "execution":
+                    type: string
         default:
           $ref: '#/components/responses/Error'
     post:
       summary: "AdminPrivacyController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -373,6 +488,11 @@ paths:
       summary: "AuthController@resendVerification (yeni uc)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -381,6 +501,11 @@ paths:
   "/api/auth/email/verify":
     post:
       summary: "AuthController@verifyEmail (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -389,6 +514,11 @@ paths:
   "/api/auth/login":
     post:
       summary: "AuthController@login (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -397,6 +527,11 @@ paths:
   "/api/auth/logout":
     post:
       summary: "AuthController@logout (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -407,6 +542,11 @@ paths:
       summary: "AuthController@totpConfirm (yeni uc)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -417,6 +557,11 @@ paths:
       summary: "AuthController@totpDisable (yeni uc)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -427,6 +572,11 @@ paths:
       summary: "AuthController@totpEnroll (yeni uc)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -435,6 +585,11 @@ paths:
   "/api/auth/mfa/verify":
     post:
       summary: "AuthController@mfaVerify (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -443,6 +598,11 @@ paths:
   "/api/auth/password/forgot":
     post:
       summary: "AuthController@forgot (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -451,6 +611,11 @@ paths:
   "/api/auth/password/reset":
     post:
       summary: "AuthController@reset (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -459,6 +624,11 @@ paths:
   "/api/auth/refresh":
     post:
       summary: "AuthController@refresh (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -467,6 +637,11 @@ paths:
   "/api/auth/register":
     post:
       summary: "AuthController@register (yeni uc)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -491,6 +666,11 @@ paths:
   "/api/brand-events":
     post:
       summary: "ClosedFeatureController (bekliyor)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -504,6 +684,35 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "id":
+                    type: string
+                  "name":
+                    type: string
+                  "version":
+                    type: integer
+                  "published":
+                    type: boolean
+                  "features":
+                    type: object
+                    properties:
+                      "quotes":
+                        type: boolean
+                      "appointments":
+                        type: boolean
+                  "ownerReady":
+                    type: boolean
+                  "request":
+                    type: object
+                    properties:
+                      "status":
+                        type: string
+                      "reason":
+                        type: string
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -517,6 +726,11 @@ paths:
       summary: "ActivationController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -530,6 +744,28 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "businesses":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "name":
+                          type: string
+                        "city":
+                          type: string
+                        "district":
+                          type: string
+                        "role":
+                          type: string
+                  "nextCursor":
+                    type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -547,6 +783,99 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "name":
+                    type: string
+                  "city":
+                    type: string
+                  "district":
+                    type: string
+                  "address":
+                    type: string
+                  "phone":
+                    type: string
+                  "website":
+                    type: string
+                  "hours":
+                    type: string
+                  "description":
+                    type: string
+                  "categories":
+                    type: array
+                    items:
+                      type: string
+                  "services":
+                    type: array
+                    items:
+                      type: string
+                  "brands":
+                    type: array
+                    items:
+                      type: string
+                  "location":
+                    type: object
+                    properties:
+                      "latitude":
+                        type: number
+                      "longitude":
+                        type: number
+                  "id":
+                    type: string
+                  "role":
+                    type: string
+                  "version":
+                    type: integer
+                  "change":
+                    type: object
+                    properties:
+                      "revisionId":
+                        type: string
+                      "status":
+                        type: string
+                      "profile":
+                        type: object
+                        properties:
+                          "name":
+                            type: string
+                          "city":
+                            type: string
+                          "district":
+                            type: string
+                          "address":
+                            type: string
+                          "phone":
+                            type: string
+                          "website":
+                            type: string
+                          "hours":
+                            type: string
+                          "description":
+                            type: string
+                          "categories":
+                            type: array
+                            items:
+                              type: string
+                          "services":
+                            type: array
+                            items:
+                              type: string
+                          "brands":
+                            type: array
+                            items:
+                              type: string
+                          "location":
+                            type: object
+                            properties:
+                              "latitude":
+                                type: number
+                              "longitude":
+                                type: number
+                      "reason":
+                        type: string
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -560,6 +889,11 @@ paths:
       summary: "ManageController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -573,6 +907,46 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "businessId":
+                    type: string
+                  "enabled":
+                    type: boolean
+                  "canUpload":
+                    type: boolean
+                  "coverId":
+                    type: ['null', string, number, object]
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "status":
+                          type: string
+                        "version":
+                          type: integer
+                        "width":
+                          type: integer
+                        "height":
+                          type: integer
+                        "bytes":
+                          type: integer
+                        "reason":
+                          type: string
+                        "expiresAtMs":
+                          type: integer
+                        "canOpen":
+                          type: boolean
+                        "canCover":
+                          type: boolean
+                        "public":
+                          type: boolean
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -586,6 +960,11 @@ paths:
       summary: "BusinessPhotoController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -595,6 +974,11 @@ paths:
       summary: "BusinessPhotoController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -621,6 +1005,19 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "businessId":
+                    type: string
+                  "ids":
+                    type: array
+                    items:
+                      type: string
+                  "coverId":
+                    type: string
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -642,9 +1039,38 @@ paths:
       summary: "PlacesController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "places":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "name":
+                          type: string
+                        "address":
+                          type: string
+                        "latitude":
+                          type: integer
+                        "longitude":
+                          type: integer
+                  "source":
+                    type: string
+                  "verification":
+                    type: string
         default:
           $ref: '#/components/responses/Error'
   "/api/businesses/replies":
@@ -668,6 +1094,11 @@ paths:
       summary: "ReplyController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -677,6 +1108,11 @@ paths:
       summary: "ReplyController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -713,6 +1149,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -739,6 +1180,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -785,6 +1231,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -811,6 +1262,11 @@ paths:
       summary: "ClaimController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -820,6 +1276,11 @@ paths:
       summary: "ClaimController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -846,6 +1307,11 @@ paths:
       summary: "ClaimEvidenceController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -855,6 +1321,11 @@ paths:
       summary: "ClaimEvidenceController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -876,12 +1347,90 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "vehicles":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "brand":
+                          type: string
+                        "model":
+                          type: string
+                        "year":
+                          type: integer
+                        "fuel":
+                          type: string
+                        "mileage":
+                          type: integer
+                        "id":
+                          type: string
+                        "archived":
+                          type: boolean
+                  "maintenance":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "vehicleId":
+                          type: string
+                        "title":
+                          type: string
+                        "date":
+                          type: string
+                        "mileage":
+                          type: integer
+                        "amount":
+                          type: number
+                        "note":
+                          type: string
+                        "id":
+                          type: string
+                  "garageShared":
+                    type: boolean
+                  "garageRevision":
+                    type: ['null', string, number, object]
+                  "reminders":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "vehicleId":
+                          type: string
+                        "title":
+                          type: string
+                        "dueDate":
+                          type: string
+                        "nextCheckAtMs":
+                          type: integer
+                        "createdAt":
+                          type: object
+                          properties:
+                            "_seconds":
+                              type: integer
+                            "_nanoseconds":
+                              type: integer
+                        "id":
+                          type: string
+                  "favorites":
+                    type: array
+                    items:
+                      type: string
         default:
           $ref: '#/components/responses/Error'
     patch:
       summary: "MeController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -891,6 +1440,11 @@ paths:
       summary: "MeController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -904,6 +1458,74 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "entries":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "business":
+                          type: object
+                          properties:
+                            "id":
+                              type: string
+                            "contactEmail":
+                              type: string
+                            "name":
+                              type: string
+                            "city":
+                              type: string
+                            "district":
+                              type: string
+                            "address":
+                              type: string
+                            "phone":
+                              type: string
+                            "website":
+                              type: string
+                            "hours":
+                              type: string
+                            "categories":
+                              type: array
+                              items:
+                                type: string
+                            "services":
+                              type: array
+                              items:
+                                type: string
+                            "brands":
+                              type: array
+                              items:
+                                type: string
+                            "published":
+                              type: boolean
+                            "ownership":
+                              type: string
+                            "coordinateStatus":
+                              type: string
+                            "latitude":
+                              type: number
+                            "longitude":
+                              type: number
+                            "ownerReady":
+                              type: boolean
+                            "features":
+                              type: object
+                              properties:
+                                "quotes":
+                                  type: boolean
+                                "appointments":
+                                  type: boolean
+                            "cardPayment":
+                              type: boolean
+                  "next":
+                    type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -917,6 +1539,11 @@ paths:
       summary: "FavoritesController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -930,6 +1557,65 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "backup":
+                    type: object
+                    properties:
+                      "revision":
+                        type: integer
+                      "updatedAt":
+                        type: string
+                      "operationId":
+                        type: string
+                      "garage":
+                        type: object
+                        properties:
+                          "version":
+                            type: integer
+                          "vehicles":
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                "brand":
+                                  type: string
+                                "model":
+                                  type: string
+                                "year":
+                                  type: integer
+                                "fuel":
+                                  type: string
+                                "mileage":
+                                  type: integer
+                                "id":
+                                  type: string
+                                "archived":
+                                  type: boolean
+                          "records":
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                "vehicleId":
+                                  type: string
+                                "title":
+                                  type: string
+                                "date":
+                                  type: string
+                                "mileage":
+                                  type: integer
+                                "amount":
+                                  type: number
+                                "note":
+                                  type: string
+                                "id":
+                                  type: string
+                          "selectedVehicleId":
+                            type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -943,6 +1629,11 @@ paths:
       summary: "GarageController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -956,6 +1647,24 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "status":
+                    type: object
+                    properties:
+                      "state":
+                        type: string
+                      "revision":
+                        type: integer
+                      "vehicles":
+                        type: integer
+                      "records":
+                        type: integer
+                      "purgeAfter":
+                        type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -969,6 +1678,11 @@ paths:
       summary: "GarageController@lifecycleStore (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -988,6 +1702,11 @@ paths:
       summary: "GarageController@migrateStore (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1001,6 +1720,30 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "request":
+                    type: object
+                    properties:
+                      "id":
+                        type: string
+                      "scope":
+                        type: string
+                      "status":
+                        type: string
+                      "version":
+                        type: integer
+                      "createdAtMs":
+                        type: integer
+                      "updatedAtMs":
+                        type: integer
+                      "reason":
+                        type: ['null', string, number, object]
+                  "execution":
+                    type: string
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1014,6 +1757,11 @@ paths:
       summary: "PrivacyController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1027,6 +1775,30 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "devices":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "generation":
+                          type: string
+                        "deviceId":
+                          type: string
+                        "platform":
+                          type: string
+                        "locale":
+                          type: string
+                        "enabled":
+                          type: boolean
+                        "version":
+                          type: integer
+                        "updatedAtMs":
+                          type: integer
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1040,6 +1812,11 @@ paths:
       summary: "PushController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1059,6 +1836,11 @@ paths:
       summary: "NotificationsController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1076,6 +1858,11 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1084,6 +1871,11 @@ paths:
   "/api/payments/webhook":
     post:
       summary: "ClosedFeatureController (bekliyor)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1097,6 +1889,45 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "businessId":
+                          type: string
+                        "businessName":
+                          type: string
+                        "kind":
+                          type: string
+                        "service":
+                          type: string
+                        "vehicle":
+                          type: string
+                        "message":
+                          type: string
+                        "status":
+                          type: string
+                        "offer":
+                          type: object
+                          properties:
+                            "text":
+                              type: string
+                            "price":
+                              type: integer
+                            "expiresAtMs":
+                              type: integer
+                        "version":
+                          type: integer
+                  "next":
+                    type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1110,6 +1941,11 @@ paths:
       summary: "RequestsController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1119,6 +1955,11 @@ paths:
       summary: "RequestsController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1132,6 +1973,34 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "reviewId":
+                          type: string
+                        "businessId":
+                          type: string
+                        "kind":
+                          type: string
+                        "text":
+                          type: string
+                        "status":
+                          type: string
+                        "decision":
+                          type: string
+                        "reason":
+                          type: string
+                  "next":
+                    type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1145,6 +2014,11 @@ paths:
       summary: "ReviewCaseController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1158,6 +2032,40 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "reviewId":
+                    type: string
+                  "reviewVersion":
+                    type: integer
+                  "enabled":
+                    type: boolean
+                  "canUpload":
+                    type: boolean
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "status":
+                          type: string
+                        "version":
+                          type: integer
+                        "width":
+                          type: integer
+                        "height":
+                          type: integer
+                        "bytes":
+                          type: integer
+                        "reason":
+                          type: string
+                        "expiresAtMs":
+                          type: integer
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1171,6 +2079,11 @@ paths:
       summary: "ReviewPhotoController@update (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1180,6 +2093,11 @@ paths:
       summary: "ReviewPhotoController@store (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1206,6 +2124,45 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "reviews":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "photoIds":
+                          type: array
+                          items:
+                            type: string
+                        "reply":
+                          type: object
+                          properties:
+                            "text":
+                              type: string
+                        "rating":
+                          type: integer
+                        "text":
+                          type: string
+                        "resolved":
+                          type: string
+                        "wc":
+                          type: string
+                        "quality":
+                          type: integer
+                        "wcCleanliness":
+                          type: integer
+                  "nextCursor":
+                    type: ['null', string, number, object]
+                  "count":
+                    type: integer
+                  "average":
+                    type: integer
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1217,6 +2174,11 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "ReviewController@store (tamam)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1230,6 +2192,34 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "review":
+                    type: object
+                    properties:
+                      "id":
+                        type: string
+                      "text":
+                        type: string
+                      "rating":
+                        type: integer
+                      "version":
+                        type: integer
+                      "status":
+                        type: string
+                      "reason":
+                        type: string
+                      "resolved":
+                        type: string
+                      "wc":
+                        type: string
+                      "canEdit":
+                        type: boolean
+                      "canWithdraw":
+                        type: boolean
         default:
           $ref: '#/components/responses/Error'
     options:
@@ -1243,6 +2233,11 @@ paths:
       summary: "ReviewController@changeMine (tamam)"
       security:
         - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: Basarili
@@ -1254,6 +2249,77 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "contactEmail":
+                          type: string
+                        "name":
+                          type: string
+                        "city":
+                          type: string
+                        "district":
+                          type: string
+                        "address":
+                          type: string
+                        "phone":
+                          type: string
+                        "website":
+                          type: string
+                        "hours":
+                          type: string
+                        "categories":
+                          type: array
+                          items:
+                            type: string
+                        "services":
+                          type: array
+                          items:
+                            type: string
+                        "brands":
+                          type: array
+                          items:
+                            type: string
+                        "published":
+                          type: boolean
+                        "ownership":
+                          type: string
+                        "coordinateStatus":
+                          type: string
+                        "latitude":
+                          type: number
+                        "longitude":
+                          type: number
+                        "ownerReady":
+                          type: boolean
+                        "features":
+                          type: object
+                          properties:
+                            "quotes":
+                              type: boolean
+                            "appointments":
+                              type: boolean
+                        "cardPayment":
+                          type: boolean
+                        "distance":
+                          type: number
+                  "districts":
+                    type: array
+                    items:
+                      type: string
+                  "sponsored":
+                    type: array
+                  "mode":
+                    type: string
         default:
           $ref: '#/components/responses/Error'
     options:

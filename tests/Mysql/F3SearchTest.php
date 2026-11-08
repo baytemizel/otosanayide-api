@@ -47,6 +47,7 @@ it('filters strictly by city, district, facets, and caps at 24', function () {
     }
     seedBusiness('ank', ['city' => 'Ankara', 'district' => 'Çankaya']);
     $r = $this->get('/api/search?city=İstanbul&district=umraniye&category=mechanical&service=Fren&brand=BMW')->assertOk();
+    contract('live-search', 'search', $r->json());
     expect($r->json('items'))->toHaveCount(24)->and($r->json('districts'))->toBe(['Ümraniye'])->and($r->json('mode'))->toBe('live');
     expect(collect($this->get('/api/search?city=Ankara')->json('items'))->pluck('id')->all())->toBe(['ank']);
 });

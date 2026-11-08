@@ -17,6 +17,20 @@ Firestore koleksiyonu ile MySQL tablosu eşleşmesi. Sıra fazlarla genişler; y
 | `catalogue_sources` | `catalogueSources` | `raw_source` ve `extra` opak JSON |
 | `catalogue_source_values` | `catalogueSources.source.*Candidates, flags` | |
 | `business_search`, `business_search_facets` | Meili indeksi | Türetilmiş; işletme yazımıyla aynı transaction'da `SearchProjection::sync` |
+| `account_fences` | `accountFences` | Yazarlar aynı transaction'da okur |
+| `business_memberships` | `businessMemberships/{uid}_{businessId}` | Bileşik birincil anahtar |
+| `user_vehicles`, `user_maintenance`, `user_reminders` | `users/*/vehicles`, `/maintenance`, `/reminders` | Kanal dizisi iki boolean + `channels_set`; `attachment_ids` yalnız boş/yok ayrımı |
+| `user_favorites` | `users/*/favorites` | FK yok: silinen işletme favoride `null` görünür |
+| `garage_backups`, `garage_recycle` | `users/*/privateGarageBackups`, `/garageRecycle` | `garage`/`backup` opak anlık görüntü: bütün olarak okunur ve şemadan geçer |
+| `garage_state` | `users/*/garageState` | |
+| `privacy_requests`, `privacy_state`, `privacy_request_history` | `users/*/privacyRequests`, `/privacyState`, `.../history` | |
+| `push_devices` | `users/*/pushTokens`, `pushTokenClaims` | Claim belgesi `token_hash` UNIQUE oldu |
+| `requests`, `request_history` | `requests`, `requests/*/history` | `original` sütunu yok: alanlar değişmez, doğrudan karşılaştırılır |
+| `appointment_slots` | `appointmentSlots/{businessId}_{ms}` | Birincil anahtar çifte randevuyu engeller |
+| `notification_jobs`, `notification_job_history` | `notificationJobs`, `.../history` | |
+| `notifications`, `notification_reads` | `notifications`, `notificationReads` | Okundu anahtarı (bildirim, kullanıcı) |
+| `cache`, `cache_locks`, `jobs`, `failed_jobs` | yeni / `rateLimits` | Hız sınırı database cache'te; `cache.key` büyük/küçük harf duyarlı |
+| Diğer içerik tabloları | bkz. `docs/schema/f5.md`, `docs/schema/f6.md` | Reviews, photos, claims, business_changes, feature_activations, işlem defterleri |
 
 ## Bilinen farklar
 - Koordinat onaysız yayındaki kayıtlar aramaya girmez (kullanıcı talimatı). Kaynakta `searchBusiness` bunları kabul ediyordu.
