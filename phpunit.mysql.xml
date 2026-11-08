@@ -22,6 +22,5 @@
         <env name="MOBILE_WEB_ORIGIN" value="https://m.otosanayide.test"/>
         <!-- Baglanti bilgileri tests/mysql-bootstrap.php ile .env dosyasindan gelir. -->
         <env name="DB_CONNECTION" value="mysql"/>
-        <env name="DB_DATABASE" value="otosanayide_test" force="true"/>
     </php>
 </phpunit>

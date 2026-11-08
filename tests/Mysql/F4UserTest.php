@@ -110,7 +110,7 @@ it('runs the request lifecycle, forbids strangers and never double books a slot'
 it('binds notification read receipts to the audience', function () {
     [$a, $authA] = userToken('a@example.com');
     [, $authB] = userToken('b@example.com');
-    DB::table('notifications')->insert(['id' => 'n1', 'audience_key' => 'user:'.$a, 'request_id' => 'r', 'request_status' => 'requested', 'created_at_ms' => 1]);
+    DB::table('notifications')->insert(['id' => 'n1', 'audience_key' => 'user:'.$a, 'business_id' => 'b1', 'request_id' => 'r', 'request_status' => 'requested', 'created_at_ms' => 1]);
     api($this, 'PATCH', '/api/notifications', $authB, ['id' => 'n1', 'read' => true])->assertStatus(403);
     api($this, 'PATCH', '/api/notifications', $authA, ['id' => 'n1', 'read' => true])->assertOk();
     expect(api($this, 'GET', '/api/notifications', $authA)->json('items.0.read'))->toBeTrue();

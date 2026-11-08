@@ -38,15 +38,25 @@ it('second writer with the same revision loses with 409', function () {
 it('a held row lock makes the writer fail without partial writes', function () {
     config(['otosanayide.flags.mobile_garage_backup' => true]);
     [$uid, $auth] = raceAccount('l@example.com');
-    DB::table('garage_backups')->insert(['user_id' => $uid, 'revision' => 1, 'updated_at_iso' => '2026-01-01T00:00:00.000Z', 'operation_id' => (string) Str::uuid(), 'garage' => json_encode(['version' => 1, 'vehicles' => [], 'records' => [], 'selectedVehicleId' => null])]);
+    $empty = ['version' => 1, 'vehicles' => [], 'records' => [], 'selectedVehicleId' => null];
     $other = rival();
-    $other->beginTransaction();
-    $other->table('garage_backups')->where('user_id', $uid)->lockForUpdate()->first();
-    DB::statement('SET SESSION innodb_lock_wait_timeout = 1');
-    $r = $this->call('PUT', '/api/me/garage', [], [], [], $auth, json_encode(['expectedRevision' => 1, 'operationId' => (string) Str::uuid(), 'garage' => ['version' => 1, 'vehicles' => [], 'records' => [], 'selectedVehicleId' => null]]));
-    $other->rollBack();
-    expect($r->getStatusCode())->toBe(409);
-    expect((int) DB::table('garage_backups')->where('user_id', $uid)->value('revision'))->toBe(1);
+    // Rakip satiri commit eder: test transaction'indaki kayit ikinci baglantiya gorunmez.
+    $other->table('garage_backups')->insert(['user_id' => $uid, 'revision' => 1, 'updated_at_iso' => '2026-01-01T00:00:00.000Z', 'operation_id' => (string) Str::uuid(), 'garage' => json_encode($empty)]);
+    try {
+        $other->beginTransaction();
+        $other->table('garage_backups')->where('user_id', $uid)->lockForUpdate()->first();
+        DB::statement('SET SESSION innodb_lock_wait_timeout = 1');
+        $r = $this->call('PUT', '/api/me/garage', [], [], [], $auth, json_encode(['expectedRevision' => 1, 'operationId' => (string) Str::uuid(), 'garage' => $empty]));
+        $other->rollBack();
+        expect($r->getStatusCode())->toBe(409);
+        expect((int) $other->table('garage_backups')->where('user_id', $uid)->value('revision'))->toBe(1);
+    } finally {
+        if ($other->transactionLevel() > 0) {
+            $other->rollBack();
+        }
+        $other->table('garage_backups')->where('user_id', $uid)->delete();
+        DB::statement('SET SESSION innodb_lock_wait_timeout = 50');
+    }
 });
 
 it('two appointments cannot hold one slot (primary key equals appointmentSlots)', function () {

@@ -48,8 +48,15 @@ final class CatalogueImport extends Command
             return self::FAILURE;
         }
         $counts = ['created' => 0, 'skipped' => 0];
-        foreach ($entries as $entry) {
-            $counts[Tx::run(fn () => $this->importOne($entry))]++;
+        try {
+            foreach ($entries as $entry) {
+                $counts[Tx::run(fn () => $this->importOne($entry))]++;
+            }
+        } catch (RuntimeException $e) {
+            $this->error($e->getMessage());
+            $this->error("Durduruldu. Olusan: {$counts['created']}, atlanan: {$counts['skipped']}");
+
+            return self::FAILURE;
         }
         $this->info("Olusan: {$counts['created']}, atlanan: {$counts['skipped']}");
 

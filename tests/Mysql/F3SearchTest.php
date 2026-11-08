@@ -15,9 +15,19 @@ function seedBusiness(string $id, array $over = [], array $services = ['Fren'], 
 }
 
 it('built the FULLTEXT index with stopwords off so short Turkish bigrams match', function () {
-    seedBusiness('a1', ['name' => 'Ali İnşaat Oto']);
-    $ids = collect($this->get('/api/search?q=in')->json('items'))->pluck('id');
-    expect($ids)->toContain('a1');
+    // InnoDB FULLTEXT yalniz commit edilmis satiri gorur: test transaction'i burada kapatilir.
+    DB::commit();
+    try {
+        seedBusiness('a1', ['name' => 'Ali İnşaat Oto']);
+        $search = fn (string $q) => collect($this->get('/api/search?q='.urlencode($q))->assertOk()->json('items'))->pluck('id')->all();
+        expect($search('in'))->toBe(['a1'])
+            ->and($search('İNŞAAT'))->toBe(['a1'])
+            ->and($search('inşaat ümraniye'))->toBe(['a1'])
+            ->and($search('zzqq'))->toBe([]);
+    } finally {
+        DB::table('businesses')->where('id', 'a1')->delete();
+        DB::beginTransaction();
+    }
 });
 
 it('stores latitude/longitude on the correct axes', function () {
