@@ -73,6 +73,7 @@ final class ClosedFeatureController
 
     public const OPTIONS = [
         'payments/checkout' => 'POST, OPTIONS',
+        'campaigns' => 'GET, PATCH, OPTIONS',
         'campaigns/finance' => 'GET, POST, OPTIONS',
         'campaigns/owner-metrics' => 'GET, OPTIONS',
     ];

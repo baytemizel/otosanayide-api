@@ -7,7 +7,7 @@ Gerekli eklentiler: `pdo_mysql, mbstring, intl, gd (WebP), openssl, sodium`. `pa
 ```bash
 php -r 'var_dump(defined("PASSWORD_ARGON2ID"));'
 ```
-Argon2id 64 MiB kullanır: php-fpm `memory_limit` en az 256M, eşzamanlı giriş sayısı bellek hesabına katılmalı. `post_max_size` ve `upload_max_filesize` en büyük medya sınırının üstünde olmalı.
+Argon2id 64 MiB kullanır, eşzamanlı giriş sayısı bellek hesabına katılmalı. GD ile görsel kodlama 24 MP'de istek başına yaklaşık 280 MB ister ve kod `ini_set('memory_limit')` ile sınırı yükseltir: php-fpm havuzunda `ini_set` engellenmemeli (`php_admin_value[memory_limit]` kullanılmamalı). `post_max_size` ve `upload_max_filesize` en büyük medya sınırının üstünde olmalı.
 
 ## Kurulum
 ```bash
@@ -66,7 +66,7 @@ Restart=always
 `ops:cleanup` saatlik çalışır. `REQUEST_NOTIFICATIONS_WORKER_ENABLED` ve `GARAGE_RECYCLE_PURGE_ENABLED` varsayılan kapalıdır; açmadan önce `--apply` olmadan çıktı incelenir. E-posta/push hatırlatma işçileri taşınmadı (MAIL-01, PUSH-01).
 
 ## Depolama
-Medya özel disktedir; `storage/` web kökünden erişilemez, `www-data` yazabilir. Depolama hedefi (yerel/S3 uyumlu) açık karardır.
+Medya `filesystems.default` diskindedir; uygulama diskin yerel/özel olduğunu ad ve `visibility` ile denetler. Görseller imzalı URL ile değil, kaynaktaki gibi API üzerinden akıtılır (istemciler `redirect:'error'` kullanır). `storage/` web kökünden erişilemez, `www-data` yazabilir. Depolama hedefi (yerel/S3 uyumlu) açık karardır.
 
 ## Yayın öncesi açıklar
 33066 tüm internete açık, TLS zorunlu değil (K173). `otosanayide_test` üzerinde `tests/Mysql` çalıştırılmadan yayın yapılmamalıdır.

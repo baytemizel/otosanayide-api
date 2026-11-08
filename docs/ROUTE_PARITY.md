@@ -1,6 +1,6 @@
 # Route paritesi
 
-Kaynak: apps/web/src/app/api. 149 method. bekliyor: 116, tamam: 33.
+Kaynak: apps/web/src/app/api. 149 method. bekliyor: 73, tamam: 76.
 
 `tamam`: kod yazildi ve testi var; bu sunucu/MySQL kabulu degildir, bkz. rapor durumu. `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.
 
@@ -69,28 +69,28 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 116, tamam: 33.
 | `/api/brand-banners/image` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/brand-banners` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/brand-events` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/businesses/activation` | GET | bekliyor | - | - |
-| `/api/businesses/activation` | PATCH | bekliyor | - | - |
-| `/api/businesses/activation` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/console` | GET | bekliyor | - | - |
-| `/api/businesses/console` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/manage` | GET | bekliyor | - | - |
-| `/api/businesses/manage` | PATCH | bekliyor | - | - |
-| `/api/businesses/manage` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/photos/media` | GET | bekliyor | - | - |
-| `/api/businesses/photos/media` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/photos/public` | GET | bekliyor | - | - |
-| `/api/businesses/photos/public` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/photos` | GET | bekliyor | - | - |
-| `/api/businesses/photos` | POST | bekliyor | - | - |
-| `/api/businesses/photos` | PATCH | bekliyor | - | - |
-| `/api/businesses/photos` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/places` | POST | bekliyor | - | - |
-| `/api/businesses/places` | OPTIONS | bekliyor | - | - |
-| `/api/businesses/replies` | GET | bekliyor | - | - |
-| `/api/businesses/replies` | POST | bekliyor | - | - |
-| `/api/businesses/replies` | PATCH | bekliyor | - | - |
-| `/api/businesses/replies` | OPTIONS | bekliyor | - | - |
+| `/api/businesses/activation` | GET | tamam | Content/ActivationController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/activation` | PATCH | tamam | Content/ActivationController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/activation` | OPTIONS | tamam | Content/ActivationController::options | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/console` | GET | tamam | Content/ConsoleController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/console` | OPTIONS | tamam | Content/ConsoleController::options | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/manage` | GET | tamam | Content/ManageController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/manage` | PATCH | tamam | Content/ManageController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/manage` | OPTIONS | tamam | Content/ManageController::options | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/photos/media` | GET | tamam | Content/BusinessPhotoController::media | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/photos/media` | OPTIONS | tamam | Content/BusinessPhotoController::mediaOptions | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/photos/public` | GET | tamam | Content/BusinessPhotoController::publicList | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/photos/public` | OPTIONS | tamam | Content/BusinessPhotoController::publicOptions | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/photos` | GET | tamam | Content/BusinessPhotoController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/photos` | POST | tamam | Content/BusinessPhotoController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/photos` | PATCH | tamam | Content/BusinessPhotoController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/photos` | OPTIONS | tamam | Content/BusinessPhotoController::options | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/places` | POST | tamam | Content/PlacesController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/places` | OPTIONS | tamam | Content/PlacesController::options | tests/Feature/F5OfflineTest.php |
+| `/api/businesses/replies` | GET | tamam | Content/ReplyController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/replies` | POST | tamam | Content/ReplyController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/replies` | PATCH | tamam | Content/ReplyController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/businesses/replies` | OPTIONS | tamam | Content/ReplyController::options | tests/Feature/F5OfflineTest.php |
 | `/api/campaigns/finance` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/campaigns/finance` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/campaigns/finance` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
@@ -101,13 +101,13 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 116, tamam: 33.
 | `/api/campaigns/reservation` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/campaigns` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/campaigns` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns` | OPTIONS | bekliyor | - | - |
-| `/api/claims/evidence` | GET | bekliyor | - | - |
-| `/api/claims/evidence` | POST | bekliyor | - | - |
-| `/api/claims/evidence` | PATCH | bekliyor | - | - |
-| `/api/claims` | GET | bekliyor | - | - |
-| `/api/claims` | POST | bekliyor | - | - |
-| `/api/claims` | PATCH | bekliyor | - | - |
+| `/api/campaigns` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
+| `/api/claims/evidence` | GET | tamam | Content/ClaimEvidenceController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/claims/evidence` | POST | tamam | Content/ClaimEvidenceController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/claims/evidence` | PATCH | tamam | Content/ClaimEvidenceController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/claims` | GET | tamam | Content/ClaimController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/claims` | POST | tamam | Content/ClaimController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/claims` | PATCH | tamam | Content/ClaimController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
 | `/api/health` | GET | tamam | HealthController | tests/Feature/F1FoundationTest.php |
 | `/api/me/favorites` | GET | tamam | Me/FavoritesController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/me/favorites` | POST | tamam | Me/FavoritesController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
@@ -138,20 +138,20 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 116, tamam: 33.
 | `/api/requests` | POST | tamam | Me/RequestsController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/requests` | PATCH | tamam | Me/RequestsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/requests` | OPTIONS | tamam | Me/RequestsController::options | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
-| `/api/review-cases` | GET | bekliyor | - | - |
-| `/api/review-cases` | POST | bekliyor | - | - |
-| `/api/review-cases` | OPTIONS | bekliyor | - | - |
-| `/api/review-photos/media` | GET | bekliyor | - | - |
-| `/api/review-photos/media` | OPTIONS | bekliyor | - | - |
-| `/api/review-photos` | GET | bekliyor | - | - |
-| `/api/review-photos` | POST | bekliyor | - | - |
-| `/api/review-photos` | PATCH | bekliyor | - | - |
-| `/api/review-photos` | OPTIONS | bekliyor | - | - |
-| `/api/reviews/mine` | GET | bekliyor | - | - |
-| `/api/reviews/mine` | PATCH | bekliyor | - | - |
-| `/api/reviews/mine` | OPTIONS | bekliyor | - | - |
-| `/api/reviews` | GET | bekliyor | - | - |
-| `/api/reviews` | POST | bekliyor | - | - |
-| `/api/reviews` | OPTIONS | bekliyor | - | - |
+| `/api/review-cases` | GET | tamam | Content/ReviewCaseController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/review-cases` | POST | tamam | Content/ReviewCaseController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/review-cases` | OPTIONS | tamam | Content/ReviewCaseController::options | tests/Feature/F5OfflineTest.php |
+| `/api/review-photos/media` | GET | tamam | Content/ReviewPhotoController::media | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/review-photos/media` | OPTIONS | tamam | Content/ReviewPhotoController::mediaOptions | tests/Feature/F5OfflineTest.php |
+| `/api/review-photos` | GET | tamam | Content/ReviewPhotoController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/review-photos` | POST | tamam | Content/ReviewPhotoController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/review-photos` | PATCH | tamam | Content/ReviewPhotoController::update | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/review-photos` | OPTIONS | tamam | Content/ReviewPhotoController::options | tests/Feature/F5OfflineTest.php |
+| `/api/reviews/mine` | GET | tamam | Content/ReviewController::mine | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/reviews/mine` | PATCH | tamam | Content/ReviewController::changeMine | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/reviews/mine` | OPTIONS | tamam | Content/ReviewController::mineOptions | tests/Feature/F5OfflineTest.php |
+| `/api/reviews` | GET | tamam | Content/ReviewController::index | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/reviews` | POST | tamam | Content/ReviewController::store | tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php |
+| `/api/reviews` | OPTIONS | tamam | Content/ReviewController::options | tests/Feature/F5OfflineTest.php |
 | `/api/search` | GET | tamam | Catalogue/SearchController::index | tests/Feature/F3SearchOfflineTest.php, tests/Mysql/F3SearchTest.php |
 | `/api/search` | OPTIONS | tamam | Catalogue/SearchController::options | tests/Feature/F3SearchOfflineTest.php |

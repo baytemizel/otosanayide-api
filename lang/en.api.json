@@ -9,5 +9,9 @@
   "Şifre sıfırlama": "Password reset",
   "Otosanayide hesabın": "Your Otosanayide account",
   "Bu e-posta adresiyle zaten bir hesabın var. Şifreni unuttuysan giriş ekranından sıfırlayabilirsin.": "An account with this email address already exists. If you forgot your password you can reset it from the sign-in screen.",
-  "Bu özellik henüz etkin değil.": "This feature is not available yet."
+  "Bu özellik henüz etkin değil.": "This feature is not available yet.",
+  "Aktivasyon bilgileri incelenmeli.": "The activation details need review.",
+  "JPEG, PNG veya WebP gerekli.": "A JPEG, PNG or WebP image is required.",
+  "Profil verileri incelenmeli.": "The profile data needs review.",
+  "Yorum değişti. Durumu yenile.": "The review has changed. Refresh its status."
 }

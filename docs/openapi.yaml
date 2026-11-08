@@ -496,6 +496,192 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/businesses/activation":
+    get:
+      summary: "ActivationController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ActivationController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ActivationController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/console":
+    get:
+      summary: "ConsoleController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ConsoleController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/manage":
+    get:
+      summary: "ManageController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ManageController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ManageController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/photos":
+    get:
+      summary: "BusinessPhotoController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "BusinessPhotoController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "BusinessPhotoController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "BusinessPhotoController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/photos/media":
+    get:
+      summary: "BusinessPhotoController@media (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "BusinessPhotoController@mediaOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/photos/public":
+    get:
+      summary: "BusinessPhotoController@publicList (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "BusinessPhotoController@publicOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/places":
+    options:
+      summary: "PlacesController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "PlacesController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/replies":
+    get:
+      summary: "ReplyController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ReplyController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReplyController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ReplyController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/businesses/{id}":
     get:
       summary: "BusinessController@show (yeni uc)"
@@ -511,6 +697,13 @@ paths:
       summary: "ClosedFeatureController (bekliyor)"
       security:
         - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ClosedFeatureController@options (bekliyor)"
       responses:
         '200':
           description: Basarili
@@ -590,6 +783,76 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/claims":
+    get:
+      summary: "ClaimController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ClaimController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClaimController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClaimController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/claims/evidence":
+    get:
+      summary: "ClaimEvidenceController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ClaimEvidenceController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClaimEvidenceController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClaimEvidenceController@store (tamam)"
       security:
         - bearer: []
       responses:
@@ -854,6 +1117,130 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "RequestsController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/review-cases":
+    get:
+      summary: "ReviewCaseController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ReviewCaseController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ReviewCaseController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/review-photos":
+    get:
+      summary: "ReviewPhotoController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ReviewPhotoController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReviewPhotoController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ReviewPhotoController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/review-photos/media":
+    get:
+      summary: "ReviewPhotoController@media (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ReviewPhotoController@mediaOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/reviews":
+    get:
+      summary: "ReviewController@index (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ReviewController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ReviewController@store (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/reviews/mine":
+    get:
+      summary: "ReviewController@mine (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ReviewController@mineOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReviewController@changeMine (tamam)"
       security:
         - bearer: []
       responses:

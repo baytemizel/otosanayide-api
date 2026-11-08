@@ -238,5 +238,10 @@
   "bekliyor",
   "Closed/ClosedFeatureController::options",
   "tests/Feature/F7ClosedTest.php"
+ ],
+ "OPTIONS /api/campaigns": [
+  "bekliyor",
+  "Closed/ClosedFeatureController::options",
+  "tests/Feature/F7ClosedTest.php"
  ]
 }

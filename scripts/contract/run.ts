@@ -22,6 +22,15 @@ const parsers:Record<string,(raw:unknown,meta:Record<string,string>)=>unknown>={
  'owner-requests':(raw,meta)=>core('owner-requests-client').parseOwnerRequests(raw,meta.businessId),
  'public-reviews':raw=>core('public-reviews-client').parsePublicReviews(raw),
  'review-cases':raw=>core('review-case-client').casePage.parse(raw),
+ 'own-review':raw=>z.object({review:core('review-author-client').ownReviewView.nullable()}).strict().parse(raw),
+ 'own-review-photos':raw=>core('own-review-photo-client').ownPhotoList.parse(raw),
+ 'business-photos':raw=>core('business-photos').businessPhotoList.parse(raw),
+ 'public-business-photos':raw=>core('business-photos').publicBusinessPhotos.parse(raw),
+ 'console-branches':raw=>core('business-console-client').consoleBranches.parse(raw),
+ 'console-reviews':raw=>core('business-console-client').consoleReviews.parse(raw),
+ 'managed-profile':raw=>core('business-profile-client').managedProfile.parse(raw),
+ activation:raw=>core('activation-client').activationView.parse(raw),
+ 'business-places':raw=>core('business-places').businessPlaceResult.parse(raw),
 };
 const files=readdirSync(dir).filter(f=>f.endsWith('.json')).sort();
 let failed=0;const seen=new Set<string>();

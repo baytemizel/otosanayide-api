@@ -29,5 +29,6 @@ it('answers closed feature preflights', function () {
     $ok = raw($this, 'OPTIONS', '/api/campaigns/owner-metrics', ['HTTP_ORIGIN' => 'https://otosanayide.test']);
     $ok->assertStatus(204);
     expect($ok->headers->get('Access-Control-Allow-Methods'))->toBe('GET, OPTIONS');
+    expect(raw($this, 'OPTIONS', '/api/campaigns', ['HTTP_ORIGIN' => 'https://otosanayide.test'])->headers->get('Access-Control-Allow-Methods'))->toBe('GET, PATCH, OPTIONS');
     raw($this, 'OPTIONS', '/api/payments/checkout', ['HTTP_ORIGIN' => 'https://evil.test'])->assertStatus(403);
 });

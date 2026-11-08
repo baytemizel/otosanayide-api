@@ -8,6 +8,8 @@ $flag = static fn (string $key): bool => Env::getRepository()->get($key) === 'tr
 return [
     'public_web_origin' => Env::getRepository()->get('PUBLIC_WEB_ORIGIN'),
     'mobile_web_origin' => Env::getRepository()->get('MOBILE_WEB_ORIGIN'),
+    'google_places_api_key' => Env::getRepository()->get('GOOGLE_PLACES_API_KEY'),
+    'moderation_extra_terms' => Env::getRepository()->get('MODERATION_EXTRA_TERMS'),
 
     // Zamanlanmis yazicilar varsayilan kapali (kaynakta bes kapali job).
     'workers' => [
