@@ -119,6 +119,8 @@ final class Docs
             'ownerReady' => (bool) $b->owner_ready,
             'features' => ['quotes' => (bool) $b->feature_quotes, 'appointments' => (bool) $b->feature_appointments],
             'businessCoverPhotoId' => $b->business_cover_photo_id,
+            'importSourceId' => $b->import_source_id,
+            'publicationVersion' => (int) $b->publication_version,
             'profileVersion' => (int) $b->profile_version,
             'activationVersion' => (int) $b->activation_version,
             'reviewCount' => (int) $b->review_count,

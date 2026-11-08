@@ -128,9 +128,10 @@ final class ExternalCalls
      *
      * @param  array{kind:string,bindingDigest:string,resourceKey:string,resolve:Closure():array{subjects:list<string>,sourceDigest:string}}  $policy
      * @param  Closure():T  $send
+     * @param  (Closure(T):bool)|null  $settled  sonuc kesin degilse kayit uncertain kalir
      * @return T
      */
-    public static function call(array $policy, Closure $send)
+    public static function call(array $policy, Closure $send, ?Closure $settled = null)
     {
         $id = Ids::uuid();
         self::begin($policy, $id);
@@ -140,8 +141,8 @@ final class ExternalCalls
             self::dispatch($policy, $id);
             $sent = true;
             $result = $send();
-            $known = true;
-            self::settle($id, false);
+            $known = $settled === null || $settled($result);
+            self::settle($id, ! $known);
 
             return $result;
         } catch (Throwable $error) {

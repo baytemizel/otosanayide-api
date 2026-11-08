@@ -44,41 +44,74 @@ final class Barrier
     }
 
     /**
+     * contentSourceSubjects: transaction icinde cagrilir; tum okumalar yazimlardan oncedir.
+     *
+     * @param  array{kind:'actor'}|array{kind:'review'|'review_with_reply'|'reply'|'case'|'claim',id:string}  $policy
+     * @return list<string> sirali sahipler (actor dahil)
+     */
+    public static function contentSubjects(string $actor, array $policy): array
+    {
+        self::owner($actor);
+        AccountFence::assertWritable($actor);
+        $conflict = static fn (): WriteConflict => new WriteConflict('content_write_relationship');
+        $owners = [$actor];
+        $kind = $policy['kind'];
+        if ($kind === 'review' || $kind === 'review_with_reply') {
+            $review = self::row('reviews', 'id', $policy['id']) ?? throw $conflict();
+            $owners[] = self::owner($review->user_id);
+            if ($kind === 'review_with_reply') {
+                $reply = self::row('review_replies', 'review_id', $policy['id']);
+                if ($reply !== null) {
+                    $owners[] = self::owner($reply->user_id);
+                    if ($reply->review_id !== $policy['id'] || $reply->business_id !== $review->business_id) {
+                        throw $conflict();
+                    }
+                }
+            }
+        } elseif ($kind === 'reply') {
+            $reply = self::row('review_replies', 'review_id', $policy['id']) ?? throw $conflict();
+            $owners[] = self::owner($reply->user_id);
+            $review = self::row('reviews', 'id', $policy['id']);
+            if ($review !== null) {
+                $owners[] = self::owner($review->user_id);
+                if ($review->business_id !== $reply->business_id) {
+                    throw $conflict();
+                }
+            }
+        } elseif ($kind === 'case') {
+            $case = self::row('review_cases', 'id', $policy['id']) ?? throw $conflict();
+            $owners[] = self::owner($case->user_id);
+            // Eksik/degismis ana yorum yine `superseded` ile kapatilabilir.
+            $review = self::row('reviews', 'id', $case->review_id);
+            if ($review !== null) {
+                $owners[] = self::owner($review->user_id);
+            }
+            $reply = self::row('review_replies', 'review_id', $case->review_id);
+            if ($reply !== null) {
+                $owners[] = self::owner($reply->user_id);
+            }
+        } elseif ($kind === 'claim') {
+            $claim = self::row('claims', 'id', $policy['id']) ?? throw $conflict();
+            $owners[] = self::owner($claim->user_id);
+        }
+        self::fence($actor, $owners);
+        $sorted = array_values(array_unique($owners));
+        sort($sorted, SORT_STRING);
+
+        return $sorted;
+    }
+
+    /**
      * @template T
      *
-     * @param  array{kind:'actor'}|array{kind:'review'|'review_with_reply'|'claim',id:string}  $policy
+     * @param  array{kind:'actor'}|array{kind:'review'|'review_with_reply'|'reply'|'case'|'claim',id:string}  $policy
      * @param  Closure():T  $run
      * @return T
      */
     public static function content(string $actor, array $policy, Closure $run)
     {
         return Tx::run(static function () use ($actor, $policy, $run) {
-            self::owner($actor);
-            AccountFence::assertWritable($actor);
-            $owners = [$actor];
-            if ($policy['kind'] === 'review' || $policy['kind'] === 'review_with_reply') {
-                $review = self::row('reviews', 'id', $policy['id']);
-                if ($review === null) {
-                    throw new WriteConflict('content_write_relationship');
-                }
-                $owners[] = self::owner($review->user_id);
-                if ($policy['kind'] === 'review_with_reply') {
-                    $reply = self::row('review_replies', 'review_id', $policy['id']);
-                    if ($reply !== null) {
-                        $owners[] = self::owner($reply->user_id);
-                        if ($reply->review_id !== $policy['id'] || $reply->business_id !== $review->business_id) {
-                            throw new WriteConflict('content_write_relationship');
-                        }
-                    }
-                }
-            } elseif ($policy['kind'] === 'claim') {
-                $claim = self::row('claims', 'id', $policy['id']);
-                if ($claim === null) {
-                    throw new WriteConflict('content_write_relationship');
-                }
-                $owners[] = self::owner($claim->user_id);
-            }
-            self::fence($actor, $owners);
+            self::contentSubjects($actor, $policy);
 
             return $run();
         });

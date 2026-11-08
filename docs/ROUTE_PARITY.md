@@ -1,6 +1,6 @@
 # Route paritesi
 
-Kaynak: apps/web/src/app/api. 149 method. bekliyor: 73, tamam: 76.
+Kaynak: apps/web/src/app/api. 149 method. bekliyor: 49, tamam: 100.
 
 `tamam`: kod yazildi ve testi var; bu sunucu/MySQL kabulu degildir, bkz. rapor durumu. `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.
 
@@ -36,36 +36,36 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 73, tamam: 76.
 | `/api/admin/brand-reservations` | DELETE | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/brand-tariffs` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/brand-tariffs` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/business-changes` | GET | bekliyor | - | - |
-| `/api/admin/business-changes` | PATCH | bekliyor | - | - |
-| `/api/admin/business-photos` | GET | bekliyor | - | - |
-| `/api/admin/business-photos` | PATCH | bekliyor | - | - |
-| `/api/admin/business-photos` | OPTIONS | bekliyor | - | - |
-| `/api/admin/catalogue/draft` | GET | bekliyor | - | - |
-| `/api/admin/catalogue/draft` | PATCH | bekliyor | - | - |
-| `/api/admin/catalogue/history` | GET | bekliyor | - | - |
-| `/api/admin/catalogue` | GET | bekliyor | - | - |
-| `/api/admin/catalogue` | PATCH | bekliyor | - | - |
-| `/api/admin/claim-evidence` | POST | bekliyor | - | - |
-| `/api/admin/claim-targets` | GET | bekliyor | - | - |
-| `/api/admin/claim-targets` | POST | bekliyor | - | - |
-| `/api/admin/claims` | GET | bekliyor | - | - |
-| `/api/admin/claims` | PATCH | bekliyor | - | - |
+| `/api/admin/business-changes` | GET | tamam | Admin/BusinessChangeAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/business-changes` | PATCH | tamam | Admin/BusinessChangeAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/business-photos` | GET | tamam | Admin/BusinessPhotoAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/business-photos` | PATCH | tamam | Admin/BusinessPhotoAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/business-photos` | OPTIONS | tamam | Admin/BusinessPhotoAdminController::options | tests/Feature/F6ContentOfflineTest.php |
+| `/api/admin/catalogue/draft` | GET | tamam | Admin/CatalogueAdminController::draft | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/catalogue/draft` | PATCH | tamam | Admin/CatalogueAdminController::saveDraft | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/catalogue/history` | GET | tamam | Admin/CatalogueAdminController::history | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/catalogue` | GET | tamam | Admin/CatalogueAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/catalogue` | PATCH | tamam | Admin/CatalogueAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/claim-evidence` | POST | tamam | Admin/ClaimAdminController::verifyEvidence | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/claim-targets` | GET | tamam | Admin/ClaimAdminController::target | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/claim-targets` | POST | tamam | Admin/ClaimAdminController::mapTarget | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/claims` | GET | tamam | Admin/ClaimAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/claims` | PATCH | tamam | Admin/ClaimAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
 | `/api/admin/notifications` | GET | tamam | Me/AdminNotificationsController::index | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
 | `/api/admin/notifications` | PATCH | tamam | Me/AdminNotificationsController::update | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
 | `/api/admin/payment-cases` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/payment-cases` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/privacy` | GET | tamam | Me/AdminPrivacyController::index | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
 | `/api/admin/privacy` | POST | tamam | Me/AdminPrivacyController::store | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
-| `/api/admin/replies` | GET | bekliyor | - | - |
-| `/api/admin/replies` | PATCH | bekliyor | - | - |
-| `/api/admin/review-cases` | GET | bekliyor | - | - |
-| `/api/admin/review-cases` | PATCH | bekliyor | - | - |
-| `/api/admin/review-photos` | GET | bekliyor | - | - |
-| `/api/admin/review-photos` | PATCH | bekliyor | - | - |
-| `/api/admin/reviews/analyze` | POST | bekliyor | - | - |
-| `/api/admin/reviews` | GET | bekliyor | - | - |
-| `/api/admin/reviews` | PATCH | bekliyor | - | - |
+| `/api/admin/replies` | GET | tamam | Admin/ReplyAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/replies` | PATCH | tamam | Admin/ReplyAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/review-cases` | GET | tamam | Admin/ReviewCaseAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/review-cases` | PATCH | tamam | Admin/ReviewCaseAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/review-photos` | GET | tamam | Admin/ReviewPhotoAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/review-photos` | PATCH | tamam | Admin/ReviewPhotoAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/reviews/analyze` | POST | tamam | Admin/ReviewAdminController::analyze | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/reviews` | GET | tamam | Admin/ReviewAdminController::index | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
+| `/api/admin/reviews` | PATCH | tamam | Admin/ReviewAdminController::update | tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php |
 | `/api/brand-banners/image` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/brand-banners` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/brand-events` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |

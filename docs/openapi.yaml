@@ -381,6 +381,182 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/admin/business-changes":
+    get:
+      summary: "BusinessChangeAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "BusinessChangeAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/business-photos":
+    get:
+      summary: "BusinessPhotoAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "BusinessPhotoAdminController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "BusinessPhotoAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/catalogue":
+    get:
+      summary: "CatalogueAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "CatalogueAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/catalogue/draft":
+    get:
+      summary: "CatalogueAdminController@draft (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "CatalogueAdminController@saveDraft (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/catalogue/history":
+    get:
+      summary: "CatalogueAdminController@history (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/claim-evidence":
+    post:
+      summary: "ClaimAdminController@verifyEvidence (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/claim-targets":
+    get:
+      summary: "ClaimAdminController@target (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClaimAdminController@mapTarget (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/claims":
+    get:
+      summary: "ClaimAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClaimAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/admin/notifications":
     get:
       summary: "AdminNotificationsController@index (tamam)"
@@ -471,6 +647,117 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "AdminPrivacyController@store (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/replies":
+    get:
+      summary: "ReplyAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReplyAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/review-cases":
+    get:
+      summary: "ReviewCaseAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReviewCaseAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/review-photos":
+    get:
+      summary: "ReviewPhotoAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReviewPhotoAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/reviews":
+    get:
+      summary: "ReviewAdminController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ReviewAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/reviews/analyze":
+    post:
+      summary: "ReviewAdminController@analyze (tamam)"
       security:
         - bearer: []
       requestBody:
