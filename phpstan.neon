@@ -6,3 +6,7 @@ parameters:
         - config
         - routes
     level: 6
+    ignoreErrors:
+        # Kaynak TS semalarindan gelen serbest diziler: sekil Z semalariyla dogrulanir.
+        - identifier: missingType.iterableValue
+        - identifier: argument.templateType

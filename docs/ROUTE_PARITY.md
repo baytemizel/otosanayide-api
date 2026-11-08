@@ -1,6 +1,6 @@
 # Route paritesi
 
-Kaynak: apps/web/src/app/api. 149 method. bekliyor: 146, tamam: 3.
+Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 
 `tamam`: kod yazildi ve testi var; bu sunucu/MySQL kabulu degildir, bkz. rapor durumu. `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.
 
@@ -109,35 +109,35 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 146, tamam: 3.
 | `/api/claims` | POST | bekliyor | - | - |
 | `/api/claims` | PATCH | bekliyor | - | - |
 | `/api/health` | GET | tamam | HealthController | tests/Feature/F1FoundationTest.php |
-| `/api/me/favorites` | GET | bekliyor | - | - |
-| `/api/me/favorites` | POST | bekliyor | - | - |
-| `/api/me/favorites` | OPTIONS | bekliyor | - | - |
-| `/api/me/garage/lifecycle` | GET | bekliyor | - | - |
-| `/api/me/garage/lifecycle` | POST | bekliyor | - | - |
-| `/api/me/garage/lifecycle` | OPTIONS | bekliyor | - | - |
-| `/api/me/garage/migrate` | GET | bekliyor | - | - |
-| `/api/me/garage/migrate` | POST | bekliyor | - | - |
-| `/api/me/garage` | GET | bekliyor | - | - |
-| `/api/me/garage` | PUT | bekliyor | - | - |
-| `/api/me/garage` | OPTIONS | bekliyor | - | - |
-| `/api/me/privacy` | GET | bekliyor | - | - |
-| `/api/me/privacy` | POST | bekliyor | - | - |
-| `/api/me/privacy` | OPTIONS | bekliyor | - | - |
-| `/api/me/push` | GET | bekliyor | - | - |
-| `/api/me/push` | POST | bekliyor | - | - |
-| `/api/me/push` | OPTIONS | bekliyor | - | - |
-| `/api/me` | GET | bekliyor | - | - |
-| `/api/me` | POST | bekliyor | - | - |
-| `/api/me` | PATCH | bekliyor | - | - |
-| `/api/notifications` | GET | bekliyor | - | - |
-| `/api/notifications` | PATCH | bekliyor | - | - |
+| `/api/me/favorites` | GET | tamam | Me/FavoritesController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/favorites` | POST | tamam | Me/FavoritesController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/favorites` | OPTIONS | tamam | Me/FavoritesController::options | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage/lifecycle` | GET | tamam | Me/GarageController::lifecycleShow | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage/lifecycle` | POST | tamam | Me/GarageController::lifecycleStore | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage/lifecycle` | OPTIONS | tamam | Me/GarageController::lifecycleOptions | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage/migrate` | GET | tamam | Me/GarageController::migrateShow | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage/migrate` | POST | tamam | Me/GarageController::migrateStore | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage` | GET | tamam | Me/GarageController::show | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage` | PUT | tamam | Me/GarageController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/garage` | OPTIONS | tamam | Me/GarageController::garageOptions | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/privacy` | GET | tamam | Me/PrivacyController::show | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/privacy` | POST | tamam | Me/PrivacyController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/privacy` | OPTIONS | tamam | Me/PrivacyController::options | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/push` | GET | tamam | Me/PushController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/push` | POST | tamam | Me/PushController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me/push` | OPTIONS | tamam | Me/PushController::options | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me` | GET | tamam | Me/MeController::show | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me` | POST | tamam | Me/MeController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/me` | PATCH | tamam | Me/MeController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/notifications` | GET | tamam | Me/NotificationsController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/notifications` | PATCH | tamam | Me/NotificationsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/payments/checkout` | POST | bekliyor | - | - |
 | `/api/payments/checkout` | OPTIONS | bekliyor | - | - |
 | `/api/payments/webhook` | POST | bekliyor | - | - |
-| `/api/requests` | GET | bekliyor | - | - |
-| `/api/requests` | POST | bekliyor | - | - |
-| `/api/requests` | PATCH | bekliyor | - | - |
-| `/api/requests` | OPTIONS | bekliyor | - | - |
+| `/api/requests` | GET | tamam | Me/RequestsController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/requests` | POST | tamam | Me/RequestsController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/requests` | PATCH | tamam | Me/RequestsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
+| `/api/requests` | OPTIONS | tamam | Me/RequestsController::options | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/review-cases` | GET | bekliyor | - | - |
 | `/api/review-cases` | POST | bekliyor | - | - |
 | `/api/review-cases` | OPTIONS | bekliyor | - | - |

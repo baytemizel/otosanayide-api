@@ -64,7 +64,13 @@ final class Z
 
     public static function literal(string|int|bool|null ...$values): self
     {
-        return new self(static fn (mixed $v): mixed => in_array($v, $values, true) ? $v : self::fail('invalid_value'));
+        return new self(static function (mixed $v) use ($values): mixed {
+            if (is_float($v) && $v == floor($v) && abs($v) <= PHP_INT_MAX) {
+                $v = (int) $v; // JSON'da 1 ile 1.0 ayni sayidir.
+            }
+
+            return in_array($v, $values, true) ? $v : self::fail('invalid_value');
+        });
     }
 
     /** @param list<string> $values */

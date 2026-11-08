@@ -5,6 +5,8 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SOURCE = ROOT.parent.parent / "apps/web/src/app/api"
 status = json.loads((ROOT / "docs/route-status.json").read_text())
+for extra in sorted((ROOT / "docs/status").glob("*.json")):
+    status.update(json.loads(extra.read_text()))
 METHODS = "GET POST PUT PATCH DELETE OPTIONS".split()
 rows = []
 for f in sorted(SOURCE.rglob("route.ts")):

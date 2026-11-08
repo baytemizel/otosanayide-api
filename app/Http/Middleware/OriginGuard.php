@@ -38,6 +38,9 @@ final class OriginGuard
         if ($cors === 'manual') {
             return $next($request); // Handler kaynak gibi kendi ret ve CORS yanitini kurar.
         }
+        if ($cors === 'push') {
+            return $this->decorate($next($request), $allowed, $origin); // Ret handler icindedir, CORS her yanitta.
+        }
         if ($request->isMethod('OPTIONS')) {
             $response = $next($request);
         } elseif (! $allowed) {
@@ -45,11 +48,14 @@ final class OriginGuard
         } else {
             $response = $next($request);
         }
-        if ($mode === 'mobile' && $cors === 'cors') {
-            $response->headers->set('Vary', 'Origin');
-            if ($allowed && $origin !== null) {
-                $response->headers->set('Access-Control-Allow-Origin', $origin);
-            }
+        return $mode === 'mobile' && $cors === 'cors' ? $this->decorate($response, $allowed, $origin) : $response;
+    }
+
+    private function decorate(Response $response, bool $allowed, ?string $origin): Response
+    {
+        $response->headers->set('Vary', 'Origin');
+        if ($allowed && $origin !== null) {
+            $response->headers->set('Access-Control-Allow-Origin', $origin);
         }
 
         return $response;

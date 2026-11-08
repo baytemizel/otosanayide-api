@@ -6,6 +6,16 @@ use Illuminate\Support\Facades\File;
 // Baglanti kurmadan: migration'lar MySQL DDL'ine derlenir (pretend). Gercek motor kabulu DEGILDIR.
 function compiledSql(): array
 {
+    // Grammar sunucu surumunu sorabilir: sahte PDO, gercek baglanti acilmaz.
+    DB::connection()->setPdo(new class extends PDO
+    {
+        public function __construct() {}
+
+        public function getAttribute(int $attribute): mixed
+        {
+            return '8.4.13';
+        }
+    });
     $sql = [];
     foreach (collect(File::files(database_path('migrations')))->sortBy->getFilename() as $file) {
         $migration = require $file->getPathname();

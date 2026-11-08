@@ -13,5 +13,135 @@
   "tamam",
   "Catalogue/SearchController::options",
   "tests/Feature/F3SearchOfflineTest.php"
+ ],
+ "GET /api/me": [
+  "tamam",
+  "Me/MeController::show",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/me": [
+  "tamam",
+  "Me/MeController::store",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "PATCH /api/me": [
+  "tamam",
+  "Me/MeController::update",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/me/favorites": [
+  "tamam",
+  "Me/FavoritesController::index",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/me/favorites": [
+  "tamam",
+  "Me/FavoritesController::store",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "OPTIONS /api/me/favorites": [
+  "tamam",
+  "Me/FavoritesController::options",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/me/garage": [
+  "tamam",
+  "Me/GarageController::show",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "PUT /api/me/garage": [
+  "tamam",
+  "Me/GarageController::update",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "OPTIONS /api/me/garage": [
+  "tamam",
+  "Me/GarageController::garageOptions",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/me/garage/lifecycle": [
+  "tamam",
+  "Me/GarageController::lifecycleShow",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/me/garage/lifecycle": [
+  "tamam",
+  "Me/GarageController::lifecycleStore",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "OPTIONS /api/me/garage/lifecycle": [
+  "tamam",
+  "Me/GarageController::lifecycleOptions",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/me/garage/migrate": [
+  "tamam",
+  "Me/GarageController::migrateShow",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/me/garage/migrate": [
+  "tamam",
+  "Me/GarageController::migrateStore",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/me/privacy": [
+  "tamam",
+  "Me/PrivacyController::show",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/me/privacy": [
+  "tamam",
+  "Me/PrivacyController::store",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "OPTIONS /api/me/privacy": [
+  "tamam",
+  "Me/PrivacyController::options",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/me/push": [
+  "tamam",
+  "Me/PushController::index",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/me/push": [
+  "tamam",
+  "Me/PushController::store",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "OPTIONS /api/me/push": [
+  "tamam",
+  "Me/PushController::options",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/notifications": [
+  "tamam",
+  "Me/NotificationsController::index",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "PATCH /api/notifications": [
+  "tamam",
+  "Me/NotificationsController::update",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/requests": [
+  "tamam",
+  "Me/RequestsController::index",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "POST /api/requests": [
+  "tamam",
+  "Me/RequestsController::store",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "PATCH /api/requests": [
+  "tamam",
+  "Me/RequestsController::update",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "OPTIONS /api/requests": [
+  "tamam",
+  "Me/RequestsController::options",
+  "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
  ]
 }
