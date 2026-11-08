@@ -3,5 +3,15 @@
   "tamam",
   "HealthController",
   "tests/Feature/F1FoundationTest.php"
+ ],
+ "GET /api/search": [
+  "tamam",
+  "Catalogue/SearchController::index",
+  "tests/Feature/F3SearchOfflineTest.php, tests/Mysql/F3SearchTest.php"
+ ],
+ "OPTIONS /api/search": [
+  "tamam",
+  "Catalogue/SearchController::options",
+  "tests/Feature/F3SearchOfflineTest.php"
  ]
 }

@@ -1,6 +1,6 @@
 # Route paritesi
 
-Kaynak: apps/web/src/app/api. 149 method. bekliyor: 148, tamam: 1.
+Kaynak: apps/web/src/app/api. 149 method. bekliyor: 146, tamam: 3.
 
 `tamam`: kod yazildi ve testi var; bu sunucu/MySQL kabulu degildir, bkz. rapor durumu. `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.
 
@@ -153,5 +153,5 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 148, tamam: 1.
 | `/api/reviews` | GET | bekliyor | - | - |
 | `/api/reviews` | POST | bekliyor | - | - |
 | `/api/reviews` | OPTIONS | bekliyor | - | - |
-| `/api/search` | GET | bekliyor | - | - |
-| `/api/search` | OPTIONS | bekliyor | - | - |
+| `/api/search` | GET | tamam | Catalogue/SearchController::index | tests/Feature/F3SearchOfflineTest.php, tests/Mysql/F3SearchTest.php |
+| `/api/search` | OPTIONS | tamam | Catalogue/SearchController::options | tests/Feature/F3SearchOfflineTest.php |

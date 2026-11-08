@@ -1,0 +1,261 @@
+{
+ "categories": [
+  {
+   "id": "mechanical",
+   "name": "Mekanik Servis",
+   "services": [
+    "Periyodik bakım",
+    "Motor bakımı",
+    "Şanzıman",
+    "Fren",
+    "Süspansiyon",
+    "Debriyaj",
+    "Turbo",
+    "Enjektör"
+   ]
+  },
+  {
+   "id": "detailing",
+   "name": "Oto Kuaför",
+   "services": [
+    "Detaylı temizlik",
+    "İç temizlik",
+    "Dış yıkama",
+    "Pasta cila",
+    "Koltuk temizliği"
+   ]
+  },
+  {
+   "id": "body",
+   "name": "Kaporta & Boya",
+   "services": [
+    "Kaporta",
+    "Boya",
+    "Boyasız göçük",
+    "Tampon onarımı"
+   ]
+  },
+  {
+   "id": "tyres",
+   "name": "Lastik & Jant",
+   "services": [
+    "Lastik",
+    "Rot balans",
+    "Jant onarımı",
+    "Lastik oteli"
+   ]
+  },
+  {
+   "id": "motorcycle",
+   "name": "Motosiklet",
+   "services": [
+    "Motosiklet bakım",
+    "Scooter",
+    "Motosiklet elektrik"
+   ]
+  },
+  {
+   "id": "electrical",
+   "name": "Elektrik & Elektronik",
+   "services": [
+    "Oto elektrik",
+    "Akü",
+    "Arıza tespiti",
+    "Marş",
+    "Alternatör"
+   ]
+  },
+  {
+   "id": "glass",
+   "name": "Cam & Sunroof",
+   "services": [
+    "Oto cam",
+    "Cam tamiri",
+    "Sunroof",
+    "Panoramik tavan"
+   ]
+  },
+  {
+   "id": "protection",
+   "name": "Film & Kaplama",
+   "services": [
+    "Cam filmi",
+    "PPF",
+    "Seramik kaplama",
+    "Renk kaplama"
+   ]
+  },
+  {
+   "id": "climate",
+   "name": "Klima",
+   "services": [
+    "Klima bakımı",
+    "Gaz dolumu",
+    "Kalorifer"
+   ]
+  },
+  {
+   "id": "electric-vehicle",
+   "name": "Elektrikli & Hibrit",
+   "services": [
+    "Elektrikli araç",
+    "Hibrit bakım",
+    "Batarya teşhisi"
+   ]
+  },
+  {
+   "id": "accessories",
+   "name": "Döşeme & Aksesuar",
+   "services": [
+    "Döşeme",
+    "Deri tamiri",
+    "Aksesuar"
+   ]
+  },
+  {
+   "id": "assistance",
+   "name": "Yol Yardım & Destek",
+   "services": [
+    "Yol yardım",
+    "Çekici",
+    "Muayene hazırlığı"
+   ]
+  },
+  {
+   "id": "auto-expertise",
+   "name": "Oto Ekspertiz",
+   "services": [
+    "Oto ekspertiz",
+    "Kaporta boya kontrolü",
+    "Motor mekanik kontrol",
+    "Airbag kontrolü",
+    "Kilometre / hasar kontrolü",
+    "Elektrikli araç batarya testi"
+   ]
+  },
+  {
+   "id": "exhaust",
+   "name": "Egzoz",
+   "services": [
+    "Egzoz tamiri",
+    "Egzoz montajı",
+    "Partikül filtresi temizliği",
+    "Katalizör"
+   ]
+  },
+  {
+   "id": "turbo",
+   "name": "Turbo",
+   "services": [
+    "Turbo tamiri",
+    "Turbo revizyonu",
+    "Turbo bakımı"
+   ]
+  },
+  {
+   "id": "suspension",
+   "name": "Süspansiyon & Amortisör",
+   "services": [
+    "Süspansiyon",
+    "Amortisör tamiri",
+    "Ön takım",
+    "Havalı süspansiyon"
+   ]
+  },
+  {
+   "id": "transmission",
+   "name": "Şanzıman",
+   "services": [
+    "Şanzıman",
+    "Otomatik şanzıman",
+    "DSG",
+    "Manuel şanzıman",
+    "Şanzıman yağı değişimi"
+   ]
+  },
+  {
+   "id": "car-audio",
+   "name": "Multimedya & Ses",
+   "services": [
+    "Oto multimedya",
+    "Oto ses sistemi",
+    "CarPlay / Android Auto",
+    "Hoparlör montajı",
+    "Geri görüş kamerası"
+   ]
+  },
+  {
+   "id": "tuning",
+   "name": "Modifiye & Performans",
+   "services": [
+    "Chip tuning",
+    "Performans tuning",
+    "Performans egzoz",
+    "Intercooler",
+    "Dinamometre"
+   ]
+  },
+  {
+   "id": "facelift",
+   "name": "Facelift & Özel Proje",
+   "services": [
+    "Facelift",
+    "Body kit",
+    "Özel proje",
+    "Araç dönüşümü"
+   ]
+  }
+ ],
+ "aliases": {
+  "egsoz": "egzoz",
+  "eksoz": "egzoz",
+  "egzozcu": "egzoz",
+  "sanzuman": "sanziman",
+  "sanzimanci": "sanziman",
+  "amortisorcu": "amortisor",
+  "turbocu": "turbo",
+  "multimedia": "multimedya",
+  "muzik": "ses",
+  "music": "ses",
+  "elektirik": "elektrik",
+  "balanc": "balans",
+  "kuafor": "detay",
+  "yikama": "temizlik",
+  "usta": "",
+  "ustasi": "",
+  "servisi": "",
+  "servis": "",
+  "icin": "",
+  "bir": "",
+  "oto": "",
+  "otomobil": "",
+  "arabam": "",
+  "mercedes": "mercedes",
+  "gocuk": "gocuk"
+ },
+ "englishExtra": {
+  "car wash": "yikama",
+  "dent repair": "gocuk",
+  "wheel alignment": "rot balans",
+  "oil change": "periyodik bakim",
+  "car detailing": "oto kuafor",
+  "garage": "servis",
+  "tire": "lastik",
+  "tires": "lastik",
+  "tyre": "lastik",
+  "brake": "fren",
+  "engine": "motor",
+  "pre purchase inspection": "oto ekspertiz",
+  "prepurchase inspection": "oto ekspertiz",
+  "vehicle appraisal": "oto ekspertiz",
+  "auto expertise": "oto ekspertiz",
+  "exhaust": "egzoz",
+  "gearbox": "sanziman",
+  "transmission": "sanziman",
+  "shock absorber": "amortisor",
+  "suspension": "suspansiyon",
+  "car audio": "oto ses sistemi",
+  "chiptuning": "chip tuning",
+  "bodykit": "body kit"
+ }
+}

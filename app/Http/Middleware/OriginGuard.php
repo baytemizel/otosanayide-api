@@ -35,6 +35,9 @@ final class OriginGuard
             default => throw new RuntimeException('Unknown origin mode'),
         };
         $request->attributes->set('origin_allowed', $allowed);
+        if ($cors === 'manual') {
+            return $next($request); // Handler kaynak gibi kendi ret ve CORS yanitini kurar.
+        }
         if ($request->isMethod('OPTIONS')) {
             $response = $next($request);
         } elseif (! $allowed) {
