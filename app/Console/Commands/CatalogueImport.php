@@ -29,7 +29,8 @@ final class CatalogueImport extends Command
             return self::FAILURE;
         }
         try {
-            $entries = self::prepare((string) file_get_contents($path));
+            $text = str_ends_with($path, '.gz') ? gzdecode((string) file_get_contents($path)) : file_get_contents($path);
+            $entries = self::prepare((string) $text);
         } catch (RuntimeException|ZodError $e) {
             $this->error($e instanceof ZodError ? 'Satir dogrulanamadi: '.$e->issue : $e->getMessage());
 
