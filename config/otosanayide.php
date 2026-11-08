@@ -9,6 +9,12 @@ return [
     'public_web_origin' => Env::getRepository()->get('PUBLIC_WEB_ORIGIN'),
     'mobile_web_origin' => Env::getRepository()->get('MOBILE_WEB_ORIGIN'),
 
+    // Zamanlanmis yazicilar varsayilan kapali (kaynakta bes kapali job).
+    'workers' => [
+        'request_notifications' => $flag('REQUEST_NOTIFICATIONS_WORKER_ENABLED'),
+        'garage_recycle_purge' => $flag('GARAGE_RECYCLE_PURGE_ENABLED'),
+    ],
+
     'flags' => [
         'shared_garage' => $flag('SHARED_GARAGE_ENABLED'),
         'mobile_garage_backup' => $flag('MOBILE_GARAGE_BACKUP_ENABLED'),

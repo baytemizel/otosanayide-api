@@ -6,36 +6,36 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 
 | Route | Method | Durum | Controller | Test |
 |---|---|---|---|---|
-| `/api/ad-events` | POST | bekliyor | - | - |
-| `/api/admin/ad-tariffs` | GET | bekliyor | - | - |
-| `/api/admin/ad-tariffs` | PATCH | bekliyor | - | - |
-| `/api/admin/brand-acceptance` | GET | bekliyor | - | - |
-| `/api/admin/brand-acceptance` | POST | bekliyor | - | - |
-| `/api/admin/brand-campaigns` | GET | bekliyor | - | - |
-| `/api/admin/brand-campaigns` | PATCH | bekliyor | - | - |
-| `/api/admin/brand-cancellation-history` | GET | bekliyor | - | - |
-| `/api/admin/brand-cancellation-queue` | GET | bekliyor | - | - |
-| `/api/admin/brand-cancellations` | GET | bekliyor | - | - |
-| `/api/admin/brand-cancellations` | POST | bekliyor | - | - |
-| `/api/admin/brand-cancellations` | PATCH | bekliyor | - | - |
-| `/api/admin/brand-capacities` | PATCH | bekliyor | - | - |
-| `/api/admin/brand-media` | GET | bekliyor | - | - |
-| `/api/admin/brand-media` | POST | bekliyor | - | - |
-| `/api/admin/brand-metrics` | GET | bekliyor | - | - |
-| `/api/admin/brand-orders` | GET | bekliyor | - | - |
-| `/api/admin/brand-orders` | POST | bekliyor | - | - |
-| `/api/admin/brand-payment-review` | GET | bekliyor | - | - |
-| `/api/admin/brand-payment-review` | PATCH | bekliyor | - | - |
-| `/api/admin/brand-preview/image` | GET | bekliyor | - | - |
-| `/api/admin/brand-preview` | GET | bekliyor | - | - |
-| `/api/admin/brand-quote` | POST | bekliyor | - | - |
-| `/api/admin/brand-refund-review` | GET | bekliyor | - | - |
-| `/api/admin/brand-refund-review` | PATCH | bekliyor | - | - |
-| `/api/admin/brand-reservations` | GET | bekliyor | - | - |
-| `/api/admin/brand-reservations` | POST | bekliyor | - | - |
-| `/api/admin/brand-reservations` | DELETE | bekliyor | - | - |
-| `/api/admin/brand-tariffs` | GET | bekliyor | - | - |
-| `/api/admin/brand-tariffs` | PATCH | bekliyor | - | - |
+| `/api/ad-events` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/ad-tariffs` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/ad-tariffs` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-acceptance` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-acceptance` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-campaigns` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-campaigns` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-cancellation-history` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-cancellation-queue` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-cancellations` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-cancellations` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-cancellations` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-capacities` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-media` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-media` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-metrics` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-orders` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-orders` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-payment-review` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-payment-review` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-preview/image` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-preview` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-quote` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-refund-review` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-refund-review` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-reservations` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-reservations` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-reservations` | DELETE | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-tariffs` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/brand-tariffs` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/business-changes` | GET | bekliyor | - | - |
 | `/api/admin/business-changes` | PATCH | bekliyor | - | - |
 | `/api/admin/business-photos` | GET | bekliyor | - | - |
@@ -53,8 +53,8 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 | `/api/admin/claims` | PATCH | bekliyor | - | - |
 | `/api/admin/notifications` | GET | bekliyor | - | - |
 | `/api/admin/notifications` | PATCH | bekliyor | - | - |
-| `/api/admin/payment-cases` | GET | bekliyor | - | - |
-| `/api/admin/payment-cases` | PATCH | bekliyor | - | - |
+| `/api/admin/payment-cases` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/payment-cases` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/privacy` | GET | bekliyor | - | - |
 | `/api/admin/privacy` | POST | bekliyor | - | - |
 | `/api/admin/replies` | GET | bekliyor | - | - |
@@ -66,9 +66,9 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 | `/api/admin/reviews/analyze` | POST | bekliyor | - | - |
 | `/api/admin/reviews` | GET | bekliyor | - | - |
 | `/api/admin/reviews` | PATCH | bekliyor | - | - |
-| `/api/brand-banners/image` | GET | bekliyor | - | - |
-| `/api/brand-banners` | GET | bekliyor | - | - |
-| `/api/brand-events` | POST | bekliyor | - | - |
+| `/api/brand-banners/image` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/brand-banners` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/brand-events` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/businesses/activation` | GET | bekliyor | - | - |
 | `/api/businesses/activation` | PATCH | bekliyor | - | - |
 | `/api/businesses/activation` | OPTIONS | bekliyor | - | - |
@@ -91,16 +91,16 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 | `/api/businesses/replies` | POST | bekliyor | - | - |
 | `/api/businesses/replies` | PATCH | bekliyor | - | - |
 | `/api/businesses/replies` | OPTIONS | bekliyor | - | - |
-| `/api/campaigns/finance` | GET | bekliyor | - | - |
-| `/api/campaigns/finance` | POST | bekliyor | - | - |
-| `/api/campaigns/finance` | OPTIONS | bekliyor | - | - |
-| `/api/campaigns/metrics` | GET | bekliyor | - | - |
-| `/api/campaigns/owner-metrics` | GET | bekliyor | - | - |
-| `/api/campaigns/owner-metrics` | OPTIONS | bekliyor | - | - |
-| `/api/campaigns/reservation` | GET | bekliyor | - | - |
-| `/api/campaigns/reservation` | POST | bekliyor | - | - |
-| `/api/campaigns` | GET | bekliyor | - | - |
-| `/api/campaigns` | PATCH | bekliyor | - | - |
+| `/api/campaigns/finance` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/finance` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/finance` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/metrics` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/owner-metrics` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/owner-metrics` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/reservation` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/reservation` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/campaigns` | OPTIONS | bekliyor | - | - |
 | `/api/claims/evidence` | GET | bekliyor | - | - |
 | `/api/claims/evidence` | POST | bekliyor | - | - |
@@ -131,9 +131,9 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 | `/api/me` | PATCH | tamam | Me/MeController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/notifications` | GET | tamam | Me/NotificationsController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/notifications` | PATCH | tamam | Me/NotificationsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
-| `/api/payments/checkout` | POST | bekliyor | - | - |
-| `/api/payments/checkout` | OPTIONS | bekliyor | - | - |
-| `/api/payments/webhook` | POST | bekliyor | - | - |
+| `/api/payments/checkout` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/payments/checkout` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
+| `/api/payments/webhook` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/requests` | GET | tamam | Me/RequestsController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/requests` | POST | tamam | Me/RequestsController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |
 | `/api/requests` | PATCH | tamam | Me/RequestsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php |

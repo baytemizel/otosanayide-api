@@ -1,0 +1,242 @@
+{
+ "POST /api/ad-events": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/brand-events": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/brand-banners": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/brand-banners/image": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/payments/webhook": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/payments/checkout": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/campaigns": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/campaigns": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/campaigns/metrics": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/campaigns/reservation": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/campaigns/reservation": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/campaigns/finance": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/campaigns/finance": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/campaigns/owner-metrics": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/ad-tariffs": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/ad-tariffs": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-acceptance": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/admin/brand-acceptance": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-campaigns": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/brand-campaigns": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-cancellation-history": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-cancellation-queue": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-cancellations": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/admin/brand-cancellations": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/brand-cancellations": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/brand-capacities": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-media": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/admin/brand-media": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-metrics": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-orders": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/admin/brand-orders": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-payment-review": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/brand-payment-review": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-preview": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-preview/image": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/admin/brand-quote": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-refund-review": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/brand-refund-review": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-reservations": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "POST /api/admin/brand-reservations": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "DELETE /api/admin/brand-reservations": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/brand-tariffs": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/brand-tariffs": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "GET /api/admin/payment-cases": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "PATCH /api/admin/payment-cases": [
+  "bekliyor",
+  "Closed/ClosedFeatureController",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "OPTIONS /api/payments/checkout": [
+  "bekliyor",
+  "Closed/ClosedFeatureController::options",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "OPTIONS /api/campaigns/finance": [
+  "bekliyor",
+  "Closed/ClosedFeatureController::options",
+  "tests/Feature/F7ClosedTest.php"
+ ],
+ "OPTIONS /api/campaigns/owner-metrics": [
+  "bekliyor",
+  "Closed/ClosedFeatureController::options",
+  "tests/Feature/F7ClosedTest.php"
+ ]
+}
