@@ -1,0 +1,878 @@
+openapi: 3.1.0
+info:
+  title: Otosanayide API
+  version: 0.1.0
+  description: Route listesinden uretildi. Govde semalari icin kaynak Zod semalari ve docs/ROUTE_PARITY.md esastir; yanit semalari tasinmadi.
+servers:
+  - url: /
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+  responses:
+    Error:
+      description: Hata govdesi
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+paths:
+  "/api/ad-events":
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/ad-tariffs":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-acceptance":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-campaigns":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-cancellation-history":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-cancellation-queue":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-cancellations":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-capacities":
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-media":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-metrics":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-orders":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-payment-review":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-preview":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-preview/image":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-quote":
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-refund-review":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-reservations":
+    delete:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/brand-tariffs":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/notifications":
+    get:
+      summary: "AdminNotificationsController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "AdminNotificationsController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/payment-cases":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/privacy":
+    get:
+      summary: "AdminPrivacyController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "AdminPrivacyController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/email/resend":
+    post:
+      summary: "AuthController@resendVerification (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/email/verify":
+    post:
+      summary: "AuthController@verifyEmail (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/login":
+    post:
+      summary: "AuthController@login (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/logout":
+    post:
+      summary: "AuthController@logout (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/mfa/totp/confirm":
+    post:
+      summary: "AuthController@totpConfirm (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/mfa/totp/disable":
+    post:
+      summary: "AuthController@totpDisable (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/mfa/totp/enroll":
+    post:
+      summary: "AuthController@totpEnroll (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/mfa/verify":
+    post:
+      summary: "AuthController@mfaVerify (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/password/forgot":
+    post:
+      summary: "AuthController@forgot (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/password/reset":
+    post:
+      summary: "AuthController@reset (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/refresh":
+    post:
+      summary: "AuthController@refresh (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/register":
+    post:
+      summary: "AuthController@register (yeni uc)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/brand-banners":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/brand-banners/image":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/brand-events":
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/{id}":
+    get:
+      summary: "BusinessController@show (yeni uc)"
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/campaigns":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/campaigns/finance":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ClosedFeatureController@options (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/campaigns/metrics":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/campaigns/owner-metrics":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "ClosedFeatureController@options (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/campaigns/reservation":
+    get:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/health":
+    get:
+      summary: "HealthController (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me":
+    get:
+      summary: "MeController@show (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "MeController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "MeController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/favorites":
+    get:
+      summary: "FavoritesController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "FavoritesController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "FavoritesController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/garage":
+    get:
+      summary: "GarageController@show (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "GarageController@garageOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    put:
+      summary: "GarageController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/garage/lifecycle":
+    get:
+      summary: "GarageController@lifecycleShow (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "GarageController@lifecycleOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "GarageController@lifecycleStore (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/garage/migrate":
+    get:
+      summary: "GarageController@migrateShow (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "GarageController@migrateStore (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/privacy":
+    get:
+      summary: "PrivacyController@show (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "PrivacyController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "PrivacyController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/push":
+    get:
+      summary: "PushController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "PushController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "PushController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/notifications":
+    get:
+      summary: "NotificationsController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "NotificationsController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/payments/checkout":
+    options:
+      summary: "ClosedFeatureController@options (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/payments/webhook":
+    post:
+      summary: "ClosedFeatureController (bekliyor)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/requests":
+    get:
+      summary: "RequestsController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "RequestsController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "RequestsController@update (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "RequestsController@store (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/search":
+    get:
+      summary: "SearchController@index (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    options:
+      summary: "SearchController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
