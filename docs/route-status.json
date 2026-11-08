@@ -143,5 +143,25 @@
   "tamam",
   "Me/RequestsController::options",
   "tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php, tests/Mysql/F4UserTest.php"
+ ],
+ "GET /api/admin/notifications": [
+  "tamam",
+  "Me/AdminNotificationsController::index",
+  "tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php"
+ ],
+ "PATCH /api/admin/notifications": [
+  "tamam",
+  "Me/AdminNotificationsController::update",
+  "tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php"
+ ],
+ "GET /api/admin/privacy": [
+  "tamam",
+  "Me/AdminPrivacyController::index",
+  "tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php"
+ ],
+ "POST /api/admin/privacy": [
+  "tamam",
+  "Me/AdminPrivacyController::store",
+  "tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php"
  ]
 }

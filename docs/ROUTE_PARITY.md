@@ -1,6 +1,6 @@
 # Route paritesi
 
-Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
+Kaynak: apps/web/src/app/api. 149 method. bekliyor: 116, tamam: 33.
 
 `tamam`: kod yazildi ve testi var; bu sunucu/MySQL kabulu degildir, bkz. rapor durumu. `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.
 
@@ -51,12 +51,12 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 120, tamam: 29.
 | `/api/admin/claim-targets` | POST | bekliyor | - | - |
 | `/api/admin/claims` | GET | bekliyor | - | - |
 | `/api/admin/claims` | PATCH | bekliyor | - | - |
-| `/api/admin/notifications` | GET | bekliyor | - | - |
-| `/api/admin/notifications` | PATCH | bekliyor | - | - |
+| `/api/admin/notifications` | GET | tamam | Me/AdminNotificationsController::index | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
+| `/api/admin/notifications` | PATCH | tamam | Me/AdminNotificationsController::update | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
 | `/api/admin/payment-cases` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
 | `/api/admin/payment-cases` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/privacy` | GET | bekliyor | - | - |
-| `/api/admin/privacy` | POST | bekliyor | - | - |
+| `/api/admin/privacy` | GET | tamam | Me/AdminPrivacyController::index | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
+| `/api/admin/privacy` | POST | tamam | Me/AdminPrivacyController::store | tests/Feature/F6AdminOfflineTest.php, tests/Mysql/F6AdminQueueTest.php |
 | `/api/admin/replies` | GET | bekliyor | - | - |
 | `/api/admin/replies` | PATCH | bekliyor | - | - |
 | `/api/admin/review-cases` | GET | bekliyor | - | - |

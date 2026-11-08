@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Me\AdminNotificationsController;
+use App\Http\Controllers\Api\Me\AdminPrivacyController;
 use App\Http\Controllers\Api\Me\FavoritesController;
 use App\Http\Controllers\Api\Me\GarageController;
 use App\Http\Controllers\Api\Me\MeController;
@@ -48,4 +50,12 @@ Route::middleware('origin:mobile,push')->group(function (): void {
     Route::get('me/push', [PushController::class, 'index']);
     Route::post('me/push', [PushController::class, 'store']);
     Route::options('me/push', [PushController::class, 'options']);
+});
+
+// F6'nin bu tablolara bagli iki yonetici ucu.
+Route::get('admin/notifications', [AdminNotificationsController::class, 'index']);
+Route::patch('admin/notifications', [AdminNotificationsController::class, 'update']);
+Route::middleware('origin:web,nocors')->group(function (): void {
+    Route::get('admin/privacy', [AdminPrivacyController::class, 'index']);
+    Route::post('admin/privacy', [AdminPrivacyController::class, 'store']);
 });
