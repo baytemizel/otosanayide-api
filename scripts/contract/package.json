@@ -1,0 +1,6 @@
+{
+  "name": "otosanayide-api-contract",
+  "private": true,
+  "scripts": { "check": "NODE_PATH=./node_modules tsx run.ts" },
+  "devDependencies": { "tsx": "4.21.0", "zod": "4.1.12" }
+}

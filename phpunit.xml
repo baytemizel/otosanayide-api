@@ -7,6 +7,7 @@
     <testsuites>
         <testsuite name="Unit"><directory>tests/Unit</directory></testsuite>
         <testsuite name="Feature"><directory>tests/Feature</directory></testsuite>
+        <testsuite name="Contract"><directory>tests/Contract</directory></testsuite>
     </testsuites>
     <source><include><directory>app</directory></include></source>
     <php>

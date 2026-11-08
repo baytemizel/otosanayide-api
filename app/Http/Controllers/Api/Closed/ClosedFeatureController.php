@@ -22,7 +22,7 @@ final class ClosedFeatureController
 
     private const FINANCE = 'Bu işlem için yetkiniz yok.';
 
-    /** @var array<string,array{gate:string,status?:int,error?:string,origin?:string}> */
+    /** @var array<string,array{gate:string,error?:string,origin?:string}> */
     public const SPECS = [
         'POST ad-events' => ['gate' => 'no-content'],
         'POST brand-events' => ['gate' => 'no-content-private'],
@@ -126,7 +126,7 @@ final class ClosedFeatureController
                 break;
         }
 
-        throw new HttpError($spec['status'] ?? 503, $spec['error'] ?? self::GENERIC);
+        throw new HttpError(503, $spec['error'] ?? self::GENERIC);
     }
 
     public function options(Request $request): Response
