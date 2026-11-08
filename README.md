@@ -16,10 +16,10 @@ composer test
 composer analyse
 ```
 
-`composer test` veritabanına bağlanmaz. Gerçek MySQL gerektiren testler `tests/Mysql` altındadır ve yalnız `otosanayide_test` üzerinde çalışır:
+`composer test` veritabanına bağlanmaz. Gerçek MySQL gerektiren testler `tests/Mysql` altındadır. Bağlantıyı `.env` dosyasındaki `DB_TEST_*` değerlerinden alır, yalnız `otosanayide_test` üzerinde çalışır ve o veritabanını her çalıştırmada sıfırlar:
 
 ```bash
-DB_USERNAME=... DB_PASSWORD=... composer test:mysql
+composer test:mysql
 ```
 
 Sözleşme kontrolü, Pest'in `storage/contract` altına yazdığı yanıtları kaynak repodaki `packages/core` ayrıştırıcılarından geçirir:
