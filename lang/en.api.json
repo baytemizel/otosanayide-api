@@ -1,0 +1,12 @@
+{
+  "Bulunamadı.": "Not found.",
+  "E-posta veya şifre hatalı.": "Incorrect email or password.",
+  "Bağlantı geçersiz veya süresi dolmuş.": "The link is invalid or has expired.",
+  "Doğrulama kodu hatalı veya süresi dolmuş.": "The verification code is incorrect or has expired.",
+  "İki adımlı doğrulama zaten etkin.": "Two-step verification is already enabled.",
+  "İki adımlı doğrulama etkin değil.": "Two-step verification is not enabled.",
+  "E-posta adresini doğrula": "Verify your email address",
+  "Şifre sıfırlama": "Password reset",
+  "Otosanayide hesabın": "Your Otosanayide account",
+  "Bu e-posta adresiyle zaten bir hesabın var. Şifreni unuttuysan giriş ekranından sıfırlayabilirsin.": "An account with this email address already exists. If you forgot your password you can reset it from the sign-in screen."
+}

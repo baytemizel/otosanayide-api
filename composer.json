@@ -7,6 +7,10 @@
     "license": "proprietary",
     "require": {
         "php": "^8.3",
+        "ext-gd": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "ext-pdo_mysql": "*",
         "laravel/framework": "^13.17",
         "laravel/sanctum": "^4.3"
     },
@@ -38,8 +42,8 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
-        "test": "pest --exclude-group=mysql",
-        "test:mysql": "pest -c phpunit.mysql.xml --group=mysql",
+        "test": "pest",
+        "test:mysql": "pest -c phpunit.mysql.xml",
         "analyse": "phpstan analyse --memory-limit=1G"
     },
     "extra": {

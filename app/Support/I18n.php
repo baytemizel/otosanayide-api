@@ -21,7 +21,7 @@ final class I18n
         $key = Js::trim($source);
         $translated = $key;
         if ($locale === 'en') {
-            self::$english ??= File::json(lang_path('en.json'));
+            self::$english ??= File::json(lang_path('en.json')) + File::json(lang_path('en.api.json'));
             $translated = self::$english[$key] ?? $key;
         }
         preg_match('/^\s*/u', $source, $start);

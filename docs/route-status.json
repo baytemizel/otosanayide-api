@@ -1,3 +1,7 @@
 {
-  "GET /api/health": ["tamam", "HealthController", "tests/Feature/F1FoundationTest.php"]
+ "GET /api/health": [
+  "tamam",
+  "HealthController",
+  "tests/Feature/F1FoundationTest.php"
+ ]
 }
