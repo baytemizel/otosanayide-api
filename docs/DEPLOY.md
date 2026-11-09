@@ -36,18 +36,31 @@ SEED_ADMIN_EMAIL=ad@alan.com SEED_ADMIN_PASSWORD='...' php artisan db:seed --cla
 Ardından girişte TOTP kurulmalıdır; yönetici uçları ikinci faktör ister. Yerel sentetik veri: `--class=LocalFixtureSeeder` (üretimde çalışmaz). Katalog `php artisan catalogue:import <dosya>` ile kuru çalışır; yazım için `--apply --confirm-count=N`, açık onayla.
 
 ## nginx
-Next.js web uygulaması `/`, API `/api` üzerinde aynı origin'de kalır:
+API kendi alan adında çalışır: `https://api.otosanayide.com/api/...` (K180). Web uygulaması ayrı adrestedir ve API'yi CORS ile çağırır:
 ```nginx
-location ^~ /api/ {
+server {
+    server_name api.otosanayide.com;
     root /srv/otosanayide-api/public;
     client_max_body_size 12m;
-    include fastcgi_params;
-    fastcgi_param SCRIPT_FILENAME $realpath_root/index.php;
-    fastcgi_param SCRIPT_NAME /index.php;
-    fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+    location / {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root/index.php;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+    }
 }
 ```
 `client_max_body_size` uçların en büyük sınırının üstünde tutulur; asıl sınırlar uygulamadadır. Yanıt tamponu kapatılmaz.
+
+## CORS
+`PUBLIC_WEB_ORIGIN`, web uygulamasının tarayıcıda görünen tam adresi olmalıdır: `https://otosanayide.com` gibi, sonunda `/` olmadan ve tek değer. `www` ile `www`'suz adreslerden biri diğerine yönlendirilir. Yalnız bu origin `WebCors` katmanından CORS yanıtı alır; yerel değerde kalırsa gerçek siteden gelen istekler reddedilir. Değişiklikten sonra `php artisan config:cache` çalıştırılır.
+
+Kimlik bilgisi izni yalnız `/api/auth/*` altındadır. Web istemcisi bu uçları `credentials: 'include'` ile çağırmalıdır; `otosanayide_refresh` çerezi `api.otosanayide.com` üzerinde kalır. Diğer uçlar `Authorization: Bearer` kullanır. `otosanayide-locale` çerezi API'ye gitmez, dil `Accept-Language` başlığından okunur.
+
+Kontrol (beklenen: 204 ve `access-control-allow-origin`):
+```bash
+curl -i -X OPTIONS -H 'Origin: https://otosanayide.com' -H 'Access-Control-Request-Method: POST' https://api.otosanayide.com/api/auth/login
+```
 
 Laravel varsayılan olarak proxy'ye güvenmez. nginx `REMOTE_ADDR`'ı php-fpm'e gerçek istemci olarak verdiği için tek sunucuda ek ayar gerekmez; önüne CDN/yük dengeleyici gelirse `trustProxies` yapılandırılmalıdır, aksi halde IP tabanlı hız sınırı tek adrese düşer.
 

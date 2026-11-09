@@ -3,6 +3,7 @@
 use App\Exceptions\ApiExceptionRenderer;
 use App\Http\Middleware\OriginGuard;
 use App\Http\Middleware\ResolveLocale;
+use App\Http\Middleware\WebCors;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Yalniz gerekli global katmanlar: TrimStrings/ConvertEmptyStringsToNull ham gövdeyi degistirmesin.
         $middleware->use([
             \Illuminate\Http\Middleware\TrustProxies::class,
+            WebCors::class,
             \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
             \Illuminate\Http\Middleware\ValidatePostSize::class,
             ResolveLocale::class,

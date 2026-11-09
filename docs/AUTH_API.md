@@ -17,7 +17,7 @@ Kaynakta Firebase Auth istemcisi vardı; bu uçlar yenidir ve `apps/web` geçiş
 | `POST /api/auth/mfa/totp/confirm` | `{code}` | 200 |
 | `POST /api/auth/mfa/totp/disable` | `{code}` | 200 |
 
-Oturum: `{accessToken,expiresIn,user:{uid,email,emailVerified}}` ve `otosanayide_refresh` çerezi (HttpOnly, Secure, SameSite=Strict, Path=/api/auth).
+Oturum: `{accessToken,expiresIn,user:{uid,email,emailVerified}}` ve `otosanayide_refresh` çerezi (HttpOnly, Secure, SameSite=Strict, Path=/api/auth). Web, `api.otosanayide.com` adresini ayrı origin'den çağırır: `/api/auth/*` istekleri `credentials: 'include'` ile yapılmalıdır, CORS kimlik bilgisi izni yalnız bu yollarda ve yalnız `PUBLIC_WEB_ORIGIN` içindir (K180).
 
 Süreler öneridir, kullanıcı kabulü bekler: erişim 15 dk, yenileme 30 gün, doğrulama 24 sa, sıfırlama 1 sa, MFA challenge 5 dk ve 5 deneme. Hız sınırları: giriş e-posta başına 10/15 dk, IP başına 60/15 dk; kayıt IP başına 10/sa; sıfırlama e-posta başına 3/sa.
 
