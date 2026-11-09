@@ -20,7 +20,7 @@ for r in rows:
     counts[r[2]] = counts.get(r[2], 0) + 1
 summary = ", ".join(f"{k}: {v}" for k, v in sorted(counts.items()))
 out = ["# Route paritesi", "", f"Kaynak: apps/web/src/app/api. {len(rows)} method. {summary}.", "",
-       "`tamam`: kod yazildi ve testi var; bu sunucu/MySQL kabulu degildir, bkz. rapor durumu. `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.", "",
+       "`tamam`: kod yazildi ve test edildi; canli kabul degildir. MySQL testleri 178c0f5 commitinde bir kez gecti, sonra depodan kaldirildi (K178). `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.", "",
        "| Route | Method | Durum | Controller | Test |", "|---|---|---|---|---|"]
 for r in rows:
     out.append("| `{}` | {} | {} | {} | {} |".format(*r))

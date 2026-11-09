@@ -3,7 +3,6 @@
 use Tests\TestCase;
 
 pest()->extend(TestCase::class)->in('Feature', 'Unit', 'Contract');
-pest()->extend(TestCase::class)->use(Illuminate\Foundation\Testing\RefreshDatabase::class)->group('mysql')->in('Mysql');
 
 /** Yaniti sozlesme kontrolu icin yazar: scripts/contract/run.ts packages/core ayristiricilarindan gecirir. */
 function contract(string $name, string $parser, mixed $response, array $meta = []): void

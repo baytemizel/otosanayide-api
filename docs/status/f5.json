@@ -2,12 +2,12 @@
  "GET /api/reviews": [
   "tamam",
   "Content/ReviewController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/reviews": [
   "tamam",
   "Content/ReviewController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/reviews": [
   "tamam",
@@ -17,12 +17,12 @@
  "GET /api/reviews/mine": [
   "tamam",
   "Content/ReviewController::mine",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/reviews/mine": [
   "tamam",
   "Content/ReviewController::changeMine",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/reviews/mine": [
   "tamam",
@@ -32,12 +32,12 @@
  "GET /api/review-cases": [
   "tamam",
   "Content/ReviewCaseController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/review-cases": [
   "tamam",
   "Content/ReviewCaseController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/review-cases": [
   "tamam",
@@ -47,17 +47,17 @@
  "GET /api/review-photos": [
   "tamam",
   "Content/ReviewPhotoController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/review-photos": [
   "tamam",
   "Content/ReviewPhotoController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/review-photos": [
   "tamam",
   "Content/ReviewPhotoController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/review-photos": [
   "tamam",
@@ -67,7 +67,7 @@
  "GET /api/review-photos/media": [
   "tamam",
   "Content/ReviewPhotoController::media",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/review-photos/media": [
   "tamam",
@@ -77,17 +77,17 @@
  "GET /api/claims": [
   "tamam",
   "Content/ClaimController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/claims": [
   "tamam",
   "Content/ClaimController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/claims": [
   "tamam",
   "Content/ClaimController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/claims": [
   "tamam",
@@ -97,17 +97,17 @@
  "GET /api/claims/evidence": [
   "tamam",
   "Content/ClaimEvidenceController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/claims/evidence": [
   "tamam",
   "Content/ClaimEvidenceController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/claims/evidence": [
   "tamam",
   "Content/ClaimEvidenceController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/claims/evidence": [
   "tamam",
@@ -117,12 +117,12 @@
  "GET /api/businesses/manage": [
   "tamam",
   "Content/ManageController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/businesses/manage": [
   "tamam",
   "Content/ManageController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/manage": [
   "tamam",
@@ -132,17 +132,17 @@
  "GET /api/businesses/photos": [
   "tamam",
   "Content/BusinessPhotoController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/businesses/photos": [
   "tamam",
   "Content/BusinessPhotoController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/businesses/photos": [
   "tamam",
   "Content/BusinessPhotoController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/photos": [
   "tamam",
@@ -152,7 +152,7 @@
  "GET /api/businesses/photos/media": [
   "tamam",
   "Content/BusinessPhotoController::media",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/photos/media": [
   "tamam",
@@ -162,7 +162,7 @@
  "GET /api/businesses/photos/public": [
   "tamam",
   "Content/BusinessPhotoController::publicList",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/photos/public": [
   "tamam",
@@ -172,17 +172,17 @@
  "GET /api/businesses/replies": [
   "tamam",
   "Content/ReplyController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "POST /api/businesses/replies": [
   "tamam",
   "Content/ReplyController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/businesses/replies": [
   "tamam",
   "Content/ReplyController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/replies": [
   "tamam",
@@ -192,12 +192,12 @@
  "GET /api/businesses/activation": [
   "tamam",
   "Content/ActivationController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "PATCH /api/businesses/activation": [
   "tamam",
   "Content/ActivationController::update",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/activation": [
   "tamam",
@@ -207,7 +207,7 @@
  "GET /api/businesses/console": [
   "tamam",
   "Content/ConsoleController::index",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/console": [
   "tamam",
@@ -217,7 +217,7 @@
  "POST /api/businesses/places": [
   "tamam",
   "Content/PlacesController::store",
-  "tests/Feature/F5OfflineTest.php, tests/Mysql/F5ContentTest.php"
+  "tests/Feature/F5OfflineTest.php"
  ],
  "OPTIONS /api/businesses/places": [
   "tamam",

@@ -2,22 +2,22 @@
  "GET /api/admin/business-changes": [
   "tamam",
   "Admin/BusinessChangeAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/business-changes": [
   "tamam",
   "Admin/BusinessChangeAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/business-photos": [
   "tamam",
   "Admin/BusinessPhotoAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/business-photos": [
   "tamam",
   "Admin/BusinessPhotoAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "OPTIONS /api/admin/business-photos": [
   "tamam",
@@ -27,96 +27,96 @@
  "GET /api/admin/catalogue": [
   "tamam",
   "Admin/CatalogueAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/catalogue": [
   "tamam",
   "Admin/CatalogueAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/catalogue/draft": [
   "tamam",
   "Admin/CatalogueAdminController::draft",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/catalogue/draft": [
   "tamam",
   "Admin/CatalogueAdminController::saveDraft",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/catalogue/history": [
   "tamam",
   "Admin/CatalogueAdminController::history",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "POST /api/admin/claim-evidence": [
   "tamam",
   "Admin/ClaimAdminController::verifyEvidence",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/claim-targets": [
   "tamam",
   "Admin/ClaimAdminController::target",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "POST /api/admin/claim-targets": [
   "tamam",
   "Admin/ClaimAdminController::mapTarget",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/claims": [
   "tamam",
   "Admin/ClaimAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/claims": [
   "tamam",
   "Admin/ClaimAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/replies": [
   "tamam",
   "Admin/ReplyAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/replies": [
   "tamam",
   "Admin/ReplyAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/review-cases": [
   "tamam",
   "Admin/ReviewCaseAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/review-cases": [
   "tamam",
   "Admin/ReviewCaseAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/review-photos": [
   "tamam",
   "Admin/ReviewPhotoAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/review-photos": [
   "tamam",
   "Admin/ReviewPhotoAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "GET /api/admin/reviews": [
   "tamam",
   "Admin/ReviewAdminController::index",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "PATCH /api/admin/reviews": [
   "tamam",
   "Admin/ReviewAdminController::update",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ],
  "POST /api/admin/reviews/analyze": [
   "tamam",
   "Admin/ReviewAdminController::analyze",
-  "tests/Feature/F6ContentOfflineTest.php, tests/Mysql/F6ContentTest.php"
+  "tests/Feature/F6ContentOfflineTest.php"
  ]
 }

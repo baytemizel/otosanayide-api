@@ -69,4 +69,4 @@ Restart=always
 Medya `filesystems.default` diskindedir; uygulama diskin yerel/özel olduğunu ad ve `visibility` ile denetler. Görseller imzalı URL ile değil, kaynaktaki gibi API üzerinden akıtılır (istemciler `redirect:'error'` kullanır). `storage/` web kökünden erişilemez, `www-data` yazabilir. Depolama hedefi (yerel/S3 uyumlu) açık karardır.
 
 ## Yayın öncesi açıklar
-33066 tüm internete açık, TLS zorunlu değil (K173). `otosanayide_test` üzerinde `tests/Mysql` çalıştırılmadan yayın yapılmamalıdır.
+33066 tüm internete açık, TLS zorunlu değil (K173). Üretim veritabanına karşı test paketi çalıştırılmaz; `migrate:fresh` kullanılmaz, şema değişiklikleri yalnız `migrate` ile uygulanır.

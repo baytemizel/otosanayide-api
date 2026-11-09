@@ -2,7 +2,7 @@
 
 Otosanayide web ve mobil istemcilerinin kullandığı HTTP API. Laravel 13, PHP 8.3, yalnız MySQL 8.4. Next.js route'larının (`apps/web/src/app/api`, kaynak repo) aynı sözleşmeyle yeniden yazımıdır; karar kayıtları kaynak repoda `docs/decision-log.md` K170 ve sonrası.
 
-Durum: 95 MySQL testi MySQL 8.4.13 üzerinde geçti (K177). Sunucu dağıtımı ve canlı kabul yapılmadı.
+Durum: Şema ve 95 MySQL testi bir kez MySQL 8.4.13 üzerinde doğrulandı (K177); o testler artık depoda yok (K178). Sunucu dağıtımı ve canlı kabul yapılmadı.
 
 ## Geliştirme
 
@@ -16,11 +16,7 @@ composer test
 composer analyse
 ```
 
-`composer test` veritabanına bağlanmaz. Gerçek MySQL gerektiren testler `tests/Mysql` altındadır. Bağlantıyı `.env` dosyasındaki `DB_TEST_*` (boşsa `DB_*`) değerlerinden alır ve hedef veritabanını her çalıştırmada silip yeniden kurar. `auth_accounts` veya `businesses` tablosunda kayıt varsa çalışmayı reddeder:
-
-```bash
-composer test:mysql
-```
+`composer test` veritabanına bağlanmaz; `.env` üretim veritabanını gösterse de testler ona ulaşmaz. Depoda gerçek MySQL'e karşı çalışan test yoktur.
 
 Sözleşme kontrolü, Pest'in `storage/contract` altına yazdığı yanıtları kaynak repodaki `packages/core` ayrıştırıcılarından geçirir:
 

@@ -43,7 +43,6 @@
             "@php artisan package:discover --ansi"
         ],
         "test": "pest",
-        "test:mysql": "pest -c phpunit.mysql.xml",
         "analyse": "phpstan analyse --memory-limit=1G"
     },
     "extra": {

@@ -22,11 +22,10 @@
         <env name="MAIL_MAILER" value="array"/>
         <env name="PUBLIC_WEB_ORIGIN" value="https://otosanayide.test"/>
         <env name="MOBILE_WEB_ORIGIN" value="https://m.otosanayide.test"/>
-        <!-- Baglantisiz paket: bu port hicbir yere ulasmaz. MySQL testleri phpunit.mysql.xml ile calisir. -->
+        <!-- Baglantisiz paket: bu port hicbir yere ulasmaz. -->
         <env name="DB_CONNECTION" value="mysql"/>
         <env name="DB_HOST" value="127.0.0.1"/>
         <env name="DB_PORT" value="1"/>
-        <env name="DB_DATABASE" value="otosanayide_test"/>
-        <env name="ALLOWED_TEST_DATABASE" value="otosanayide_test"/>
+        <env name="DB_DATABASE" value="offline_no_database"/>
     </php>
 </phpunit>
