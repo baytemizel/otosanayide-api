@@ -231,7 +231,8 @@ final class HttpInput
             $q = Query::from($r);
             $get = $r->isMethod('GET');
             foreach ($q->keys() as $k) {
-                if (! $get || $k !== 'businessId' || $q->count($k) !== 1) {
+                // portal-04: v=2 saat alanlarini acar.
+                if (! $get || ! in_array($k, ['businessId', 'v'], true) || $q->count($k) !== 1 || ($k === 'v' && $q->get('v') !== '2')) {
                     self::fail('profile_query');
                 }
             }

@@ -33,5 +33,6 @@ final class SearchProjection
         if ($rows !== []) {
             DB::table('business_search_facets')->insert($rows);
         }
+        ReviewSummary::refresh($businessId); // web-08: yeniden olusan satir sifirdan baslamasin.
     }
 }

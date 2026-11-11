@@ -14,8 +14,12 @@ final class BusinessChangeAdminController
     public function index(Request $r): JsonResponse
     {
         Moderator::admin($r);
+        $v = \App\Support\Query::from($r)->get('v');
+        if ($v !== null && $v !== '2') {
+            throw new \App\Exceptions\HttpError(400, 'Geçersiz istek.');
+        }
 
-        return Output::noStore(BusinessChangeReview::pending());
+        return Output::noStore(BusinessChangeReview::pending($v === '2'));
     }
 
     public function update(Request $r): JsonResponse

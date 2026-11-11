@@ -29,8 +29,9 @@ cd scripts/contract && npm ci && npm run check
 - [Route paritesi](docs/ROUTE_PARITY.md): her method için durum, controller, test.
 - [Şema haritası](docs/SCHEMA_MAP.md), [F5](docs/schema/f5.md) ve [F6](docs/schema/f6.md) tabloları.
 - [Giriş uçları](docs/AUTH_API.md), [OpenAPI](docs/openapi.yaml), [Dağıtım](docs/DEPLOY.md).
+- [İstemci erişim matrisi](docs/CLIENT_ACCESS.md) (web/portal/native), [Push sözleşmesi](docs/PUSH_API.md), [Endpoint talepleri](docs/endpoint-requests/).
 
-Üretmek için: `python3 scripts/parity.py`, `python3 scripts/openapi.py`.
+Üretmek için: `python3 scripts/parity.py`, `python3 scripts/openapi.py`, `python3 scripts/client_access.py`.
 
 ## Kurallar
 

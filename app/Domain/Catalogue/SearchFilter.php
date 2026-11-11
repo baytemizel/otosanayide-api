@@ -11,6 +11,11 @@ final class SearchFilter
 {
     private const ALLOWED = ['q', 'city', 'district', 'category', 'service', 'brand', 'card', 'lat', 'lng', 'radius'];
 
+    /** Arama v2 (web-05/06/08): yalniz v=2 ile kabul edilir; v1 yaniti ve kurallari degismez. */
+    private const ALLOWED_V2 = ['v', 'sort', 'cursor', 'verifiedOwner'];
+
+    public const SORTS = ['recommended', 'nearest', 'rating', 'most_reviewed'];
+
     /** @param array{latitude:float,longitude:float}|null $center */
     public function __construct(
         public readonly string $q,
@@ -22,12 +27,26 @@ final class SearchFilter
         public readonly bool $card,
         public readonly ?array $center,
         public readonly ?float $radius,
+        public readonly bool $v2 = false,
+        public readonly string $sort = 'recommended',
+        public readonly ?string $cursor = null,
+        public readonly bool $verifiedOwner = false,
     ) {}
+
+    /** Imlecin baglandigi filtre ozeti (cursor haric). */
+    public function digest(): string
+    {
+        return hash('sha256', (string) json_encode([$this->q, $this->city, $this->district, $this->category, $this->service, $this->brand, $this->card, $this->center, $this->radius, $this->sort, $this->verifiedOwner]));
+    }
 
     public static function parse(Query $p): self
     {
+        $v2 = $p->has('v');
+        if ($v2 && $p->get('v') !== '2') {
+            throw new InvalidArgumentException('invalid');
+        }
         foreach ($p->keys() as $key) {
-            if (! in_array($key, self::ALLOWED, true) || $p->count($key) !== 1) {
+            if (! (in_array($key, self::ALLOWED, true) || ($v2 && in_array($key, self::ALLOWED_V2, true))) || $p->count($key) !== 1) {
                 throw new InvalidArgumentException('invalid');
             }
         }
@@ -75,6 +94,13 @@ final class SearchFilter
             throw new InvalidArgumentException('invalid');
         }
 
-        return new self($q, $city, $district, $category, $service, $brand, $p->get('card') === 'true', $latitude !== null ? ['latitude' => $latitude, 'longitude' => (float) $longitude] : null, $radius);
+        $sort = $p->get('sort') ?? 'recommended';
+        $cursor = $p->get('cursor');
+        if (! in_array($sort, self::SORTS, true) || ($sort === 'nearest' && $latitude === null)
+            || ($p->has('verifiedOwner') && $p->get('verifiedOwner') !== 'true') || ($cursor !== null && (strlen($cursor) < 1 || strlen($cursor) > 512))) {
+            throw new InvalidArgumentException('invalid');
+        }
+
+        return new self($q, $city, $district, $category, $service, $brand, $p->get('card') === 'true', $latitude !== null ? ['latitude' => $latitude, 'longitude' => (float) $longitude] : null, $radius, $v2, $sort, $cursor, $p->get('verifiedOwner') === 'true');
     }
 }

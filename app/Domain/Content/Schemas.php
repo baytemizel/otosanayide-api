@@ -180,6 +180,8 @@ final class Schemas
             'expectedVersion' => Z::number()->int()->nonnegative(),
             'expectedRevisionId' => self::uuid()->nullable(),
             'profile' => self::businessProfile(),
+            // portal-04: istege bagli. Yok: saatler degismez; null: saatler kaldirilir.
+            'openingHours' => \App\Domain\Catalogue\OpeningHours::schema()->nullable()->optional(),
         ]);
     }
 

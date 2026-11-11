@@ -16,8 +16,11 @@ use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
 use stdClass;
 
-/** Firebase Auth yerine MySQL'de kendi giris sistemi (K171): sozlesme db/mysql/ADAPTER_CONTRACT_TR.md. */
-final class AuthService
+/**
+ * Firebase Auth yerine MySQL'de kendi giris sistemi (K171): sozlesme db/mysql/ADAPTER_CONTRACT_TR.md.
+ * final degil: baglantisiz HTTP testleri kapsayicida sahte alt sinif baglar; uretimde tek uygulama budur.
+ */
+class AuthService
 {
     public const ACCESS_TTL_SECONDS = 900;
 
@@ -36,7 +39,7 @@ final class AuthService
 
     public function __construct(private readonly ?string $ip = null) {}
 
-    public function register(string $email, string $password): void
+    public function register(string $email, string $password, ?string $linkOrigin = null): void
     {
         $hash = Hash::make($password);
         $now = CarbonImmutable::now('UTC');
@@ -58,7 +61,7 @@ final class AuthService
             $token = null;
         }
         // Yanit iki durumda da aynidir; var olan hesaba yalniz bilgilendirme gider.
-        SendAuthEmail::dispatch($email, $token === null ? 'account_exists' : 'verify_email', $token[1] ?? null, App::getLocale());
+        SendAuthEmail::dispatch($email, $token === null ? 'account_exists' : 'verify_email', $token[1] ?? null, App::getLocale(), $linkOrigin);
     }
 
     /** @return array{session:?IssuedSession,challenge:?string} */
@@ -177,10 +180,14 @@ final class AuthService
 
     public function verifyEmail(string $raw): void
     {
-        $ok = Tx::run(function () use ($raw): bool {
+        $changed = null;
+        $ok = Tx::run(function () use ($raw, &$changed): bool {
             $row = $this->consumeEmailToken($raw, 'verify_email');
             if ($row === null) {
-                return false;
+                // web-03: ayni bagi sayfasi e-posta degisimini de onaylar.
+                $changed = $this->confirmEmailChange($raw);
+
+                return $changed !== null;
             }
             DB::table('auth_accounts')->where('id', $row->account_id)->whereNull('email_verified_at')->update(['email_verified_at' => $this->ms(CarbonImmutable::now('UTC'))]);
             $this->event($row->account_id, 'email_verified');
@@ -190,22 +197,99 @@ final class AuthService
         if (! $ok) {
             throw new HttpError(400, 'Bağlantı geçersiz veya süresi dolmuş.');
         }
+        if ($changed !== null) {
+            SendAuthEmail::dispatch($changed, 'email_changed', null, App::getLocale());
+        }
     }
 
-    public function resendVerification(Actor $actor): void
+    /**
+     * web-03: yeni adrese tek kullanimlik bag gider; hesap bag onaylanana kadar degismez. Eski adrese bilgilendirme gider.
+     * Yeni adres baska hesaba aitse yanit yine aynidir; yeni adrese "zaten kayitli" bilgisi gider.
+     */
+    public function requestEmailChange(Actor $actor, string $newEmail, string $password, ?string $code, ?string $linkOrigin = null): void
+    {
+        $failure = new HttpError(400, 'Şifre veya doğrulama kodu hatalı.');
+        $account = DB::table('auth_accounts')->where('id', $actor->uid)->first();
+        if ($account === null || $account->status !== 'active' || ! Hash::check($password, $account->password_hash)) {
+            $this->event($actor->uid, 'email_change_failed');
+            throw $failure;
+        }
+        if ($newEmail === $account->email) {
+            throw new HttpError(400, 'Bilgileri kontrol edin.');
+        }
+        $result = Tx::run(function () use ($actor, $newEmail, $code): string|array {
+            $factor = $this->activeFactor($actor->uid);
+            if ($factor !== null) {
+                if ($code === null) {
+                    return 'mfa';
+                }
+                $step = Totp::matchStep(Crypt::decryptString($factor->secret_ciphertext), $code, time(), $factor->last_used_step === null ? null : (int) $factor->last_used_step);
+                if ($step === null) {
+                    return 'failed';
+                }
+                DB::table('auth_mfa_factors')->where('id', $factor->id)->update(['last_used_step' => $step]);
+            }
+            if (DB::table('auth_accounts')->where('email', $newEmail)->exists()) {
+                return 'taken';
+            }
+            $now = (int) CarbonImmutable::now('UTC')->getPreciseTimestamp(3);
+            DB::table('auth_email_changes')->where('account_id', $actor->uid)->whereNull('consumed_at_ms')->update(['consumed_at_ms' => $now]);
+            $raw = $this->token();
+            DB::table('auth_email_changes')->insert(['token_hash' => hash('sha256', $raw), 'account_id' => $actor->uid, 'new_email' => $newEmail, 'expires_at_ms' => $now + self::VERIFY_TTL_SECONDS * 1000, 'created_at_ms' => $now]);
+            $this->event($actor->uid, 'email_change_requested');
+
+            return ['token' => $raw];
+        });
+        if ($result === 'mfa') {
+            throw new HttpError(403, 'İki adımlı doğrulama kodu gerekli.');
+        }
+        if ($result === 'failed') {
+            throw $failure;
+        }
+        $locale = App::getLocale();
+        if ($result === 'taken') {
+            SendAuthEmail::dispatch($newEmail, 'account_exists', null, $locale);
+        } else {
+            SendAuthEmail::dispatch($newEmail, 'verify_email', $result['token'], $locale, $linkOrigin);
+        }
+        SendAuthEmail::dispatch($actor->email, 'email_change_requested', null, $locale);
+    }
+
+    /** Onay: e-posta degisir, dogrulanmis sayilir, butun oturum aileleri iptal edilir. Eski adresi dondurur. */
+    private function confirmEmailChange(string $raw): ?string
+    {
+        $row = DB::table('auth_email_changes')->where('token_hash', hash('sha256', $raw))->lockForUpdate()->first();
+        $now = (int) CarbonImmutable::now('UTC')->getPreciseTimestamp(3);
+        if ($row === null || $row->consumed_at_ms !== null || (int) $row->expires_at_ms <= $now) {
+            return null;
+        }
+        DB::table('auth_email_changes')->where('token_hash', $row->token_hash)->update(['consumed_at_ms' => $now]);
+        $account = DB::table('auth_accounts')->where('id', $row->account_id)->lockForUpdate()->first();
+        if ($account === null || $account->status !== 'active' || DB::table('auth_accounts')->where('email', $row->new_email)->exists()) {
+            return null;
+        }
+        $at = $this->ms(CarbonImmutable::now('UTC'));
+        DB::table('auth_accounts')->where('id', $row->account_id)->update(['email' => $row->new_email, 'email_verified_at' => $at, 'tokens_valid_after' => $at]);
+        $this->revokeAll($row->account_id);
+        $this->event($row->account_id, 'email_changed');
+
+        return (string) $account->email;
+    }
+
+    public function resendVerification(Actor $actor, ?string $linkOrigin = null): void
     {
         if ($actor->emailVerified) {
             return;
         }
         $token = Tx::run(fn () => $this->newEmailToken($actor->uid, 'verify_email', self::VERIFY_TTL_SECONDS));
-        SendAuthEmail::dispatch($actor->email, 'verify_email', $token, App::getLocale());
+        SendAuthEmail::dispatch($actor->email, 'verify_email', $token, App::getLocale(), $linkOrigin);
     }
 
-    public function forgot(string $email): void
+    public function forgot(string $email, ?string $linkOrigin = null): void
     {
         $account = DB::table('auth_accounts')->where('email', $email)->where('status', '!=', 'disabled')->first();
         $token = $account === null ? null : Tx::run(fn () => $this->newEmailToken($account->id, 'reset_password', self::RESET_TTL_SECONDS));
-        SendAuthEmail::dispatch($account === null ? null : $email, 'reset_password', $token, App::getLocale());
+        SendAuthEmail::dispatch($account === null ? null : $email, 'reset_password', $token, App::getLocale(), $linkOrigin);
     }
 
     public function resetPassword(string $raw, string $password): void
@@ -227,6 +311,66 @@ final class AuthService
         if (! $ok) {
             throw new HttpError(400, 'Bağlantı geçersiz veya süresi dolmuş.');
         }
+    }
+
+    /** web-01: yalniz durum; sir veya faktor kimligi donmez. @return array{totp:array{enabled:bool,enabledAtMs:?int}} */
+    public function mfaStatus(Actor $actor): array
+    {
+        $at = DB::table('auth_mfa_factors')->where('account_id', $actor->uid)->where('type', 'totp')
+            ->whereNotNull('verified_at')->whereNull('disabled_at')->value('verified_at');
+
+        return ['totp' => ['enabled' => $at !== null, 'enabledAtMs' => $at === null ? null : (int) CarbonImmutable::parse((string) $at, 'UTC')->getPreciseTimestamp(3)]];
+    }
+
+    /**
+     * web-02: mevcut sifre (+ TOTP etkinse kod) ile degisim. Butun oturum aileleri ve erisim jetonlari iptal edilir,
+     * cagirana yeni bir aile verilir. Hatali sifre ve hatali kod ayni yaniti alir.
+     */
+    public function changePassword(Actor $actor, string $current, string $new, ?string $code): IssuedSession
+    {
+        $failure = new HttpError(400, 'Şifre veya doğrulama kodu hatalı.');
+        $account = DB::table('auth_accounts')->where('id', $actor->uid)->first();
+        if ($account === null || $account->status !== 'active' || ! Hash::check($current, $account->password_hash)) {
+            $this->event($actor->uid, 'password_change_failed');
+            throw $failure;
+        }
+        $hash = Hash::make($new);
+        $issued = Tx::run(function () use ($actor, $code, $hash): IssuedSession|string {
+            $account = DB::table('auth_accounts')->where('id', $actor->uid)->lockForUpdate()->first();
+            if ($account === null || $account->status !== 'active') {
+                return 'failed';
+            }
+            $factor = $this->activeFactor($actor->uid);
+            $secondFactor = null;
+            if ($factor !== null) {
+                if ($code === null) {
+                    return 'mfa';
+                }
+                $step = Totp::matchStep(Crypt::decryptString($factor->secret_ciphertext), $code, time(), $factor->last_used_step === null ? null : (int) $factor->last_used_step);
+                if ($step === null) {
+                    return 'failed';
+                }
+                DB::table('auth_mfa_factors')->where('id', $factor->id)->update(['last_used_step' => $step]);
+                $secondFactor = 'totp';
+            }
+            $now = CarbonImmutable::now('UTC');
+            DB::table('auth_accounts')->where('id', $actor->uid)->update(['password_hash' => $hash, 'password_changed_at' => $this->ms($now), 'tokens_valid_after' => $this->ms($now)]);
+            DB::table('auth_email_tokens')->where('account_id', $actor->uid)->where('purpose', 'reset_password')->whereNull('consumed_at')->update(['consumed_at' => $this->ms($now)]);
+            $this->revokeAll($actor->uid);
+            $this->event($actor->uid, 'password_changed');
+            // Yeni erisim jetonu tokens_valid_after'dan sonra (ms) olusur; ActorResolver yalniz oncekini reddeder.
+            return $this->issue($account, $secondFactor, CarbonImmutable::now('UTC'), (string) Str::uuid());
+        });
+        if ($issued === 'mfa') {
+            throw new HttpError(403, 'İki adımlı doğrulama kodu gerekli.');
+        }
+        if (! $issued instanceof IssuedSession) {
+            $this->event($actor->uid, 'password_change_failed');
+            throw $failure;
+        }
+        SendAuthEmail::dispatch($actor->email, 'password_changed', null, App::getLocale());
+
+        return $issued;
     }
 
     /** @return array{secret:string,otpauthUri:string} */

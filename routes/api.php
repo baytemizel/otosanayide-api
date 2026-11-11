@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('health', HealthController::class);
 
-Route::prefix('auth')->middleware('origin:web')->controller(AuthController::class)->group(function (): void {
+// Web + portal cerezle, native (Origin yok) govdede yenileme jetonuyla: docs/AUTH_API.md.
+Route::prefix('auth')->middleware('origin:account')->controller(AuthController::class)->group(function (): void {
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('mfa/verify', 'mfaVerify');
@@ -18,6 +19,9 @@ Route::prefix('auth')->middleware('origin:web')->controller(AuthController::clas
     Route::post('email/resend', 'resendVerification');
     Route::post('password/forgot', 'forgot');
     Route::post('password/reset', 'reset');
+    Route::post('password/change', 'changePassword');
+    Route::post('email/change', 'changeEmail');
+    Route::get('mfa', 'mfaStatus');
     Route::post('mfa/totp/enroll', 'totpEnroll');
     Route::post('mfa/totp/confirm', 'totpConfirm');
     Route::post('mfa/totp/disable', 'totpDisable');
@@ -27,7 +31,7 @@ Route::middleware('origin:mobile,manual')->group(function (): void {
     Route::get('search', [SearchController::class, 'index']);
     Route::options('search', [SearchController::class, 'options']);
 });
-foreach (['f4', 'f5', 'f6', 'f7'] as $phase) {
+foreach (['f4', 'f5', 'f6', 'f7', 'r2'] as $phase) {
     if (is_file(__DIR__.'/api/'.$phase.'.php')) {
         require __DIR__.'/api/'.$phase.'.php';
     }

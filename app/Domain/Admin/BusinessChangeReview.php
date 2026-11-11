@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 final class BusinessChangeReview
 {
     /** @return array{changes:list<array<string,mixed>>} */
-    public static function pending(): array
+    public static function pending(bool $v2 = false): array
     {
         $rows = DB::table('business_changes')->where('status', 'pending')->orderBy('business_id')->limit(50)->get();
         $changes = [];
@@ -28,6 +28,7 @@ final class BusinessChangeReview
                 'id' => $row->business_id,
                 'revisionId' => $c['revisionId'],
                 'profile' => $c['profile'],
+                ...($v2 ? \App\Domain\Content\Profiles::hoursView($row->business_id, $row) : []),
                 'current' => $v === null ? null : ['name' => $v['name'] ?? null, 'city' => $v['city'] ?? null, 'district' => $v['district'] ?? null, 'address' => $v['address'] ?? null, 'phone' => $v['phone'] ?? '', 'website' => $v['website'] ?? '', 'hours' => $v['hours'] ?? '', 'description' => $v['description'] ?? '', 'categories' => $v['categories'], 'services' => $v['services'], 'brands' => $v['brands'], 'location' => isset($v['latitude'], $v['longitude']) ? ['latitude' => $v['latitude'], 'longitude' => $v['longitude']] : null],
             ];
         }
@@ -62,6 +63,13 @@ final class BusinessChangeReview
                 $projection = AdminPolicy::profileProjection($profile, $b);
                 DB::table('businesses')->where('id', $id)->update(['profile_version' => $d['expectedVersion'] + 1, 'updated_at' => Ids::now()] + BusinessRecords::profileColumns($projection));
                 BusinessRecords::writeValues($id, $projection);
+                // portal-04: saat eylemi profil onayiyla birlikte uygulanir.
+                if (($row->opening_hours_action ?? 'keep') === 'set') {
+                    $hours = json_decode((string) $row->opening_hours, true) + ['updatedAtMs' => (int) floor(microtime(true) * 1000)];
+                    DB::table('businesses')->where('id', $id)->update(['opening_hours' => json_encode($hours)]);
+                } elseif (($row->opening_hours_action ?? 'keep') === 'clear') {
+                    DB::table('businesses')->where('id', $id)->update(['opening_hours' => null]);
+                }
             }
             DB::table('business_changes')->where('business_id', $id)->update(['status' => $input['decision'] === 'approve' ? 'approved' : 'rejected', 'reason' => $input['reason'], 'reviewed_by' => $u->uid, 'reviewed_at' => Ids::now()]);
             Rows::history('business_history', 'business_id', $id, ['kind' => 'profile_reviewed', 'details' => Ids::stringify(['decision' => $input['decision'], 'revisionId' => $input['revisionId'], 'reason' => $input['reason'], 'actorId' => $u->uid]), 'created_at' => Ids::now()]);

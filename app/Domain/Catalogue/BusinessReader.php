@@ -52,6 +52,8 @@ final class BusinessReader
             'wc' => $row->wc === null ? null : (bool) $row->wc,
             'businessCoverPhotoId' => $row->business_cover_photo_id,
             'publicBusinessPhotoIds' => $photoIds,
+            // Yalniz v2 okumalari icin; publicBusiness() v1 DTO'suna eklemez.
+            'openingHoursJson' => $row->opening_hours ?? null,
         ];
     }
 

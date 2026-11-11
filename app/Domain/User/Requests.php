@@ -15,7 +15,10 @@ use stdClass;
 
 final class Requests
 {
-    public static function view(stdClass $r): array
+    public const AUTO_OFFER_TEXT = 'Seçtiğin saat için işletmenin otomatik randevu önerisi. Kabul edersen randevu kesinleşir.';
+
+    /** v2 (portal-05/portal-03): teklif kalemleri ve secilen saat yalniz ?v=2 ile doner; v1 gorunumu degismez. */
+    public static function view(stdClass $r, bool $v2 = false): array
     {
         $out = ['id' => $r->id, 'businessId' => $r->business_id, 'businessName' => $r->business_name, 'kind' => $r->kind, 'service' => $r->service, 'vehicle' => $r->vehicle, 'message' => $r->message];
         if ($r->preferred_date !== null) {
@@ -24,6 +27,12 @@ final class Requests
         $out['status'] = $r->status;
         if ($r->offer_text !== null) {
             $out['offer'] = self::offer($r);
+            if ($v2) {
+                $out['offer'] += self::offerExtras($r);
+            }
+        }
+        if ($v2 && ($r->preferred_starts_at_ms ?? null) !== null) {
+            $out['preferredStartsAt'] = Js::iso(new \DateTimeImmutable('@'.intdiv((int) $r->preferred_starts_at_ms, 1000)));
         }
         if ($r->resolution !== null) {
             $out['resolution'] = $r->resolution;
@@ -46,6 +55,28 @@ final class Requests
         return $offer + ['expiresAtMs' => (int) $r->offer_expires_at_ms];
     }
 
+    /** @return array<string,mixed> */
+    private static function offerExtras(stdClass $r): array
+    {
+        $out = [];
+        if (($r->offer_lines ?? null) !== null) {
+            $lines = json_decode((string) $r->offer_lines, true);
+            $out['lines'] = is_array($lines) ? $lines : [];
+            $out['totalMinor'] = array_sum(array_column($out['lines'], 'amountMinor'));
+        }
+        if (($r->offer_currency ?? null) !== null) {
+            $out['currency'] = $r->offer_currency;
+        }
+        if (($r->offer_excluded ?? null) !== null) {
+            $out['excluded'] = $r->offer_excluded;
+        }
+        if (($r->offer_may_change ?? null) !== null) {
+            $out['mayChangeAfterInspection'] = (bool) $r->offer_may_change;
+        }
+
+        return $out;
+    }
+
     /** mayManageRequests() */
     public static function mayManage(string $uid, string $bid, ?array $b, ?stdClass $m): bool
     {
@@ -61,7 +92,7 @@ final class Requests
         return BusinessReader::records([$bid])[$bid] ?? null;
     }
 
-    public static function page(string $uid, ?string $bid, ?string $after): array
+    public static function page(string $uid, ?string $bid, ?string $after, bool $v2 = false): array
     {
         $accepting = ['quotes' => false, 'appointments' => false];
         if ($bid !== null) {
@@ -79,16 +110,17 @@ final class Requests
         $rows = $q->orderBy('id')->limit(21)->get();
         $page = $rows->take(20)->values();
 
-        return ($bid !== null ? ['businessId' => $bid, 'accepting' => $accepting] : []) + ['items' => $page->map(fn (stdClass $r) => self::view($r))->all(), 'next' => $rows->count() > 20 ? $page[19]->id : null];
+        return ($bid !== null ? ['businessId' => $bid, 'accepting' => $accepting] : []) + ['items' => $page->map(fn (stdClass $r) => self::view($r, $v2))->all(), 'next' => $rows->count() > 20 ? $page[19]->id : null];
     }
 
     /** @param array<string,mixed> $v */
     public static function create(string $uid, array $v): array
     {
         $key = $v['requestKey'];
-        unset($v['requestKey']);
+        $slot = $v['preferredSlot'] ?? null;
+        unset($v['requestKey'], $v['preferredSlot']);
         $id = hash('sha256', Js::stringify([$uid, $key]));
-        $run = fn () => Tx::run(function () use ($uid, $id, $v): string {
+        $run = fn () => Tx::run(function () use ($uid, $id, $v, $slot): string {
             AccountFence::assertWritable($uid);
             $existing = DB::table('requests')->where('id', $id)->lockForUpdate()->first();
             $b = self::business($v['businessId'], true);
@@ -111,10 +143,18 @@ final class Requests
             if ($v['kind'] === 'appointments' && (empty($v['preferredDate']) || strcmp($v['preferredDate'], gmdate('Y-m-d', time() + 10800)) < 0)) {
                 throw new HttpError(400, 'Randevu tarihi geçmişte olamaz.');
             }
-            DB::table('requests')->insert(['id' => $id, 'business_id' => $v['businessId'], 'business_name' => $b['name'], 'user_id' => $uid, 'kind' => $v['kind'], 'service' => $v['service'], 'vehicle' => $v['vehicle'], 'message' => $v['message'], 'preferred_date' => $v['preferredDate'] ?? null, 'status' => 'requested', 'version' => 1]);
-            self::job($id, $v['businessId'], $uid, 1, 'requested', Js::nowMs());
+            // portal-03: duraklatma, kapali gun ve secilen saatin kapasitesi.
+            $start = $v['kind'] === 'appointments' ? AppointmentCapacity::assertRequestable($v['businessId'], $v['preferredDate'], $slot) : null;
+            $row = ['id' => $id, 'business_id' => $v['businessId'], 'business_name' => $b['name'], 'user_id' => $uid, 'kind' => $v['kind'], 'service' => $v['service'], 'vehicle' => $v['vehicle'], 'message' => $v['message'], 'preferred_date' => $v['preferredDate'] ?? null, 'status' => 'requested', 'version' => 1, 'preferred_starts_at_ms' => $start];
+            $now = Js::nowMs();
+            if ($start !== null && AppointmentCapacity::settings($v['businessId'])?->approval === 'auto_offer') {
+                // Otomatik teklif: randevu musteri kabul edene kadar kesin degildir; kapasite kabulde yeniden denetlenir.
+                $row = ['status' => 'offered', 'version' => 1, 'offer_text' => self::AUTO_OFFER_TEXT, 'offer_starts_at' => Js::iso(new \DateTimeImmutable('@'.intdiv($start, 1000))), 'offer_expires_at_ms' => min($now + 7 * 86400000, $start)] + $row;
+            }
+            DB::table('requests')->insert($row);
+            self::job($id, $v['businessId'], $uid, 1, $row['status'], $now);
 
-            return 'requested';
+            return $row['status'];
         });
         try {
             $status = $run();
@@ -166,19 +206,25 @@ final class Requests
             if ($row->kind === 'appointments' && $startsAt && in_array($input['action'], ['accept', 'cancel'], true)) {
                 $ms = Js::ms($startsAt);
                 $occupied = DB::table('appointment_slots')->where('business_id', $bid)->where('starts_at_ms', $ms)->lockForUpdate()->first();
-                if ($input['action'] === 'accept') {
+                if ($input['action'] === 'accept' && ! AppointmentCapacity::book($bid, $input['id'], $ms)) {
+                    // Kapasite ayari yok: eski tekil slot kurali.
                     if ($occupied !== null && $occupied->request_id !== $input['id']) {
                         throw new HttpError(409, 'Bu saat başka bir randevuya ayrıldı. Yeni saat iste.');
                     }
                     DB::table('appointment_slots')->updateOrInsert(['business_id' => $bid, 'starts_at_ms' => $ms], ['request_id' => $input['id'], 'starts_at' => $startsAt]);
                 }
-                if ($input['action'] === 'cancel' && $row->status === 'confirmed' && $occupied?->request_id === $input['id']) {
-                    DB::table('appointment_slots')->where('business_id', $bid)->where('starts_at_ms', $ms)->delete();
+                if ($input['action'] === 'cancel' && $row->status === 'confirmed') {
+                    AppointmentCapacity::release($bid, $input['id']);
+                    if ($occupied?->request_id === $input['id']) {
+                        DB::table('appointment_slots')->where('business_id', $bid)->where('starts_at_ms', $ms)->delete();
+                    }
                 }
             }
             $update = ['status' => $next['status'], 'version' => $next['version'], 'updated_at' => gmdate('Y-m-d H:i:s').'.000'];
             if (isset($next['offer'])) {
-                $update += ['offer_text' => $next['offer']['text'], 'offer_price' => $next['offer']['price'] ?? null, 'offer_starts_at' => $next['offer']['startsAt'] ?? null, 'offer_expires_at_ms' => $next['offer']['expiresAtMs']];
+                $update += ['offer_text' => $next['offer']['text'], 'offer_price' => $next['offer']['price'] ?? null, 'offer_starts_at' => $next['offer']['startsAt'] ?? null, 'offer_expires_at_ms' => $next['offer']['expiresAtMs'],
+                    'offer_lines' => isset($next['offer']['lines']) ? json_encode($next['offer']['lines'], JSON_UNESCAPED_UNICODE) : null, 'offer_currency' => $next['offer']['currency'] ?? null,
+                    'offer_excluded' => $next['offer']['excluded'] ?? null, 'offer_may_change' => $next['offer']['mayChangeAfterInspection'] ?? null];
             }
             if (isset($next['resolution'])) {
                 $update['resolution'] = $next['resolution'];

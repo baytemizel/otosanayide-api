@@ -7,8 +7,12 @@ routes = json.loads(subprocess.check_output(["php", "artisan", "route:list", "--
 status = json.loads((ROOT / "docs/route-status.json").read_text())
 for extra in sorted((ROOT / "docs/status").glob("*.json")):
     status.update(json.loads(extra.read_text()))
-PUBLIC = re.compile(r"^/api/(health|search|businesses/\{id\}|auth/(register|login|mfa/verify|refresh|logout|email/verify|password/(forgot|reset))|ad-events|brand-events|brand-banners.*|payments/webhook|businesses/photos/(media|public)|review-photos/media|reviews)$")
-CONTRACT = {"/api/search get": "search", "/api/me get": "account", "/api/me/favorites get": "favorites-page", "/api/me/garage get": "garage-backup", "/api/me/garage/lifecycle get": "garage-recycle", "/api/me/privacy get": "privacy", "/api/admin/privacy get": "privacy-queue", "/api/me/push get": "push", "/api/requests get": "requests", "/api/reviews get": "public-reviews-f5", "/api/reviews/mine get": "own-review", "/api/review-cases get": "review-cases-f5", "/api/review-photos get": "own-review-photos", "/api/businesses/photos get": "business-photos", "/api/businesses/photos/public get": "public-business-photos", "/api/businesses/console get": "console-branches", "/api/businesses/manage get": "managed-profile", "/api/businesses/activation get": "activation", "/api/businesses/places post": "business-places"}
+PUBLIC = re.compile(r"^/api/(health|search|businesses/\{id\}|businesses/\{id\}/availability|auth/(register|login|mfa/verify|refresh|logout|email/verify|password/(forgot|reset))|ad-events|brand-events|brand-banners.*|payments/webhook|businesses/photos/(media|public)|review-photos/media|reviews)$")
+CONTRACT = {"/api/search get": "search", "/api/me get": "account", "/api/me/favorites get": "favorites-page", "/api/me/garage get": "garage-backup", "/api/me/garage/lifecycle get": "garage-recycle", "/api/me/privacy get": "privacy", "/api/admin/privacy get": "privacy-queue", "/api/me/push get": "push", "/api/requests get": "requests", "/api/reviews get": "public-reviews-f5", "/api/reviews/mine get": "own-review", "/api/review-cases get": "review-cases-f5", "/api/review-photos get": "own-review-photos", "/api/businesses/photos get": "business-photos", "/api/businesses/photos/public get": "public-business-photos", "/api/businesses/console get": "console-branches", "/api/businesses/manage get": "managed-profile", "/api/businesses/activation get": "activation", "/api/businesses/places post": "business-places",
+            # F7 (API-B fixture'lari; owner-ad-finance-empty ayni ayristiricinin bos ornegidir, ayni sema)
+            "/api/campaigns get": "owner-campaign-page", "/api/campaigns patch": "owner-campaign-item", "/api/campaigns/finance get": "owner-ad-finance",
+            "/api/campaigns/finance post": "owner-ad-reserve", "/api/campaigns/owner-metrics get": "owner-ad-metrics", "/api/payments/checkout post": "checkout-receipt"}
+NATIVE_SESSION = {"/api/auth/login", "/api/auth/mfa/verify", "/api/auth/refresh", "/api/auth/logout", "/api/auth/password/change"}
 SAMPLES = {}
 for f in (ROOT / "storage/contract").glob("*.json"):
     SAMPLES[f.stem] = json.loads(f.read_text())["response"]
@@ -55,10 +59,16 @@ for r in routes:
 for uri in sorted(paths):
     lines.append(f"  {json.dumps(uri)}:")
     for m in sorted(paths[uri]):
-        state = status.get(f"{m.upper()} {uri}", ["yeni uc" if uri.startswith(("/api/auth", "/api/businesses/{id}")) else "bekliyor"])[0]
+        # Kaynak parite listesinde olmayan her uc yenidir (auth, 2. tur endpoint talepleri); bkz. docs/endpoint-requests.
+        state = status.get(f"{m.upper()} {uri}", ["yeni uc"])[0]
         lines += [f"    {m}:", f"      summary: {json.dumps(paths[uri][m] + ' (' + state + ')', ensure_ascii=False)}"]
         if "{id}" in uri:
             lines += ["      parameters:", "        - {name: id, in: path, required: true, schema: {type: string}}"]
+        if uri in NATIVE_SESSION:
+            # Sozlesme Eki v1: Origin yoksa ikisi zorunlu; Origin varsa yok sayilir (docs/AUTH_API.md).
+            lines += ["      description: " + json.dumps("Origin yoksa X-Client-Platform ve X-Client-Version zorunludur; native yanit govdesinde refreshToken doner, cerez kurulmaz. Origin varsa refreshToken govdede asla donmez. Ayrinti docs/AUTH_API.md.", ensure_ascii=False),
+                      "      parameters:", "        - {name: X-Client-Platform, in: header, required: false, schema: {type: string, enum: [ios, android]}}",
+                      "        - {name: X-Client-Version, in: header, required: false, schema: {type: string}}"]
         if m != "options" and not PUBLIC.match(uri):
             lines += ["      security:", "        - bearer: []"]
         if m in ("post", "put", "patch"):

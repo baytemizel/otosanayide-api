@@ -85,6 +85,42 @@ final class Reviews
         return Policy::ownReview($u->uid, $businessId, $id, Docs::review(Rows::review($id)));
     }
 
+    /**
+     * web-17: yazarin butun yorumlari, son guncellenen once, sayfa 20. `review` nesnesi `reviews/mine` ile ayni projeksiyon.
+     * Imlec: base64url({t:siralama zamani,i:kimlik}).
+     *
+     * @return array{items:list<array<string,mixed>>,next:?string}
+     */
+    public static function ownAll(Actor $u, ?array $cursor): array
+    {
+        $sort = 'COALESCE(updated_at, created_at)';
+        $q = DB::table('reviews')->where('user_id', $u->uid)->selectRaw('*, '.$sort.' as sort_at');
+        if ($cursor !== null) {
+            $q->where(fn ($w) => $w->whereRaw($sort.' < ?', [$cursor['t']])->orWhere(fn ($x) => $x->whereRaw($sort.' = ?', [$cursor['t']])->where('id', '>', $cursor['i'])));
+        }
+        $rows = $q->orderByRaw($sort.' desc')->orderBy('id')->limit(21)->get();
+        $page = $rows->take(20);
+        $records = \App\Domain\Catalogue\BusinessReader::records($page->pluck('business_id')->unique()->values()->all());
+        $items = [];
+        foreach ($page as $row) {
+            $review = Policy::ownReview($u->uid, $row->business_id, $row->id, Docs::review($row));
+            if ($review === null) {
+                continue;
+            }
+            $record = $records[$row->business_id] ?? null;
+            $items[] = [
+                'businessId' => $row->business_id, 'businessName' => $record['name'] ?? '',
+                'businessAvailable' => $record !== null && \App\Domain\Catalogue\BusinessReader::publicBusiness($row->business_id, $record) !== null,
+                'updatedAtMs' => (int) (\Carbon\CarbonImmutable::parse((string) $row->sort_at, 'UTC')->getPreciseTimestamp(3)),
+                'review' => $review,
+            ];
+        }
+        $last = $page->last();
+        $next = $rows->count() > 20 && $last !== null ? rtrim(strtr(base64_encode((string) json_encode(['t' => (string) $last->sort_at, 'i' => $last->id])), '+/', '-_'), '=') : null;
+
+        return ['items' => $items, 'next' => $next];
+    }
+
     /** @param array<string,mixed> $input authorReviewAction ciktisi */
     public static function change(Actor $u, array $input): string
     {
@@ -116,6 +152,7 @@ final class Reviews
                 DB::table('businesses')->where('id', $input['businessId'])->update(['review_count' => $totals['reviewCount'], 'review_rating_sum' => $totals['reviewRatingSum']]);
             }
             DB::table('public_reviews')->where('business_id', $input['businessId'])->where('review_id', $id)->delete();
+            \App\Domain\Catalogue\ReviewSummary::refresh($input['businessId']); // web-08
             if ($replyRow !== null && $replyRow->business_id === $input['businessId']) {
                 DB::table('review_replies')->where('review_id', $id)->update(['status' => 'hidden', 'version' => (int) $replyRow->version + 1, 'reason' => 'Ana yorum değişti veya geri çekildi.', 'updated_at' => Ids::now()]);
                 Rows::history('review_reply_history', 'review_id', $id, ['kind' => 'parent_changed', 'actor_id' => $u->uid, 'details' => Ids::stringify(['reviewVersion' => $transition['version']]), 'created_at' => Ids::now()]);

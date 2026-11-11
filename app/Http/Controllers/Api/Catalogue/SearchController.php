@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Catalogue;
 
+use App\Domain\Ads\SponsoredServing;
+use App\Domain\Catalogue\SearchCursor;
 use App\Domain\Catalogue\SearchFilter;
 use App\Domain\Catalogue\SearchService;
 use App\Http\Api;
@@ -54,11 +56,30 @@ final class SearchController
         } catch (InvalidArgumentException) {
             return $this->answer($request, ['error' => I18n::t('Arama filtrelerini kontrol et.')], 400);
         }
+        $offset = 0;
+        if ($filter->v2 && $filter->cursor !== null) {
+            $offset = SearchCursor::open($filter->cursor, $filter->digest());
+            if ($offset === null) {
+                return $this->answer($request, ['error' => I18n::t('Arama filtrelerini kontrol et.')], 400);
+            }
+        }
         try {
-            // Reklam yerlesimi F7 (AD_SERVING_ENABLED kapali): kaynaktaki bos dizi.
-            return $this->answer($request, ['items' => $service->search($filter), 'districts' => $service->districts($filter->city), 'sponsored' => [], 'mode' => 'live']);
+            if ($filter->v2) {
+                $page = $service->searchV2($filter, $offset);
+                $next = $page['more'] && $offset + SearchService::PAGE_LIMIT <= SearchService::MAX_OFFSET ? SearchCursor::seal($offset + SearchService::PAGE_LIMIT, $filter->digest()) : null;
+
+                return $this->answer($request, ['items' => $page['items'], 'districts' => $service->districts($filter->city), 'sponsored' => $offset === 0 ? $this->sponsored($filter) : [], 'mode' => 'live', 'sort' => $filter->sort, 'nextCursor' => $next, 'total' => $page['total'] === null ? null : ['value' => $page['total'], 'exact' => true]]);
+            }
+
+            return $this->answer($request, ['items' => $service->search($filter), 'districts' => $service->districts($filter->city), 'sponsored' => $this->sponsored($filter), 'mode' => 'live']);
         } catch (Throwable) {
             return $this->answer($request, ['error' => I18n::t('Arama altyapısı henüz yayına açılmadı.')], 503);
         }
+    }
+
+    /** Sponsorlu yerlesim (F7 reklam sunumu). Bayrak kapaliyken kaynaktaki bos dizi. @return list<array<string,mixed>> */
+    private function sponsored(SearchFilter $filter): array
+    {
+        return config('otosanayide.flags.ad_serving') === true ? SponsoredServing::serve($filter, app(SearchService::class)) : [];
     }
 }

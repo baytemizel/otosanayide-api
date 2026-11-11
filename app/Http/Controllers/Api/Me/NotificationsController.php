@@ -42,6 +42,11 @@ final class NotificationsController
         $p = Query::from($request);
         $bid = $p->get('businessId');
         $after = $p->get('after');
+        // web-11: istege bagli tur suzgeci. Talep kayitlarinda kind bos (kaynakta alan yoktu).
+        $kind = $p->get('kind');
+        if ($kind !== null && ! in_array($kind, ['request', 'reminder'], true)) {
+            throw new HttpError(400, 'Geçersiz istek.');
+        }
         if ($after !== null && $after !== '') {
             Z::string()->regex('/^[a-zA-Z0-9_-]{1,180}$/')->parse($after);
         }
@@ -53,6 +58,11 @@ final class NotificationsController
         }
         $audience = ($bid !== null && $bid !== '') ? 'business:'.$bid : 'user:'.$u->uid;
         $q = DB::table('notifications')->where('audience_key', $audience);
+        if ($kind === 'reminder') {
+            $q->where('kind', 'reminder');
+        } elseif ($kind === 'request') {
+            $q->where(fn ($w) => $w->whereNull('kind')->orWhere('kind', '!=', 'reminder'));
+        }
         if ($after !== null && $after !== '') {
             $q->where('id', '>', $after);
         }
@@ -61,6 +71,38 @@ final class NotificationsController
         $reads = DB::table('notification_reads')->where('user_id', $u->uid)->whereIn('notification_id', $visible->pluck('id'))->pluck('read', 'notification_id');
 
         return Api::json(['items' => $visible->map(fn (stdClass $n) => $this->view($n, (bool) ($reads[$n->id] ?? false)))->all(), 'next' => $rows->count() > 20 ? $visible[19]->id : null]);
+    }
+
+    /**
+     * web-11: POST /api/notifications/read-all {"before":ms}. Yalniz kullanicinin kendi kutusu; `before` anindan
+     * once olusan okunmamis kayitlar okundu olur. Cagri basina en cok 1000 kayit; `more` true ise istemci tekrarlar.
+     */
+    public function readAll(Request $request): JsonResponse
+    {
+        $u = ActorResolver::resolve($request);
+        RateLimit::consume($u->uid);
+        if (! str_starts_with(strtolower((string) $request->headers->get('Content-Type')), 'application/json')) {
+            throw new HttpError(415, 'Geçersiz istek.');
+        }
+        $input = Z::strictObject(['before' => Z::number()->int()->nonnegative()])->parse(Body::json($request));
+        $before = min((int) $input['before'], Js::nowMs());
+        $result = Tx::run(function () use ($u, $before): array {
+            AccountFence::assertWritable($u->uid);
+            $ids = DB::table('notifications as n')
+                ->leftJoin('notification_reads as r', fn ($j) => $j->on('r.notification_id', '=', 'n.id')->where('r.user_id', '=', $u->uid))
+                ->where('n.audience_key', 'user:'.$u->uid)->where('n.created_at_ms', '<', $before)
+                ->where(fn ($w) => $w->whereNull('r.read')->orWhere('r.read', false))
+                ->orderBy('n.id')->limit(1001)->pluck('n.id');
+            $now = Js::nowMs();
+            $batch = $ids->take(1000)->map(fn (string $id) => ['notification_id' => $id, 'user_id' => $u->uid, 'read' => true, 'updated_at_ms' => $now])->all();
+            if ($batch !== []) {
+                DB::table('notification_reads')->upsert($batch, ['notification_id', 'user_id'], ['read', 'updated_at_ms']);
+            }
+
+            return ['updated' => count($batch), 'more' => $ids->count() > 1000];
+        });
+
+        return Api::json($result);
     }
 
     public function update(Request $request): JsonResponse

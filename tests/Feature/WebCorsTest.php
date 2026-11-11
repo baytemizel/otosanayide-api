@@ -96,3 +96,34 @@ it('stays out of requests without an Origin', function () {
     $r = $this->get('/api/health');
     expect($r->headers->has('Access-Control-Allow-Origin'))->toBeFalse()->and($r->headers->has('Vary'))->toBeFalse();
 });
+
+// Sozlesme Eki v1: PORTAL_WEB_ORIGIN ayni kurallarla CORS alir; /api/admin haric.
+it('serves the portal origin like the web origin outside /api/admin', function () {
+    $portal = 'https://portal.otosanayide.test';
+    config(['otosanayide.portal_web_origin' => $portal]);
+    foreach ([['/api/auth/login', 'POST'], ['/api/me', 'GET'], ['/api/businesses/manage', 'PATCH'], ['/api/claims', 'POST'], ['/api/requests', 'PATCH']] as [$uri, $method]) {
+        $r = preflight($this, $uri, $portal, $method)->assertStatus(204);
+        expect($r->headers->get('Access-Control-Allow-Origin'))->toBe($portal, $uri);
+    }
+    expect(preflight($this, '/api/auth/refresh', $portal, 'POST')->headers->get('Access-Control-Allow-Credentials'))->toBe('true')
+        ->and(preflight($this, '/api/me', $portal, 'GET')->headers->has('Access-Control-Allow-Credentials'))->toBeFalse();
+
+    foreach ([['/api/admin/reviews', 'GET'], ['/api/admin/privacy', 'POST'], ['/api/admin/business-photos', 'PATCH'], ['/api/admin/notifications', 'GET']] as [$uri, $method]) {
+        expect(preflight($this, $uri, $portal, $method)->headers->has('Access-Control-Allow-Origin'))->toBeFalse($uri);
+        $real = $this->call($method, $uri, [], [], [], ['HTTP_ORIGIN' => $portal, 'CONTENT_TYPE' => 'application/json'], '{}');
+        expect($real->headers->has('Access-Control-Allow-Origin'))->toBeFalse($uri);
+    }
+});
+
+it('ignores an invalid or unset portal origin', function () {
+    foreach ([null, '', 'http://portal.otosanayide.test', 'https://portal.otosanayide.test/', 'https://portal.otosanayide.test/x', 'https://otosanayide.test'] as $value) {
+        config(['otosanayide.portal_web_origin' => $value]);
+        $origin = is_string($value) && $value !== '' ? rtrim(preg_replace('#(https?://[^/]+).*#', '$1', $value), '/') : 'https://portal.otosanayide.test';
+        if ($origin === 'https://otosanayide.test') {
+            continue; // web ile ayni deger: web kurallari gecerli, portal sayilmaz
+        }
+        expect(preflight($this, '/api/me', $origin, 'GET')->headers->has('Access-Control-Allow-Origin'))->toBeFalse((string) $value);
+    }
+    config(['otosanayide.portal_web_origin' => 'http://localhost:3001']);
+    expect(preflight($this, '/api/me', 'http://localhost:3001', 'GET')->headers->get('Access-Control-Allow-Origin'))->toBe('http://localhost:3001');
+});

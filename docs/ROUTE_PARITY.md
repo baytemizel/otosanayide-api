@@ -1,41 +1,41 @@
 # Route paritesi
 
-Kaynak: apps/web/src/app/api. 149 method. bekliyor: 49, tamam: 100.
+Kaynak: apps/web/src/app/api. 149 method. tamam: 149.
 
 `tamam`: kod yazildi ve test edildi; canli kabul degildir. MySQL testleri 178c0f5 commitinde bir kez gecti, sonra depodan kaldirildi (K178). `kapali bayrak`: kaynaktaki kapali yanit. `bekliyor`: yazilmadi.
 
 | Route | Method | Durum | Controller | Test |
 |---|---|---|---|---|
-| `/api/ad-events` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/ad-tariffs` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/ad-tariffs` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-acceptance` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-acceptance` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-campaigns` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-campaigns` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-cancellation-history` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-cancellation-queue` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-cancellations` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-cancellations` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-cancellations` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-capacities` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-media` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-media` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-metrics` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-orders` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-orders` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-payment-review` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-payment-review` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-preview/image` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-preview` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-quote` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-refund-review` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-refund-review` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-reservations` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-reservations` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-reservations` | DELETE | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-tariffs` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/brand-tariffs` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/ad-events` | POST | tamam | Ads/AdEventController | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/ad-tariffs` | GET | tamam | Ads/AdTariffController::show | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/ad-tariffs` | PATCH | tamam | Ads/AdTariffController::update | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-acceptance` | GET | tamam | Brand/BrandFinanceController::acceptance | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-acceptance` | POST | tamam | Brand/BrandFinanceController::accept | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-campaigns` | GET | tamam | Brand/BrandAdminController::campaigns | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-campaigns` | PATCH | tamam | Brand/BrandAdminController::saveCampaign | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-cancellation-history` | GET | tamam | Brand/BrandFinanceController::history | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-cancellation-queue` | GET | tamam | Brand/BrandFinanceController::queue | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-cancellations` | GET | tamam | Brand/BrandFinanceController::cancellationShow | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-cancellations` | POST | tamam | Brand/BrandFinanceController::cancellationRequest | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-cancellations` | PATCH | tamam | Brand/BrandFinanceController::cancellationDecide | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-capacities` | PATCH | tamam | Brand/BrandAdminController::saveCapacity | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-media` | GET | tamam | Brand/BrandServingController::media | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-media` | POST | tamam | Brand/BrandServingController::upload | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-metrics` | GET | tamam | Brand/BrandServingController::metrics | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-orders` | GET | tamam | Brand/BrandAdminController::order | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-orders` | POST | tamam | Brand/BrandAdminController::prepareOrder | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-payment-review` | GET | tamam | Payments/PaymentController::brandReview | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-payment-review` | PATCH | tamam | Payments/PaymentController::decideBrandReview | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-preview/image` | GET | tamam | Brand/BrandServingController::previewImage | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-preview` | GET | tamam | Brand/BrandServingController::preview | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-quote` | POST | tamam | Brand/BrandAdminController::quote | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-refund-review` | GET | tamam | Brand/BrandFinanceController::refundShow | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-refund-review` | PATCH | tamam | Brand/BrandFinanceController::refundDecide | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-reservations` | GET | tamam | Brand/BrandAdminController::reservation | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-reservations` | POST | tamam | Brand/BrandAdminController::reserve | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-reservations` | DELETE | tamam | Brand/BrandAdminController::release | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-tariffs` | GET | tamam | Brand/BrandAdminController::tariff | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/brand-tariffs` | PATCH | tamam | Brand/BrandAdminController::saveTariff | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
 | `/api/admin/business-changes` | GET | tamam | Admin/BusinessChangeAdminController::index | tests/Feature/F6ContentOfflineTest.php |
 | `/api/admin/business-changes` | PATCH | tamam | Admin/BusinessChangeAdminController::update | tests/Feature/F6ContentOfflineTest.php |
 | `/api/admin/business-photos` | GET | tamam | Admin/BusinessPhotoAdminController::index | tests/Feature/F6ContentOfflineTest.php |
@@ -53,8 +53,8 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 49, tamam: 100.
 | `/api/admin/claims` | PATCH | tamam | Admin/ClaimAdminController::update | tests/Feature/F6ContentOfflineTest.php |
 | `/api/admin/notifications` | GET | tamam | Me/AdminNotificationsController::index | tests/Feature/F6AdminOfflineTest.php |
 | `/api/admin/notifications` | PATCH | tamam | Me/AdminNotificationsController::update | tests/Feature/F6AdminOfflineTest.php |
-| `/api/admin/payment-cases` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/admin/payment-cases` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/admin/payment-cases` | GET | tamam | Payments/PaymentController::cases | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/admin/payment-cases` | PATCH | tamam | Payments/PaymentController::decideCase | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
 | `/api/admin/privacy` | GET | tamam | Me/AdminPrivacyController::index | tests/Feature/F6AdminOfflineTest.php |
 | `/api/admin/privacy` | POST | tamam | Me/AdminPrivacyController::store | tests/Feature/F6AdminOfflineTest.php |
 | `/api/admin/replies` | GET | tamam | Admin/ReplyAdminController::index | tests/Feature/F6ContentOfflineTest.php |
@@ -66,9 +66,9 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 49, tamam: 100.
 | `/api/admin/reviews/analyze` | POST | tamam | Admin/ReviewAdminController::analyze | tests/Feature/F6ContentOfflineTest.php |
 | `/api/admin/reviews` | GET | tamam | Admin/ReviewAdminController::index | tests/Feature/F6ContentOfflineTest.php |
 | `/api/admin/reviews` | PATCH | tamam | Admin/ReviewAdminController::update | tests/Feature/F6ContentOfflineTest.php |
-| `/api/brand-banners/image` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/brand-banners` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/brand-events` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/brand-banners/image` | GET | tamam | Brand/BrandServingController::image | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/brand-banners` | GET | tamam | Brand/BrandServingController::banners | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
+| `/api/brand-events` | POST | tamam | Brand/BrandServingController::events | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
 | `/api/businesses/activation` | GET | tamam | Content/ActivationController::index | tests/Feature/F5OfflineTest.php |
 | `/api/businesses/activation` | PATCH | tamam | Content/ActivationController::update | tests/Feature/F5OfflineTest.php |
 | `/api/businesses/activation` | OPTIONS | tamam | Content/ActivationController::options | tests/Feature/F5OfflineTest.php |
@@ -91,17 +91,17 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 49, tamam: 100.
 | `/api/businesses/replies` | POST | tamam | Content/ReplyController::store | tests/Feature/F5OfflineTest.php |
 | `/api/businesses/replies` | PATCH | tamam | Content/ReplyController::update | tests/Feature/F5OfflineTest.php |
 | `/api/businesses/replies` | OPTIONS | tamam | Content/ReplyController::options | tests/Feature/F5OfflineTest.php |
-| `/api/campaigns/finance` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/finance` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/finance` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/metrics` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/owner-metrics` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/owner-metrics` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/reservation` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns/reservation` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns` | GET | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns` | PATCH | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/campaigns` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
+| `/api/campaigns/finance` | GET | tamam | Ads/CampaignController::finance | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/finance` | POST | tamam | Ads/CampaignController::finance | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/finance` | OPTIONS | tamam | Ads/CampaignController::financeOptions | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/metrics` | GET | tamam | Ads/CampaignController::metrics | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/owner-metrics` | GET | tamam | Ads/CampaignController::ownerMetrics | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/owner-metrics` | OPTIONS | tamam | Ads/CampaignController::ownerMetricsOptions | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/reservation` | GET | tamam | Ads/CampaignController::quote | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns/reservation` | POST | tamam | Ads/CampaignController::reserve | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns` | GET | tamam | Ads/CampaignController::index | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns` | PATCH | tamam | Ads/CampaignController::update | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/campaigns` | OPTIONS | tamam | Ads/CampaignController::options | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
 | `/api/claims/evidence` | GET | tamam | Content/ClaimEvidenceController::index | tests/Feature/F5OfflineTest.php |
 | `/api/claims/evidence` | POST | tamam | Content/ClaimEvidenceController::store | tests/Feature/F5OfflineTest.php |
 | `/api/claims/evidence` | PATCH | tamam | Content/ClaimEvidenceController::update | tests/Feature/F5OfflineTest.php |
@@ -131,9 +131,9 @@ Kaynak: apps/web/src/app/api. 149 method. bekliyor: 49, tamam: 100.
 | `/api/me` | PATCH | tamam | Me/MeController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php |
 | `/api/notifications` | GET | tamam | Me/NotificationsController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php |
 | `/api/notifications` | PATCH | tamam | Me/NotificationsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php |
-| `/api/payments/checkout` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
-| `/api/payments/checkout` | OPTIONS | bekliyor | Closed/ClosedFeatureController::options | tests/Feature/F7ClosedTest.php |
-| `/api/payments/webhook` | POST | bekliyor | Closed/ClosedFeatureController | tests/Feature/F7ClosedTest.php |
+| `/api/payments/checkout` | POST | tamam | Payments/PaymentController::checkout | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/payments/checkout` | OPTIONS | tamam | Payments/PaymentController::checkoutOptions | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php |
+| `/api/payments/webhook` | POST | tamam | Payments/PaymentController::webhook | tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php |
 | `/api/requests` | GET | tamam | Me/RequestsController::index | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php |
 | `/api/requests` | POST | tamam | Me/RequestsController::store | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php |
 | `/api/requests` | PATCH | tamam | Me/RequestsController::update | tests/Unit/F4RulesTest.php, tests/Feature/F4OfflineTest.php |

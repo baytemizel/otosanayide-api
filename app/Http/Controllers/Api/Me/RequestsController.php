@@ -23,7 +23,10 @@ final class RequestsController
     {
         $p = Query::from($request);
         try {
-            $this->assertKeys($p, $request->isMethod('GET') ? ['businessId', 'after'] : []);
+            $this->assertKeys($p, $request->isMethod('GET') ? ['businessId', 'after', 'v'] : []);
+            if ($p->has('v') && $p->get('v') !== '2') {
+                throw new ZodError('v');
+            }
             if ($request->isMethod('GET')) {
                 if ($p->has('businessId')) {
                     RequestRules::id()->parse($p->get('businessId'));
@@ -47,7 +50,7 @@ final class RequestsController
         $p = $this->httpInput($request);
         $u = $this->verified($request);
 
-        return Api::json(Requests::page($u->uid, $p->get('businessId'), $p->get('after')));
+        return Api::json(Requests::page($u->uid, $p->get('businessId'), $p->get('after'), $p->get('v') === '2'));
     }
 
     public function store(Request $request): JsonResponse

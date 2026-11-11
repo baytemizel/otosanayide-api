@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Domain\Auth\ActorResolver;
+use App\Domain\Auth\AuthClient;
 use App\Domain\Auth\AuthService;
 use App\Domain\Auth\IssuedSession;
 use App\Exceptions\HttpError;
@@ -15,10 +16,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 
-/** Yeni uclar: kaynakta Firebase Auth istemcisi vardi; sozlesme docs/AUTH_API.md. */
+/** Yeni uclar: kaynakta Firebase Auth istemcisi vardi; sozlesme docs/AUTH_API.md (Sozlesme Eki v1 dahil). */
 final class AuthController
 {
-    public const COOKIE = 'otosanayide_refresh';
+    public const COOKIE = AuthClient::WEB_COOKIE;
 
     private const MIN_PASSWORD = 10;
 
@@ -28,13 +29,14 @@ final class AuthController
     {
         $input = $this->input($request, ['email' => $this->email(), 'password' => $this->newPassword()]);
         Throttle::hit('register-ip', (string) $request->ip(), 10, 3600);
-        $this->service($request)->register($this->normalize($input['email']), $input['password']);
+        $this->service($request)->register($this->normalize($input['email']), $input['password'], AuthClient::linkOrigin($request));
 
         return Api::json(['ok' => true], 202);
     }
 
     public function login(Request $request): JsonResponse
     {
+        $client = AuthClient::of($request);
         $input = $this->input($request, ['email' => $this->email(), 'password' => Z::string()->min(1)->max(self::MAX_PASSWORD)]);
         $email = $this->normalize($input['email']);
         Throttle::hit('login-email', $email, 10, 900);
@@ -44,34 +46,38 @@ final class AuthController
             return Api::json(['mfaRequired' => true, 'challenge' => $result['challenge']]);
         }
 
-        return $this->session($result['session']);
+        return $this->session($result['session'], $client);
     }
 
     public function mfaVerify(Request $request): JsonResponse
     {
+        $client = AuthClient::of($request);
         $input = $this->input($request, ['challenge' => Z::string()->min(1)->max(128), 'code' => Z::string()->max(16)]);
         Throttle::hit('mfa-ip', (string) $request->ip(), 30, 900);
 
-        return $this->session($this->service($request)->completeMfa($input['challenge'], $input['code']));
+        return $this->session($this->service($request)->completeMfa($input['challenge'], $input['code']), $client);
     }
 
     public function refresh(Request $request): JsonResponse
     {
-        $raw = $request->cookies->get(self::COOKIE);
-        if (! is_string($raw) || $raw === '') {
+        $client = AuthClient::of($request);
+        $raw = $this->refreshToken($request, $client);
+        if ($raw === null) {
             throw new HttpError(401, 'Oturum geçersiz veya süresi dolmuş.');
         }
         Throttle::hit('refresh-ip', (string) $request->ip(), 120, 60);
 
-        return $this->session($this->service($request)->refresh($raw));
+        return $this->session($this->service($request)->refresh($raw), $client);
     }
 
     public function logout(Request $request): Response
     {
-        $raw = $request->cookies->get(self::COOKIE);
-        $this->service($request)->logout(is_string($raw) ? $raw : null);
+        $client = AuthClient::of($request);
+        $this->service($request)->logout($this->refreshToken($request, $client));
         $response = Api::empty(204);
-        $response->headers->setCookie($this->cookie('', -1));
+        if (! $client->native()) {
+            $response->headers->setCookie($this->cookie((string) $client->cookie(), '', -1));
+        }
 
         return $response;
     }
@@ -89,7 +95,7 @@ final class AuthController
     {
         $actor = ActorResolver::resolve($request);
         Throttle::hit('resend', $actor->uid, 5, 3600);
-        $this->service($request)->resendVerification($actor);
+        $this->service($request)->resendVerification($actor, AuthClient::linkOrigin($request));
 
         return Api::json(['ok' => true], 202);
     }
@@ -100,7 +106,7 @@ final class AuthController
         $email = $this->normalize($input['email']);
         Throttle::hit('forgot-email', $email, 3, 3600);
         Throttle::hit('forgot-ip', (string) $request->ip(), 20, 3600);
-        $this->service($request)->forgot($email);
+        $this->service($request)->forgot($email, AuthClient::linkOrigin($request));
 
         return Api::json(['ok' => true], 202);
     }
@@ -112,6 +118,43 @@ final class AuthController
         $this->service($request)->resetPassword($input['token'], $input['password']);
 
         return Api::json(['ok' => true]);
+    }
+
+    /** web-01: GET /api/auth/mfa. */
+    public function mfaStatus(Request $request): JsonResponse
+    {
+        $actor = ActorResolver::resolve($request);
+        Throttle::hit('mfa-status', $actor->uid, 60, 60);
+
+        return Api::json($this->service($request)->mfaStatus($actor));
+    }
+
+    /** web-02: POST /api/auth/password/change. Oturum kanali login ile ayni (cerez veya native govde). */
+    public function changePassword(Request $request): JsonResponse
+    {
+        $client = AuthClient::of($request);
+        if (! str_starts_with(strtolower((string) $request->headers->get('Content-Type')), 'application/json')) {
+            throw new HttpError(415, 'Geçersiz istek.');
+        }
+        $actor = ActorResolver::resolve($request);
+        Throttle::hit('password-change', $actor->uid, 5, 3600);
+        $input = $this->input($request, ['currentPassword' => Z::string()->min(1)->max(self::MAX_PASSWORD), 'newPassword' => $this->newPassword(), 'code' => Z::string()->max(16)->optional()]);
+
+        return $this->session($this->service($request)->changePassword($actor, $input['currentPassword'], $input['newPassword'], $input['code'] ?? null), $client);
+    }
+
+    /** web-03: POST /api/auth/email/change. Hesap yeni adres onaylanana kadar degismez. */
+    public function changeEmail(Request $request): JsonResponse
+    {
+        if (! str_starts_with(strtolower((string) $request->headers->get('Content-Type')), 'application/json')) {
+            throw new HttpError(415, 'Geçersiz istek.');
+        }
+        $actor = ActorResolver::resolve($request);
+        Throttle::hit('email-change', $actor->uid, 3, 3600);
+        $input = $this->input($request, ['newEmail' => $this->email(), 'password' => Z::string()->min(1)->max(self::MAX_PASSWORD), 'code' => Z::string()->max(16)->optional()]);
+        $this->service($request)->requestEmailChange($actor, $this->normalize($input['newEmail']), $input['password'], $input['code'] ?? null, AuthClient::linkOrigin($request));
+
+        return Api::json(['ok' => true], 202);
     }
 
     public function totpEnroll(Request $request): JsonResponse
@@ -148,9 +191,23 @@ final class AuthController
         return Api::json(['ok' => true]);
     }
 
+    /** Kapsayicidan: baglantisiz testler sahte servis baglayabilir. */
     private function service(Request $request): AuthService
     {
-        return new AuthService($request->ip());
+        return app()->make(AuthService::class, ['ip' => $request->ip()]);
+    }
+
+    /** Native: zorunlu JSON govde {"refreshToken"}; tarayici: yalniz origin'e ait cerez, govde okunmaz. */
+    private function refreshToken(Request $request, AuthClient $client): ?string
+    {
+        if ($client->native()) {
+            $raw = $this->input($request, ['refreshToken' => Z::string()->min(1)->max(256)])['refreshToken'];
+
+            return is_string($raw) ? $raw : null;
+        }
+        $raw = $request->cookies->get((string) $client->cookie());
+
+        return is_string($raw) && $raw !== '' ? $raw : null;
     }
 
     private function email(): Z
@@ -182,20 +239,24 @@ final class AuthController
         return Z::strictObject($shape)->parse(Body::json($request));
     }
 
-    private function session(IssuedSession $s): JsonResponse
+    private function session(IssuedSession $s, AuthClient $client): JsonResponse
     {
-        $response = Api::json([
-            'accessToken' => $s->accessToken,
-            'expiresIn' => $s->expiresIn,
-            'user' => ['uid' => $s->uid, 'email' => $s->email, 'emailVerified' => $s->emailVerified],
-        ]);
-        $response->headers->setCookie($this->cookie($s->refreshToken, $s->refreshMaxAge));
+        $body = ['accessToken' => $s->accessToken, 'expiresIn' => $s->expiresIn];
+        if ($client->native()) {
+            // Yalniz Origin'siz native istemci: tarayici akisinda jeton govdeye asla girmez.
+            $body['refreshToken'] = $s->refreshToken;
+        }
+        $body['user'] = ['uid' => $s->uid, 'email' => $s->email, 'emailVerified' => $s->emailVerified];
+        $response = Api::json($body);
+        if (! $client->native()) {
+            $response->headers->setCookie($this->cookie((string) $client->cookie(), $s->refreshToken, $s->refreshMaxAge));
+        }
 
         return $response;
     }
 
-    private function cookie(string $value, int $maxAge): Cookie
+    private function cookie(string $name, string $value, int $maxAge): Cookie
     {
-        return Cookie::create(self::COOKIE, $value, $maxAge > 0 ? time() + $maxAge : 1, '/api/auth', null, true, true, false, Cookie::SAMESITE_STRICT);
+        return Cookie::create($name, $value, $maxAge > 0 ? time() + $maxAge : 1, '/api/auth', null, true, true, false, Cookie::SAMESITE_STRICT);
     }
 }

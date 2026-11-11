@@ -17,6 +17,7 @@ Route::post('me', [MeController::class, 'store']);
 Route::patch('me', [MeController::class, 'update']);
 Route::get('notifications', [NotificationsController::class, 'index']);
 Route::patch('notifications', [NotificationsController::class, 'update']);
+Route::post('notifications/read-all', [NotificationsController::class, 'readAll']); // web-11 (yeni uc)
 
 Route::middleware('origin:mobile')->group(function (): void {
     Route::get('me/favorites', [FavoritesController::class, 'index']);

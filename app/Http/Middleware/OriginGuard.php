@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
  *  exact   origin === server, Origin basligi zorunlu
  *  present Origin varsa server olmali
  * Beklenen origin PUBLIC_WEB_ORIGIN'dir; Host basligi kullanilmaz.
+ * Sozlesme Eki v1: `account` = web + portal (/api/auth). PORTAL_WEB_ORIGIN `mobile` ve `account`
+ * modlarinda web origin'iyle esdeger sayilir; `web`, `exact`, `present` web'e ozgu kalir ve
+ * /api/admin altinda portal hicbir modda kabul edilmez (yonetim web /yonetim icindedir).
  */
 final class OriginGuard
 {
@@ -27,8 +30,10 @@ final class OriginGuard
         }
         $mobile = config('otosanayide.mobile_web_origin');
         $origin = $request->headers->get('Origin');
+        $portal = ! $request->is('api/admin', 'api/admin/*') && Origin::isPortal($origin);
         $allowed = match ($mode) {
-            'mobile' => Origin::allowed($origin, $server, is_string($mobile) ? $mobile : null),
+            'mobile' => $portal || Origin::allowed($origin, $server, is_string($mobile) ? $mobile : null),
+            'account' => $portal || Origin::allowed($origin, $server),
             'web' => Origin::allowed($origin, $server),
             'exact' => $origin === $server,
             'present' => $origin === null || $origin === $server,
@@ -48,6 +53,7 @@ final class OriginGuard
         } else {
             $response = $next($request);
         }
+
         return $mode === 'mobile' && $cors === 'cors' ? $this->decorate($response, $allowed, $origin) : $response;
     }
 

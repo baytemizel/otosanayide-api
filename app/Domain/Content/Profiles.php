@@ -3,13 +3,14 @@
 namespace App\Domain\Content;
 
 use App\Domain\Auth\Actor;
+use App\Domain\Catalogue\OpeningHours;
 use App\Exceptions\HttpError;
 use Illuminate\Support\Facades\DB;
 
 /** /api/businesses/manage: dogrudan yayin yok, yalniz bekleyen revizyon. */
 final class Profiles
 {
-    public static function one(Actor $u, string $selected): array
+    public static function one(Actor $u, string $selected, bool $v2 = false): array
     {
         $memberRow = Rows::member($u->uid, $selected);
         $b = Docs::business(Rows::business($selected));
@@ -17,16 +18,20 @@ final class Profiles
         if ($memberRow === null || $b === null || ($m['businessId'] ?? null) !== $selected || ! Policy::mayEditOwnedProfile($u->uid, $b, $m) || ($b['sample'] ?? null) === true) {
             throw new HttpError(403, 'Bu işletmenin profilini düzenleyemezsin.');
         }
-        $change = Docs::change(DB::table('business_changes')->where('business_id', $selected)->first());
+        $changeRow = DB::table('business_changes')->where('business_id', $selected)->first();
+        $change = Docs::change($changeRow);
         $value = Policy::projectManagedProfile($u->uid, $u->uid.'_'.$selected, $m, $b, $change);
         if ($value === null) {
             throw new HttpError(409, 'Profil verileri incelenmeli.');
+        }
+        if ($v2) {
+            $value += self::hoursView($selected, $changeRow);
         }
 
         return ['businesses' => [$value]];
     }
 
-    public static function all(Actor $u): array
+    public static function all(Actor $u, bool $v2 = false): array
     {
         $members = DB::table('business_memberships')->where('user_id', $u->uid)->orderBy('business_id')->limit(100)->get();
         $out = [];
@@ -43,7 +48,8 @@ final class Profiles
             if ($b === null || ! Policy::mayEditOwnedProfile($u->uid, $b, $m)) {
                 continue;
             }
-            $draft = Docs::change(DB::table('business_changes')->where('business_id', $id)->first());
+            $draftRow = DB::table('business_changes')->where('business_id', $id)->first();
+            $draft = Docs::change($draftRow);
             $value = ['id' => $id, 'role' => $m['role'], 'name' => $b['name'], 'city' => $b['city'], 'district' => $b['district'], 'address' => $b['address'], 'phone' => $b['phone'] ?? ''];
             if (is_string($b['contactEmail'] ?? null)) {
                 $value['contactEmail'] = $b['contactEmail'];
@@ -58,10 +64,42 @@ final class Profiles
                 'location' => isset($b['latitude'], $b['longitude']) ? ['latitude' => $b['latitude'], 'longitude' => $b['longitude']] : null,
                 'version' => $b['profileVersion'] ?? 0,
                 'change' => $draft === null ? null : ['revisionId' => $draft['revisionId'], 'status' => $draft['status'], 'profile' => $draft['profile'], 'reason' => $draft['reason'] ?? ''],
-            ];
+            ] + ($v2 ? self::hoursView($id, $draftRow) : []);
         }
 
         return ['businesses' => $out];
+    }
+
+    /**
+     * portal-04: bekleyen revizyonda saat eylemi. Gecmis veya 366 gunden uzak istisna 400.
+     *
+     * @param  array<string,mixed>  $input
+     * @return array{opening_hours_action:string,opening_hours:?string}
+     */
+    private static function hoursColumns(array $input): array
+    {
+        if (! array_key_exists('openingHours', $input)) {
+            return ['opening_hours_action' => 'keep', 'opening_hours' => null];
+        }
+        if ($input['openingHours'] === null) {
+            return ['opening_hours_action' => 'clear', 'opening_hours' => null];
+        }
+        $canonical = OpeningHours::canonical($input['openingHours']);
+        if ($canonical === null) {
+            throw new HttpError(400, 'Bilgileri kontrol edin.');
+        }
+
+        return ['opening_hours_action' => 'set', 'opening_hours' => (string) json_encode($canonical)];
+    }
+
+    /** v=2 okumasi: yayindaki saatler ve bekleyen eylem. @return array<string,mixed> */
+    public static function hoursView(string $businessId, ?\stdClass $change): array
+    {
+        $current = OpeningHours::view(DB::table('businesses')->where('id', $businessId)->value('opening_hours'));
+        $pending = $change === null || ($change->opening_hours_action ?? 'keep') === 'keep' ? null
+            : ['action' => $change->opening_hours_action, 'value' => OpeningHours::view($change->opening_hours ?? null)];
+
+        return ['openingHours' => $current, 'pendingOpeningHours' => $pending];
     }
 
     /**
@@ -87,7 +125,8 @@ final class Profiles
                 throw new HttpError(409, 'Profil değişti. Güncel bilgileri yükleyip yeniden dene.');
             }
             $p = $input['profile'];
-            $row = [
+            $hours = self::hoursColumns($input);
+            $row = $hours + [
                 'revision_id' => $revisionId, 'expected_revision_id' => $input['expectedRevisionId'], 'expected_version' => $input['expectedVersion'],
                 'user_id' => $u->uid, 'status' => 'pending',
                 'profile_name' => $p['name'], 'profile_city' => $p['city'], 'profile_district' => $p['district'], 'profile_address' => $p['address'],

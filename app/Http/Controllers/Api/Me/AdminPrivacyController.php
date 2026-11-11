@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Me;
 use App\Domain\Auth\Actor;
 use App\Domain\Auth\ActorResolver;
 use App\Domain\User\Privacy;
+use App\Domain\User\PrivacyExports;
 use App\Exceptions\HttpError;
 use App\Http\Api;
 use App\Support\Body;
@@ -51,6 +52,9 @@ final class AdminPrivacyController
         return $this->guard(function () use ($request): JsonResponse {
             $this->admin($request);
             $q = Query::from($request);
+            if ($q->has('kind')) {
+                return $this->exportQueue($q); // web-10: yalniz ?kind=export ile, v1 yaniti degismez.
+            }
             foreach ($q->keys() as $key) {
                 if (! in_array($key, ['status', 'after'], true)) {
                     throw new HttpError(400, 'Geçersiz istek.');
@@ -77,6 +81,22 @@ final class AdminPrivacyController
         });
     }
 
+    private function exportQueue(Query $q): JsonResponse
+    {
+        foreach ($q->keys() as $key) {
+            if (! in_array($key, ['kind', 'status', 'after'], true) || $q->count($key) > 1) {
+                throw new HttpError(400, 'Geçersiz istek.');
+            }
+        }
+        $after = $q->get('after');
+        if ($q->get('kind') !== 'export' || ($after !== null && preg_match('/^[0-9a-f-]{36}$/D', $after) !== 1)) {
+            throw new HttpError(400, 'Geçersiz istek.');
+        }
+        $status = Z::enum(['submitted', 'in_progress'])->parse($q->get('status') ?? 'submitted');
+
+        return Api::json(PrivacyExports::queue($status, $after));
+    }
+
     public function store(Request $request): JsonResponse
     {
         return $this->guard(function () use ($request): JsonResponse {
@@ -87,7 +107,11 @@ final class AdminPrivacyController
             if (! Privacy::recentLogin($u->authTime, Js::nowMs())) {
                 throw new HttpError(428, 'Güvenlik için çıkış yapıp tekrar giriş yap. Sonra talebini yeniden kontrol et.');
             }
-            $input = Privacy::adminAction()->parse(Body::json($request));
+            $raw = Body::json($request);
+            if ($raw instanceof \stdClass && property_exists($raw, 'kind')) {
+                return Api::json(['request' => PrivacyExports::decide($u->uid, PrivacyExports::adminSchema()->parse($raw)), 'preparation' => 'manual']);
+            }
+            $input = Privacy::adminAction()->parse($raw);
 
             return Api::json(['request' => Privacy::changeAdmin($u->uid, $input, Js::nowMs()), 'execution' => 'not_enabled']);
         });

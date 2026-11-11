@@ -1,247 +1,247 @@
 {
- "POST /api/ad-events": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/brand-events": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/brand-banners": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/brand-banners/image": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/payments/webhook": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/payments/checkout": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/campaigns": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/campaigns": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/campaigns/metrics": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/campaigns/reservation": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/campaigns/reservation": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/campaigns/finance": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/campaigns/finance": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "GET /api/campaigns/owner-metrics": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+ "DELETE /api/admin/brand-reservations": [
+  "tamam",
+  "Brand/BrandAdminController::release",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/ad-tariffs": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/ad-tariffs": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Ads/AdTariffController::show",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-acceptance": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/admin/brand-acceptance": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandFinanceController::acceptance",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-campaigns": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/brand-campaigns": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandAdminController::campaigns",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-cancellation-history": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandFinanceController::history",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-cancellation-queue": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandFinanceController::queue",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-cancellations": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/admin/brand-cancellations": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/brand-cancellations": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/brand-capacities": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandFinanceController::cancellationShow",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-media": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/admin/brand-media": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandServingController::media",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-metrics": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandServingController::metrics",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-orders": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/admin/brand-orders": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandAdminController::order",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-payment-review": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/brand-payment-review": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Payments/PaymentController::brandReview",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-preview": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandServingController::preview",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-preview/image": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/admin/brand-quote": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandServingController::previewImage",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-refund-review": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/brand-refund-review": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandFinanceController::refundShow",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-reservations": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "POST /api/admin/brand-reservations": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "DELETE /api/admin/brand-reservations": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandAdminController::reservation",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/brand-tariffs": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
- ],
- "PATCH /api/admin/brand-tariffs": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Brand/BrandAdminController::tariff",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
  "GET /api/admin/payment-cases": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Payments/PaymentController::cases",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
- "PATCH /api/admin/payment-cases": [
-  "bekliyor",
-  "Closed/ClosedFeatureController",
-  "tests/Feature/F7ClosedTest.php"
+ "GET /api/brand-banners": [
+  "tamam",
+  "Brand/BrandServingController::banners",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
- "OPTIONS /api/payments/checkout": [
-  "bekliyor",
-  "Closed/ClosedFeatureController::options",
-  "tests/Feature/F7ClosedTest.php"
+ "GET /api/brand-banners/image": [
+  "tamam",
+  "Brand/BrandServingController::image",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ],
- "OPTIONS /api/campaigns/finance": [
-  "bekliyor",
-  "Closed/ClosedFeatureController::options",
-  "tests/Feature/F7ClosedTest.php"
+ "GET /api/campaigns": [
+  "tamam",
+  "Ads/CampaignController::index",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
  ],
- "OPTIONS /api/campaigns/owner-metrics": [
-  "bekliyor",
-  "Closed/ClosedFeatureController::options",
-  "tests/Feature/F7ClosedTest.php"
+ "GET /api/campaigns/finance": [
+  "tamam",
+  "Ads/CampaignController::finance",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "GET /api/campaigns/metrics": [
+  "tamam",
+  "Ads/CampaignController::metrics",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "GET /api/campaigns/owner-metrics": [
+  "tamam",
+  "Ads/CampaignController::ownerMetrics",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "GET /api/campaigns/reservation": [
+  "tamam",
+  "Ads/CampaignController::quote",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
  ],
  "OPTIONS /api/campaigns": [
-  "bekliyor",
-  "Closed/ClosedFeatureController::options",
-  "tests/Feature/F7ClosedTest.php"
+  "tamam",
+  "Ads/CampaignController::options",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "OPTIONS /api/campaigns/finance": [
+  "tamam",
+  "Ads/CampaignController::financeOptions",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "OPTIONS /api/campaigns/owner-metrics": [
+  "tamam",
+  "Ads/CampaignController::ownerMetricsOptions",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "OPTIONS /api/payments/checkout": [
+  "tamam",
+  "Payments/PaymentController::checkoutOptions",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "PATCH /api/admin/ad-tariffs": [
+  "tamam",
+  "Ads/AdTariffController::update",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/brand-campaigns": [
+  "tamam",
+  "Brand/BrandAdminController::saveCampaign",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/brand-cancellations": [
+  "tamam",
+  "Brand/BrandFinanceController::cancellationDecide",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/brand-capacities": [
+  "tamam",
+  "Brand/BrandAdminController::saveCapacity",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/brand-payment-review": [
+  "tamam",
+  "Payments/PaymentController::decideBrandReview",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/brand-refund-review": [
+  "tamam",
+  "Brand/BrandFinanceController::refundDecide",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/brand-tariffs": [
+  "tamam",
+  "Brand/BrandAdminController::saveTariff",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/admin/payment-cases": [
+  "tamam",
+  "Payments/PaymentController::decideCase",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "PATCH /api/campaigns": [
+  "tamam",
+  "Ads/CampaignController::update",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "POST /api/ad-events": [
+  "tamam",
+  "Ads/AdEventController",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/admin/brand-acceptance": [
+  "tamam",
+  "Brand/BrandFinanceController::accept",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/admin/brand-cancellations": [
+  "tamam",
+  "Brand/BrandFinanceController::cancellationRequest",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/admin/brand-media": [
+  "tamam",
+  "Brand/BrandServingController::upload",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/admin/brand-orders": [
+  "tamam",
+  "Brand/BrandAdminController::prepareOrder",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/admin/brand-quote": [
+  "tamam",
+  "Brand/BrandAdminController::quote",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/admin/brand-reservations": [
+  "tamam",
+  "Brand/BrandAdminController::reserve",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/brand-events": [
+  "tamam",
+  "Brand/BrandServingController::events",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
+ ],
+ "POST /api/campaigns/finance": [
+  "tamam",
+  "Ads/CampaignController::finance",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "POST /api/campaigns/reservation": [
+  "tamam",
+  "Ads/CampaignController::reserve",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "POST /api/payments/checkout": [
+  "tamam",
+  "Payments/PaymentController::checkout",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php, tests/Contract/F7FixturesTest.php"
+ ],
+ "POST /api/payments/webhook": [
+  "tamam",
+  "Payments/PaymentController::webhook",
+  "tests/Feature/F7FeatureTest.php, tests/Unit/F7RulesTest.php"
  ]
 }

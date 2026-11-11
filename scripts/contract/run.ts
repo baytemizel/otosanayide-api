@@ -31,6 +31,13 @@ const parsers:Record<string,(raw:unknown,meta:Record<string,string>)=>unknown>={
  'managed-profile':raw=>core('business-profile-client').managedProfile.parse(raw),
  activation:raw=>core('activation-client').activationView.parse(raw),
  'business-places':raw=>core('business-places').businessPlaceResult.parse(raw),
+ // F7 (API-B)
+ 'owner-campaign-page':raw=>core('owner-campaigns-client').ownerCampaignPage.parse(raw),
+ 'owner-campaign-item':raw=>z.object({item:core('owner-campaigns-client').ownerCampaignItem}).strict().parse(raw),
+ 'owner-ad-finance':raw=>core('owner-ad-finance').ownerAdFinance.parse(raw),
+ 'owner-ad-reserve':raw=>core('owner-ad-finance').ownerAdReserveReceipt.parse(raw),
+ 'owner-ad-metrics':raw=>core('owner-ad-finance').ownerAdMetrics.parse(raw),
+ 'checkout-receipt':raw=>z.object({kind:z.enum(['business','brand']),orderId:z.string().uuid(),session:core('hosted-checkout').checkoutSession}).strict().parse(raw),
 };
 const files=readdirSync(dir).filter(f=>f.endsWith('.json')).sort();
 let failed=0;const seen=new Set<string>();

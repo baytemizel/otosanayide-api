@@ -239,6 +239,20 @@ final class Barrier
                 }
                 $paths = ['business-photos/'.$input['id'].'/full.webp', 'business-photos/'.$input['id'].'/thumbnail.webp'];
                 break;
+            case 'brand_parent': // F7 (API-B): brandCampaigns/{id}
+                $subjects[] = self::owner($get('brand_campaigns', 'id', $input['id'])->last_editor_id);
+                break;
+            case 'brand': // F7 (API-B): brandMediaUploads/{id}
+                $row = $get('brand_media_uploads', 'id', $input['id']);
+                if ($row->actor_id !== null) {
+                    $subjects[] = self::owner($row->actor_id);
+                }
+                $c = $get('brand_campaigns', 'id', $row->campaign_id, false);
+                if ($c !== null) {
+                    $subjects[] = self::owner($c->last_editor_id);
+                }
+                $paths = ['brand-media/'.$input['id'].'.webp'];
+                break;
             default:
                 throw new WriteConflict('media_write_conflict');
         }

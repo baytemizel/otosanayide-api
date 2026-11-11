@@ -13,7 +13,7 @@ it('requires a bearer token on protected auth endpoints', function () {
 });
 
 it('rejects non-JSON content types with 415', function () {
-    $this->call('POST', '/api/auth/login', [], [], [], ['HTTP_ACCEPT_LANGUAGE' => '', 'CONTENT_TYPE' => 'text/plain'], '{}')->assertStatus(415);
+    $this->call('POST', '/api/auth/login', [], [], [], ['HTTP_ORIGIN' => 'https://otosanayide.test', 'HTTP_ACCEPT_LANGUAGE' => '', 'CONTENT_TYPE' => 'text/plain'], '{}')->assertStatus(415);
 });
 
 it('rejects unknown fields and short passwords with 400', function () {
@@ -23,7 +23,7 @@ it('rejects unknown fields and short passwords with 400', function () {
 });
 
 it('rejects a body over 20000 bytes with 413', function () {
-    jsonPost($this, '/api/auth/login', '{"email":"'.str_repeat('a', 20000).'"}')->assertStatus(413);
+    jsonPost($this, '/api/auth/login', '{"email":"'.str_repeat('a', 20000).'"}', ['HTTP_ORIGIN' => 'https://otosanayide.test'])->assertStatus(413);
 });
 
 it('refuses a foreign origin on cookie endpoints', function () {
@@ -32,5 +32,5 @@ it('refuses a foreign origin on cookie endpoints', function () {
 });
 
 it('refresh without a cookie is 401', function () {
-    $this->post('/api/auth/refresh')->assertStatus(401)->assertExactJson(['error' => 'Oturum geçersiz veya süresi dolmuş.']);
+    $this->withHeader('Origin', 'https://otosanayide.test')->post('/api/auth/refresh')->assertStatus(401)->assertExactJson(['error' => 'Oturum geçersiz veya süresi dolmuş.']);
 });

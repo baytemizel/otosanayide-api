@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Api;
+use App\Support\Origin;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Web uygulamasi API'yi ayri alan adindan cagirir (K180). Yalniz PUBLIC_WEB_ORIGIN ile birebir
  * eslesen istekler CORS yaniti alir; diger origin'ler icin OriginGuard ve route davranisi aynen kalir.
  * Kimlik bilgisi izni yalniz yenileme cerezinin kullanildigi /api/auth altindadir.
+ * Sozlesme Eki v1: PORTAL_WEB_ORIGIN de ayni kurallarla hizmet alir; /api/admin altinda portal CORS almaz.
  */
 final class WebCors
 {
@@ -26,8 +28,7 @@ final class WebCors
     public function handle(Request $request, Closure $next): Response
     {
         $origin = $request->headers->get('Origin');
-        $web = config('otosanayide.public_web_origin');
-        if ($origin === null || $origin !== $web || ! $request->is('api/*')) {
+        if ($origin === null || ! $request->is('api/*') || ! $this->served($request, $origin)) {
             return $next($request);
         }
         $method = $request->headers->get('Access-Control-Request-Method');
@@ -40,6 +41,15 @@ final class WebCors
         }
 
         return $this->decorate($request, $next($request), $origin);
+    }
+
+    private function served(Request $request, string $origin): bool
+    {
+        if ($origin === config('otosanayide.public_web_origin')) {
+            return true;
+        }
+
+        return Origin::isPortal($origin) && ! $request->is('api/admin', 'api/admin/*');
     }
 
     private function routable(Request $request, string $method): bool

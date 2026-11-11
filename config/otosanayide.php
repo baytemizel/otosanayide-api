@@ -8,6 +8,10 @@ $flag = static fn (string $key): bool => Env::getRepository()->get($key) === 'tr
 return [
     'public_web_origin' => Env::getRepository()->get('PUBLIC_WEB_ORIGIN'),
     'mobile_web_origin' => Env::getRepository()->get('MOBILE_WEB_ORIGIN'),
+    // Isletme paneli (Sozlesme Eki v1). Yonetici uclari (/api/admin/*) portala acilmaz.
+    'portal_web_origin' => Env::getRepository()->get('PORTAL_WEB_ORIGIN'),
+    // K179: virgulle ayrilmis proxy IP/CIDR listesi (Cloudflare araliklari). Bos: proxy'ye guvenilmez.
+    'trusted_proxies' => Env::getRepository()->get('TRUSTED_PROXIES'),
     'google_places_api_key' => Env::getRepository()->get('GOOGLE_PLACES_API_KEY'),
     'openai_api_key' => Env::getRepository()->get('OPENAI_API_KEY'),
     'moderation_extra_terms' => Env::getRepository()->get('MODERATION_EXTRA_TERMS'),
@@ -16,7 +20,29 @@ return [
     'workers' => [
         'request_notifications' => $flag('REQUEST_NOTIFICATIONS_WORKER_ENABLED'),
         'garage_recycle_purge' => $flag('GARAGE_RECYCLE_PURGE_ENABLED'),
+        // A3: kaynakta reminder_inbox, reminder_email, reminder_push. Disa giden iki kanal ayrica saglayici bayragi ister.
+        'reminder_inbox' => $flag('REMINDER_INBOX_WORKER_ENABLED'),
+        'reminder_email' => $flag('REMINDER_EMAIL_WORKER_ENABLED'),
+        'reminder_push' => $flag('REMINDER_PUSH_WORKER_ENABLED'),
     ],
+
+    // A2: gonderim kapisi. log: saglayiciya baglanmaz (uretimde reddedilir). live: cihaz saglayicisina gore apns/fcm.
+    // Yalniz dosya yollari ve kimlik numaralari; sir degerleri .env'e yazilmaz.
+    'push' => [
+        'driver' => Env::getRepository()->get('PUSH_DRIVER') ?: 'log',
+        'apns' => [
+            'key_path' => Env::getRepository()->get('APNS_KEY_PATH'),
+            'key_id' => Env::getRepository()->get('APNS_KEY_ID'),
+            'team_id' => Env::getRepository()->get('APNS_TEAM_ID'),
+        ],
+        'fcm' => [
+            'credentials_path' => Env::getRepository()->get('FCM_CREDENTIALS_PATH'),
+            'project_id' => Env::getRepository()->get('FCM_PROJECT_ID'),
+        ],
+    ],
+
+    // Hatirlatma e-postasi (MAIL-01): Laravel mailer ile gonderilir; saglayici secilmedi.
+    'reminder_email_delivery' => $flag('EMAIL_DELIVERY_ENABLED'),
 
     'flags' => [
         'shared_garage' => $flag('SHARED_GARAGE_ENABLED'),

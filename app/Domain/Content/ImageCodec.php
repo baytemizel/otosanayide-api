@@ -24,6 +24,22 @@ final class ImageCodec
         return self::photo($input, 94);
     }
 
+    /**
+     * F7 (API-B) canonicalBrandImage: en fazla 1920 kenar, kayipsiz WebP, 2,5 MB / 24 MP.
+     *
+     * @return array{data:string,width:int,height:int,sha256:string,bytes:int}
+     */
+    public static function brand(string $input): array
+    {
+        $image = self::canonical($input, 2500000, 24000000, 1920);
+        $data = self::webp($image, IMG_WEBP_LOSSLESS);
+        if (strlen($data) > 2500000) {
+            throw new RuntimeException('image');
+        }
+
+        return ['data' => $data, 'sha256' => hash('sha256', $data), 'width' => imagesx($image), 'height' => imagesy($image), 'bytes' => strlen($data)];
+    }
+
     /** @return array{data:string,width:int,height:int,sha256:string} */
     public static function evidence(string $input): array
     {

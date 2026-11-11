@@ -2,6 +2,8 @@
 
 use Tests\TestCase;
 
+require_once __DIR__.'/Support/R2Db.php';
+
 pest()->extend(TestCase::class)->in('Feature', 'Unit', 'Contract');
 
 /** Yaniti sozlesme kontrolu icin yazar: scripts/contract/run.ts packages/core ayristiricilarindan gecirir. */

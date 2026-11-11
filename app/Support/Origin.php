@@ -29,6 +29,33 @@ final class Origin
             && $source['port'] === $server['port'];
     }
 
+    /**
+     * PORTAL_WEB_ORIGIN (Sozlesme Eki v1): isletme paneli. Gecerli tam origin olmali (yol yok, sonda / yok);
+     * https zorunlu, yalniz loopback gelistirme adresinde http kabul edilir. Gecersiz veya web ile ayni
+     * deger yok sayilir: portal hicbir zaman web'in yerine gecmez.
+     */
+    public static function portal(): ?string
+    {
+        $value = config('otosanayide.portal_web_origin');
+        if (! is_string($value) || $value === '' || $value === config('otosanayide.public_web_origin')) {
+            return null;
+        }
+        $parsed = self::parse($value);
+        if ($parsed === null || $parsed['origin'] !== $value) {
+            return null;
+        }
+        $loopback = in_array($parsed['host'], ['localhost', '127.0.0.1', '[::1]'], true);
+
+        return $parsed['scheme'] === 'https' || $loopback ? $value : null;
+    }
+
+    public static function isPortal(?string $origin): bool
+    {
+        $portal = self::portal();
+
+        return $origin !== null && $portal !== null && $origin === $portal;
+    }
+
     /** garageApiUrl(): https, kimlik bilgisi/yol/sorgu/parca yok. */
     private static function validApiOrigin(string $origin): bool
     {

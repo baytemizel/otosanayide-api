@@ -76,6 +76,7 @@ final class CaseModeration
                 $totals = Policy::reviewTotals($b['reviewCount'] ?? null, $b['reviewRatingSum'] ?? null, $r['rating'], -1);
                 DB::table('businesses')->where('id', $bid)->update(['review_count' => $totals['reviewCount'], 'review_rating_sum' => $totals['reviewRatingSum']]);
                 DB::table('public_reviews')->where('business_id', $bid)->where('review_id', $rid)->delete();
+                \App\Domain\Catalogue\ReviewSummary::refresh($bid); // web-08
                 DB::table('reviews')->where('id', $rid)->update(['status' => 'hidden', 'moderation_hold' => true, 'version' => ($r['version'] ?? 1) + 1, 'reason' => $input['reason'], 'reviewed_by' => $u->uid, 'reviewed_at' => Ids::now()]);
             }
             if ($action === 'pending') {

@@ -13,5 +13,19 @@
   "Aktivasyon bilgileri incelenmeli.": "The activation details need review.",
   "JPEG, PNG veya WebP gerekli.": "A JPEG, PNG or WebP image is required.",
   "Profil verileri incelenmeli.": "The profile data needs review.",
-  "Yorum değişti. Durumu yenile.": "The review has changed. Refresh its status."
+  "Yorum değişti. Durumu yenile.": "The review has changed. Refresh its status.",
+  "Otosanayide araç hatırlatması": "Otosanayide vehicle reminder",
+  "Araç bakım veya muayene hatırlatmanı kontrol et: {link}": "Check your vehicle maintenance or inspection reminder: {link}",
+  "Bu e-postayı hatırlatmada e-posta kanalını seçtiğin için aldın. Kanalı hatırlatma ayarlarından kapatabilirsin.": "You received this email because you chose the email channel for this reminder. You can turn the channel off in the reminder settings.",
+  "Araç bakım veya muayene hatırlatmanı kontrol et.": "Check your vehicle maintenance or inspection reminder.",
+  "E-posta değişikliği istendi": "Email change requested",
+  "Otosanayide hesabının e-posta adresini değiştirme isteği alındı. Değişiklik yeni adresteki bağlantı onaylanınca uygulanır. Bu isteği sen yapmadıysan şifreni hemen değiştir: {link}": "We received a request to change the email address of your Otosanayide account. The change applies only after the link sent to the new address is confirmed. If you did not make this request, change your password now: {link}",
+  "E-posta adresin değiştirildi": "Your email address was changed",
+  "Otosanayide hesabının e-posta adresi değiştirildi ve bütün oturumlar kapatıldı. Bu işlemi sen yapmadıysan bizimle iletişime geç.": "The email address of your Otosanayide account was changed and all sessions were signed out. If you did not do this, contact us.",
+  "Şifren değiştirildi": "Your password was changed",
+  "Otosanayide hesabının şifresi değiştirildi. Bu işlemi sen yapmadıysan hemen şifre sıfırlama bağlantısı iste: {link}": "The password of your Otosanayide account was changed. If you did not do this, request a password reset link now: {link}",
+  "Şifre veya doğrulama kodu hatalı.": "Incorrect password or verification code.",
+  "İki adımlı doğrulama kodu gerekli.": "A two-step verification code is required.",
+  "İşletme ekibine davet": "Business team invitation",
+  "Otosanayide üzerinde bir işletme ekibine çalışan olarak davet edildin. Daveti bu e-posta adresiyle açtığın ve doğruladığın hesapla 7 gün içinde kabul edebilirsin: {link}": "You were invited to join a business team on Otosanayide as staff. Accept within 7 days with a verified account using this email address: {link}"
 }

@@ -35,6 +35,12 @@ final class Taxonomy
         return self::coverage()['cities'];
     }
 
+    /** @return list<string> kategori kimlikleri (katalog sirasi) */
+    public static function categoryIds(): array
+    {
+        return array_map(static fn (array $c): string => $c['id'], self::data()['categories']);
+    }
+
     /** @return array{id:string,name:string,services:list<string>}|null */
     public static function category(string $id): ?array
     {

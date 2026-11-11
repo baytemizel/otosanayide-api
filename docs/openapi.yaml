@@ -27,7 +27,7 @@ components:
 paths:
   "/api/ad-events":
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "AdEventController (tamam)"
       requestBody:
         content:
           application/json:
@@ -40,7 +40,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/ad-tariffs":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "AdTariffController@show (tamam)"
       security:
         - bearer: []
       responses:
@@ -49,7 +49,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "AdTariffController@update (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -64,7 +64,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-acceptance":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@acceptance (tamam)"
       security:
         - bearer: []
       responses:
@@ -73,7 +73,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@accept (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -88,7 +88,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-campaigns":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@campaigns (tamam)"
       security:
         - bearer: []
       responses:
@@ -97,7 +97,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@saveCampaign (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -112,7 +112,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-cancellation-history":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@history (tamam)"
       security:
         - bearer: []
       responses:
@@ -122,7 +122,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-cancellation-queue":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@queue (tamam)"
       security:
         - bearer: []
       responses:
@@ -132,7 +132,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-cancellations":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@cancellationShow (tamam)"
       security:
         - bearer: []
       responses:
@@ -141,7 +141,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@cancellationDecide (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -155,7 +155,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@cancellationRequest (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -170,7 +170,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-capacities":
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@saveCapacity (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -185,7 +185,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-media":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@media (tamam)"
       security:
         - bearer: []
       responses:
@@ -194,7 +194,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@upload (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -209,7 +209,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-metrics":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@metrics (tamam)"
       security:
         - bearer: []
       responses:
@@ -219,7 +219,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-orders":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@order (tamam)"
       security:
         - bearer: []
       responses:
@@ -228,7 +228,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@prepareOrder (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -243,7 +243,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-payment-review":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "PaymentController@brandReview (tamam)"
       security:
         - bearer: []
       responses:
@@ -252,7 +252,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "PaymentController@decideBrandReview (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -267,7 +267,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-preview":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@preview (tamam)"
       security:
         - bearer: []
       responses:
@@ -277,7 +277,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-preview/image":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@previewImage (tamam)"
       security:
         - bearer: []
       responses:
@@ -287,7 +287,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-quote":
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@quote (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -302,7 +302,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-refund-review":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@refundShow (tamam)"
       security:
         - bearer: []
       responses:
@@ -311,7 +311,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandFinanceController@refundDecide (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -326,7 +326,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-reservations":
     delete:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@release (tamam)"
       security:
         - bearer: []
       responses:
@@ -335,7 +335,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@reservation (tamam)"
       security:
         - bearer: []
       responses:
@@ -344,7 +344,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@reserve (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -359,7 +359,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/admin/brand-tariffs":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@tariff (tamam)"
       security:
         - bearer: []
       responses:
@@ -368,7 +368,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandAdminController@saveTariff (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -424,6 +424,30 @@ paths:
           $ref: '#/components/responses/Error'
     patch:
       summary: "BusinessPhotoAdminController@update (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/admin/business-reports":
+    get:
+      summary: "OperationsAdminController@reports (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "OperationsAdminController@decideReport (yeni uc)"
       security:
         - bearer: []
       requestBody:
@@ -557,6 +581,16 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/admin/flags":
+    get:
+      summary: "OperationsAdminController@flags (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/admin/notifications":
     get:
       summary: "AdminNotificationsController@index (tamam)"
@@ -581,9 +615,19 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/admin/overview":
+    get:
+      summary: "OperationsAdminController@overview (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/admin/payment-cases":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "PaymentController@cases (tamam)"
       security:
         - bearer: []
       responses:
@@ -592,7 +636,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "PaymentController@decideCase (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -770,6 +814,21 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/auth/email/change":
+    post:
+      summary: "AuthController@changeEmail (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/auth/email/resend":
     post:
       summary: "AuthController@resendVerification (yeni uc)"
@@ -801,6 +860,10 @@ paths:
   "/api/auth/login":
     post:
       summary: "AuthController@login (yeni uc)"
+      description: "Origin yoksa X-Client-Platform ve X-Client-Version zorunludur; native yanit govdesinde refreshToken doner, cerez kurulmaz. Origin varsa refreshToken govdede asla donmez. Ayrinti docs/AUTH_API.md."
+      parameters:
+        - {name: X-Client-Platform, in: header, required: false, schema: {type: string, enum: [ios, android]}}
+        - {name: X-Client-Version, in: header, required: false, schema: {type: string}}
       requestBody:
         content:
           application/json:
@@ -814,11 +877,25 @@ paths:
   "/api/auth/logout":
     post:
       summary: "AuthController@logout (yeni uc)"
+      description: "Origin yoksa X-Client-Platform ve X-Client-Version zorunludur; native yanit govdesinde refreshToken doner, cerez kurulmaz. Origin varsa refreshToken govdede asla donmez. Ayrinti docs/AUTH_API.md."
+      parameters:
+        - {name: X-Client-Platform, in: header, required: false, schema: {type: string, enum: [ios, android]}}
+        - {name: X-Client-Version, in: header, required: false, schema: {type: string}}
       requestBody:
         content:
           application/json:
             schema:
               type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/mfa":
+    get:
+      summary: "AuthController@mfaStatus (yeni uc)"
+      security:
+        - bearer: []
       responses:
         '200':
           description: Basarili
@@ -872,6 +949,29 @@ paths:
   "/api/auth/mfa/verify":
     post:
       summary: "AuthController@mfaVerify (yeni uc)"
+      description: "Origin yoksa X-Client-Platform ve X-Client-Version zorunludur; native yanit govdesinde refreshToken doner, cerez kurulmaz. Origin varsa refreshToken govdede asla donmez. Ayrinti docs/AUTH_API.md."
+      parameters:
+        - {name: X-Client-Platform, in: header, required: false, schema: {type: string, enum: [ios, android]}}
+        - {name: X-Client-Version, in: header, required: false, schema: {type: string}}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/auth/password/change":
+    post:
+      summary: "AuthController@changePassword (yeni uc)"
+      description: "Origin yoksa X-Client-Platform ve X-Client-Version zorunludur; native yanit govdesinde refreshToken doner, cerez kurulmaz. Origin varsa refreshToken govdede asla donmez. Ayrinti docs/AUTH_API.md."
+      parameters:
+        - {name: X-Client-Platform, in: header, required: false, schema: {type: string, enum: [ios, android]}}
+        - {name: X-Client-Version, in: header, required: false, schema: {type: string}}
+      security:
+        - bearer: []
       requestBody:
         content:
           application/json:
@@ -911,6 +1011,10 @@ paths:
   "/api/auth/refresh":
     post:
       summary: "AuthController@refresh (yeni uc)"
+      description: "Origin yoksa X-Client-Platform ve X-Client-Version zorunludur; native yanit govdesinde refreshToken doner, cerez kurulmaz. Origin varsa refreshToken govdede asla donmez. Ayrinti docs/AUTH_API.md."
+      parameters:
+        - {name: X-Client-Platform, in: header, required: false, schema: {type: string, enum: [ios, android]}}
+        - {name: X-Client-Version, in: header, required: false, schema: {type: string}}
       requestBody:
         content:
           application/json:
@@ -936,7 +1040,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/brand-banners":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@banners (tamam)"
       responses:
         '200':
           description: Basarili
@@ -944,7 +1048,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/brand-banners/image":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@image (tamam)"
       responses:
         '200':
           description: Basarili
@@ -952,7 +1056,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/brand-events":
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "BrandServingController@events (tamam)"
       requestBody:
         content:
           application/json:
@@ -1023,6 +1127,54 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/businesses/capacity":
+    get:
+      summary: "BusinessToolsController@capacity (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "BusinessToolsController@updateCapacity (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/capacity/closures":
+    delete:
+      summary: "BusinessToolsController@removeClosure (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "BusinessToolsController@addClosure (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/businesses/console":
     get:
       summary: "ConsoleController@index (tamam)"
@@ -1057,6 +1209,16 @@ paths:
           $ref: '#/components/responses/Error'
     options:
       summary: "ConsoleController@options (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/insights":
+    get:
+      summary: "BusinessToolsController@insights (yeni uc)"
+      security:
+        - bearer: []
       responses:
         '200':
           description: Basarili
@@ -1405,6 +1567,60 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/businesses/team":
+    get:
+      summary: "BusinessToolsController@team (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "BusinessToolsController@changeTeam (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/team/invitations":
+    post:
+      summary: "BusinessToolsController@invite (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/businesses/team/invitations/accept":
+    post:
+      summary: "BusinessToolsController@acceptInvitation (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/businesses/{id}":
     get:
       summary: "BusinessController@show (yeni uc)"
@@ -1415,25 +1631,111 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
-  "/api/campaigns":
+  "/api/businesses/{id}/availability":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
-      security:
-        - bearer: []
+      summary: "BusinessToolsController@availability (yeni uc)"
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
       responses:
         '200':
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/businesses/{id}/reports":
+    post:
+      summary: "BusinessToolsController@report (yeni uc)"
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/campaigns":
+    get:
+      summary: "CampaignController@index (tamam)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "business":
+                    type: object
+                    properties:
+                      "id":
+                        type: string
+                      "name":
+                        type: string
+                      "city":
+                        type: string
+                      "categories":
+                        type: array
+                        items:
+                          type: string
+                      "published":
+                        type: boolean
+                      "coordinateVerified":
+                        type: boolean
+                  "items":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "id":
+                          type: string
+                        "placement":
+                          type: string
+                        "city":
+                          type: string
+                        "category":
+                          type: string
+                        "days":
+                          type: integer
+                        "startDate":
+                          type: string
+                        "headline":
+                          type: string
+                        "description":
+                          type: string
+                        "businessId":
+                          type: string
+                        "businessName":
+                          type: string
+                        "status":
+                          type: string
+                        "version":
+                          type: integer
+                        "reason":
+                          type: string
+                        "createdAtMs":
+                          type: integer
+                        "updatedAtMs":
+                          type: integer
+                  "next":
+                    type: ['null', string, number, object]
+        default:
+          $ref: '#/components/responses/Error'
     options:
-      summary: "ClosedFeatureController@options (bekliyor)"
+      summary: "CampaignController@options (tamam)"
       responses:
         '200':
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
     patch:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@update (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -1444,27 +1746,137 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "item":
+                    type: object
+                    properties:
+                      "id":
+                        type: string
+                      "placement":
+                        type: string
+                      "city":
+                        type: string
+                      "category":
+                        type: string
+                      "days":
+                        type: integer
+                      "startDate":
+                        type: string
+                      "headline":
+                        type: string
+                      "description":
+                        type: string
+                      "businessId":
+                        type: string
+                      "businessName":
+                        type: string
+                      "status":
+                        type: string
+                      "version":
+                        type: integer
+                      "reason":
+                        type: string
+                      "createdAtMs":
+                        type: integer
+                      "updatedAtMs":
+                        type: integer
         default:
           $ref: '#/components/responses/Error'
   "/api/campaigns/finance":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@finance (tamam)"
       security:
         - bearer: []
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "campaignId":
+                    type: string
+                  "businessId":
+                    type: string
+                  "campaignVersion":
+                    type: integer
+                  "status":
+                    type: string
+                  "checkedAtMs":
+                    type: integer
+                  "reservationsEnabled":
+                    type: boolean
+                  "checkoutEnabled":
+                    type: boolean
+                  "quote":
+                    type: object
+                    properties:
+                      "currency":
+                        type: string
+                      "subtotalMinor":
+                        type: integer
+                      "taxMinor":
+                        type: integer
+                      "totalMinor":
+                        type: integer
+                      "tariffVersion":
+                        type: integer
+                      "campaignVersion":
+                        type: integer
+                      "dates":
+                        type: array
+                        items:
+                          type: string
+                      "expiresAtMs":
+                        type: integer
+                  "reservation":
+                    type: object
+                    properties:
+                      "id":
+                        type: string
+                      "status":
+                        type: string
+                      "expiresAtMs":
+                        type: integer
+                      "currency":
+                        type: string
+                      "subtotalMinor":
+                        type: integer
+                      "taxMinor":
+                        type: integer
+                      "totalMinor":
+                        type: integer
+                      "tariffVersion":
+                        type: integer
+                      "campaignVersion":
+                        type: integer
+                  "payment":
+                    type: object
+                    properties:
+                      "status":
+                        type: string
+                      "currency":
+                        type: string
+                      "totalMinor":
+                        type: integer
+                      "checkedAtMs":
+                        type: ['null', string, number, object]
         default:
           $ref: '#/components/responses/Error'
     options:
-      summary: "ClosedFeatureController@options (bekliyor)"
+      summary: "CampaignController@financeOptions (tamam)"
       responses:
         '200':
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@finance (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -1475,11 +1887,43 @@ paths:
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "campaignId":
+                    type: string
+                  "businessId":
+                    type: string
+                  "campaignVersion":
+                    type: integer
+                  "reservation":
+                    type: object
+                    properties:
+                      "id":
+                        type: string
+                      "status":
+                        type: string
+                      "expiresAtMs":
+                        type: integer
+                      "currency":
+                        type: string
+                      "subtotalMinor":
+                        type: integer
+                      "taxMinor":
+                        type: integer
+                      "totalMinor":
+                        type: integer
+                      "tariffVersion":
+                        type: integer
+                      "campaignVersion":
+                        type: integer
         default:
           $ref: '#/components/responses/Error'
   "/api/campaigns/metrics":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@metrics (tamam)"
       security:
         - bearer: []
       responses:
@@ -1489,16 +1933,46 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/campaigns/owner-metrics":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@ownerMetrics (tamam)"
       security:
         - bearer: []
       responses:
         '200':
           description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "campaignId":
+                    type: string
+                  "businessId":
+                    type: string
+                  "campaignVersion":
+                    type: integer
+                  "enabled":
+                    type: boolean
+                  "rows":
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        "date":
+                          type: string
+                        "views":
+                          type: integer
+                        "clicks":
+                          type: integer
+                  "views":
+                    type: integer
+                  "clicks":
+                    type: integer
+                  "ctr":
+                    type: number
         default:
           $ref: '#/components/responses/Error'
     options:
-      summary: "ClosedFeatureController@options (bekliyor)"
+      summary: "CampaignController@ownerMetricsOptions (tamam)"
       responses:
         '200':
           description: Basarili
@@ -1506,7 +1980,7 @@ paths:
           $ref: '#/components/responses/Error'
   "/api/campaigns/reservation":
     get:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@quote (tamam)"
       security:
         - bearer: []
       responses:
@@ -1515,7 +1989,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "CampaignController@reserve (tamam)"
       security:
         - bearer: []
       requestBody:
@@ -1606,6 +2080,39 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "ClaimEvidenceController@store (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/coverage/waitlist":
+    delete:
+      summary: "AccountExtrasController@leaveWaitlist (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    get:
+      summary: "AccountExtrasController@waitlist (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "AccountExtrasController@joinWaitlist (yeni uc)"
       security:
         - bearer: []
       requestBody:
@@ -1999,6 +2506,77 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/me/lists":
+    delete:
+      summary: "AccountExtrasController@deleteList (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    get:
+      summary: "AccountExtrasController@lists (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "AccountExtrasController@updateList (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "AccountExtrasController@createList (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/preferences":
+    get:
+      summary: "AccountExtrasController@preferences (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "AccountExtrasController@updatePreferences (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
   "/api/me/privacy":
     get:
       summary: "PrivacyController@show (tamam)"
@@ -2042,6 +2620,44 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "PrivacyController@store (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/me/privacy/exports":
+    get:
+      summary: "AccountExtrasController@exports (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    patch:
+      summary: "AccountExtrasController@cancelExport (yeni uc)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "AccountExtrasController@createExport (yeni uc)"
       security:
         - bearer: []
       requestBody:
@@ -2133,16 +2749,9 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
-  "/api/payments/checkout":
-    options:
-      summary: "ClosedFeatureController@options (bekliyor)"
-      responses:
-        '200':
-          description: Basarili
-        default:
-          $ref: '#/components/responses/Error'
+  "/api/notifications/read-all":
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "NotificationsController@readAll (yeni uc)"
       security:
         - bearer: []
       requestBody:
@@ -2155,9 +2764,49 @@ paths:
           description: Basarili
         default:
           $ref: '#/components/responses/Error'
+  "/api/payments/checkout":
+    options:
+      summary: "PaymentController@checkoutOptions (tamam)"
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "PaymentController@checkout (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "kind":
+                    type: string
+                  "orderId":
+                    type: string
+                  "session":
+                    type: object
+                    properties:
+                      "sessionId":
+                        type: string
+                      "url":
+                        type: string
+                      "expiresAtMs":
+                        type: integer
+        default:
+          $ref: '#/components/responses/Error'
   "/api/payments/webhook":
     post:
-      summary: "ClosedFeatureController (bekliyor)"
+      summary: "PaymentController@webhook (tamam)"
       requestBody:
         content:
           application/json:
@@ -2240,6 +2889,30 @@ paths:
           $ref: '#/components/responses/Error'
     post:
       summary: "RequestsController@store (tamam)"
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/requests/messages":
+    get:
+      summary: "RequestThreadController@index (yeni uc)"
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: "RequestThreadController@store (yeni uc)"
       security:
         - bearer: []
       requestBody:
@@ -2525,6 +3198,16 @@ paths:
           application/json:
             schema:
               type: object
+      responses:
+        '200':
+          description: Basarili
+        default:
+          $ref: '#/components/responses/Error'
+  "/api/reviews/mine/all":
+    get:
+      summary: "OwnReviewsController@index (yeni uc)"
+      security:
+        - bearer: []
       responses:
         '200':
           description: Basarili

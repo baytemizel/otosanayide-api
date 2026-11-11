@@ -84,9 +84,11 @@ final class ReviewModeration
                 // tx.set: varsa eski yanit ve fotograflar da gider.
                 DB::table('public_reviews')->where('business_id', $bid)->where('review_id', $id)->delete();
                 DB::table('public_reviews')->insert(['business_id' => $bid, 'review_id' => $id, 'rating' => $validated['rating'], 'quality' => $validated['quality'] ?? null, 'payment' => $validated['payment'] ?? null, 'cleanliness' => $validated['cleanliness'] ?? null, 'wc_cleanliness' => $validated['wcCleanliness'] ?? null, 'resolved' => $validated['resolved'], 'wc' => $validated['wc'], 'text' => $validated['text'], 'reply_text' => null, 'published_at' => Ids::now()]);
+                \App\Domain\Catalogue\ReviewSummary::refresh($bid); // web-08
             }
             if ($transition['status'] === 'hidden') {
                 DB::table('public_reviews')->where('business_id', $bid)->where('review_id', $id)->delete();
+                \App\Domain\Catalogue\ReviewSummary::refresh($bid); // web-08
             }
             DB::table('businesses')->where('id', $bid)->update(['review_count' => $totals['reviewCount'], 'review_rating_sum' => $totals['reviewRatingSum']]);
             DB::table('reviews')->where('id', $id)->update(['status' => $transition['status'], 'version' => $input['version'] + 1, 'reason' => $input['reason'], 'reviewed_by' => $u->uid, 'reviewed_at' => Ids::now()]);

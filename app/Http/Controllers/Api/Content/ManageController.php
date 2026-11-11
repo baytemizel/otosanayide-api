@@ -31,15 +31,16 @@ final class ManageController
             $u = ActorResolver::resolve($r);
             RateLimit::consume($u->uid);
             $selected = Query::from($r)->get('businessId');
+            $v2 = Query::from($r)->get('v') === '2';
             if ($selected !== null && $selected !== '') {
                 if (! $u->emailVerified) {
                     throw new HttpError(403, self::VERIFY);
                 }
 
-                return Respond::json(Profiles::one($u, $selected));
+                return Respond::json(Profiles::one($u, $selected, $v2));
             }
 
-            return Respond::json(Profiles::all($u));
+            return Respond::json(Profiles::all($u, $v2));
         });
     }
 

@@ -26,7 +26,9 @@ final class RequestRules
             'message' => Z::string()->trim()->min(10)->max(2000),
             'preferredDate' => Z::string()->isoDate()->optional(),
             'requestKey' => Z::string()->uuid(),
-        ]);
+            // portal-03: musaitlikten secilen saat (yalniz randevu). Onay degildir.
+            'preferredSlot' => Z::string()->regex('/^(?:[01]\d|2[0-3]):00$/')->optional(),
+        ])->refine(static fn (array $v): bool => ! isset($v['preferredSlot']) || ($v['kind'] === 'appointments' && isset($v['preferredDate'])), 'slot');
     }
 
     public static function action(): Z
@@ -34,9 +36,21 @@ final class RequestRules
         $simple = Z::strictObject(['id' => self::id(), 'version' => Z::number()->int()->positive(), 'action' => Z::enum(['accept', 'cancel', 'decline', 'complete']), 'text' => Z::string()->trim()->min(10)->max(1000)->optional()]);
 
         return Z::discriminatedUnion('action', [
-            'offer' => Z::strictObject(['id' => self::id(), 'version' => Z::number()->int()->positive(), 'action' => Z::literal('offer'), 'text' => Z::string()->trim()->min(10)->max(2000), 'price' => Z::number()->positive()->max(10000000)->optional(), 'startsAt' => Z::string()->isoDatetime(true)->optional()]),
+            'offer' => Z::strictObject(['id' => self::id(), 'version' => Z::number()->int()->positive(), 'action' => Z::literal('offer'), 'text' => Z::string()->trim()->min(10)->max(2000), 'price' => Z::number()->positive()->max(10000000)->optional(), 'startsAt' => Z::string()->isoDatetime(true)->optional()] + self::quoteFields()),
             'accept' => $simple, 'cancel' => $simple, 'decline' => $simple, 'complete' => $simple,
         ]);
+    }
+
+    /** portal-05: teklif kalemleri (kurus), para birimi, gecerlilik, haric tutulanlar, inceleme sonrasi degisebilir. */
+    private static function quoteFields(): array
+    {
+        return [
+            'lines' => Z::array(Z::strictObject(['kind' => Z::enum(['labour', 'parts', 'tax', 'other']), 'label' => Z::string()->trim()->min(1)->max(120), 'amountMinor' => Z::number()->int()->min(1)->max(1000000000)]))->min(1)->max(20)->optional(),
+            'currency' => Z::literal('TRY')->optional(),
+            'validDays' => Z::literal(1, 3, 7)->optional(),
+            'excluded' => Z::string()->trim()->max(500)->optional(),
+            'mayChangeAfterInspection' => Z::boolean()->optional(),
+        ];
     }
 
     public static function ownerWrite(): Z
@@ -66,6 +80,20 @@ final class RequestRules
             $fail('Talep değişti. Listeyi yenile.');
         }
         if ($a['action'] === 'offer' && $role === 'business' && in_array($r['status'], ['requested', 'offered'], true)) {
+            $quoteExtras = array_intersect_key($a, array_flip(['lines', 'currency', 'validDays', 'excluded', 'mayChangeAfterInspection']));
+            if ($quoteExtras !== [] && $r['kind'] !== 'quotes') {
+                $fail('Teklif kalemleri yalnız fiyat teklifinde kullanılır.');
+            }
+            if (isset($a['lines'])) {
+                $sum = array_sum(array_column($a['lines'], 'amountMinor'));
+                if (array_key_exists('price', $a) && (int) round($a['price'] * 100) !== $sum) {
+                    $fail('Teklif toplamı kalemlerle uyuşmuyor.');
+                }
+                if ($sum > 1000000000) {
+                    $fail('Teklif toplamı çok yüksek.');
+                }
+                $a['price'] = $sum / 100;
+            }
             $hasPrice = array_key_exists('price', $a);
             $starts = $a['startsAt'] ?? null;
             if ($r['kind'] === 'quotes' && (! $hasPrice || $starts)) {
@@ -85,7 +113,18 @@ final class RequestRules
             if ($start !== null) {
                 $offer['startsAt'] = Js::iso(new \DateTimeImmutable('@'.intdiv($start, 1000)));
             }
-            $offer['expiresAtMs'] = min($now + 7 * 86400000, $start ?? PHP_INT_MAX);
+            $offer['expiresAtMs'] = min($now + ($a['validDays'] ?? 7) * 86400000, $start ?? PHP_INT_MAX);
+            if (isset($a['lines'])) {
+                $offer['lines'] = array_map(static fn (array $l): array => ['kind' => $l['kind'], 'label' => $l['label'], 'amountMinor' => $l['amountMinor']], $a['lines']);
+            }
+            foreach (['currency', 'excluded', 'mayChangeAfterInspection'] as $k) {
+                if (array_key_exists($k, $a)) {
+                    $offer[$k] = $a[$k];
+                }
+            }
+            if ($quoteExtras !== [] && ! isset($offer['currency'])) {
+                $offer['currency'] = 'TRY';
+            }
 
             return ['status' => 'offered', 'version' => $a['version'] + 1, 'offer' => $offer];
         }

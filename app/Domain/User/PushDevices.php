@@ -15,10 +15,20 @@ use stdClass;
 /** packages/server/push-devices.ts. pushTokenClaims yerine push_devices.token_hash UNIQUE. */
 final class PushDevices
 {
+    /** APNs cihaz jetonu: kucuk harf onaltilik, 32-100 bayt (bugun 32). */
+    public const APNS_TOKEN = '/^(?:[0-9a-f]{2}){32,100}$/D';
+
+    /** iOS bundle id = APNs topic; ters DNS, en az iki parca. */
+    public const BUNDLE_ID = '/^[A-Za-z][A-Za-z0-9-]*(?:\.[A-Za-z0-9][A-Za-z0-9-]*)+$/D';
+
     public static function command(): Z
     {
         return Z::discriminatedUnion('action', [
-            'register' => Z::strictObject(['action' => Z::literal('register'), 'deviceId' => Z::string()->uuid(), 'token' => Z::string()->regex('/^[A-Za-z0-9_:.-]{20,4096}$/'), 'provider' => Z::literal('fcm'), 'platform' => Z::enum(['web', 'android', 'ios']), 'locale' => Z::enum(['tr', 'en']), 'appId' => Z::string()->regex('/^1:\d+:(?:web|android|ios):[a-f0-9]+$/')]),
+            // Kaynak bicimi (FCM; web/android/ios) degismedi. Ek: iOS dogrudan APNs (docs/PUSH_API.md).
+            'register' => Z::union([
+                Z::strictObject(['action' => Z::literal('register'), 'deviceId' => Z::string()->uuid(), 'token' => Z::string()->regex('/^[A-Za-z0-9_:.-]{20,4096}$/'), 'provider' => Z::literal('fcm'), 'platform' => Z::enum(['web', 'android', 'ios']), 'locale' => Z::enum(['tr', 'en']), 'appId' => Z::string()->regex('/^1:\d+:(?:web|android|ios):[a-f0-9]+$/')]),
+                Z::strictObject(['action' => Z::literal('register'), 'deviceId' => Z::string()->uuid(), 'token' => Z::string()->regex(self::APNS_TOKEN), 'provider' => Z::literal('apns'), 'platform' => Z::literal('ios'), 'locale' => Z::enum(['tr', 'en']), 'appId' => Z::string()->max(155)->regex(self::BUNDLE_ID), 'environment' => Z::enum(['production', 'sandbox'])]),
+            ]),
             'revoke' => Z::strictObject(['action' => Z::literal('revoke'), 'deviceId' => Z::string()->uuid(), 'expectedVersion' => Z::number()->int()->positive(), 'expectedGeneration' => Z::string()->uuid()]),
         ]);
     }
@@ -70,7 +80,7 @@ final class PushDevices
                 if ($owner !== null && ($owner->user_id !== $uid || $owner->device_id !== $input['deviceId'])) {
                     throw new RuntimeException('push_token_bound');
                 }
-                DB::table('push_devices')->updateOrInsert(['user_id' => $uid, 'device_id' => $input['deviceId']], ['generation' => $old->generation ?? (string) Str::uuid(), 'app_id' => $input['appId'], 'platform' => $input['platform'], 'locale' => $input['locale'], 'enabled' => true, 'version' => ((int) ($old->version ?? 0)) + 1, 'updated_at_ms' => $now, 'refresh_after_ms' => $now + 30 * 86400000, 'token' => $input['token'], 'token_hash' => $hash]);
+                DB::table('push_devices')->updateOrInsert(['user_id' => $uid, 'device_id' => $input['deviceId']], ['generation' => $old->generation ?? (string) Str::uuid(), 'app_id' => $input['appId'], 'platform' => $input['platform'], 'provider' => $input['provider'], 'apns_environment' => $input['environment'] ?? null, 'locale' => $input['locale'], 'enabled' => true, 'version' => ((int) ($old->version ?? 0)) + 1, 'updated_at_ms' => $now, 'refresh_after_ms' => $now + 30 * 86400000, 'token' => $input['token'], 'token_hash' => $hash]);
             });
         } catch (UniqueConstraintViolationException) {
             throw new RuntimeException('push_token_bound');
