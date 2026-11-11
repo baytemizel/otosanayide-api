@@ -33,7 +33,7 @@ php artisan config:cache
 ```bash
 SEED_ADMIN_EMAIL=ad@alan.com SEED_ADMIN_PASSWORD='...' php artisan db:seed --class=AdminAccountSeeder --force
 ```
-Ardından girişte TOTP kurulmalıdır; yönetici uçları ikinci faktör ister. Yerel sentetik veri: `--class=LocalFixtureSeeder` (üretimde çalışmaz). Katalog `php artisan catalogue:import <dosya>` ile kuru çalışır; yazım için `--apply --confirm-count=N`, açık onayla.
+Ardından girişte TOTP kurulmalıdır; yönetici uçları ikinci faktör ister. Yerel sentetik veri: `--class=LocalFixtureSeeder` (üretimde çalışmaz). Katalog `php artisan catalogue:import <dosya>` ile kuru çalışır; yazım için `--apply --confirm-count=N`, açık onayla. Uzak veritabanında `--batch=500` ekleyin: aynı satırları 500'lük gruplarla, grup başına tek transaction ile yazar (satır satır yol her kayıt için ~20 istek gönderir). Hata grubun tamamını geri alır; komut yeniden çalıştırılabilir, var olan kayıt atlanır, değişen kaynak durdurur. Güncel dosya (`data/source/review.jsonl.gz`, 36.432 satır) için `php -d memory_limit=3G` gerekir.
 
 ## nginx
 API kendi alan adında çalışır: `https://api.otosanayide.com/api/...` (K180). Web uygulaması ayrı adrestedir ve API'yi CORS ile çağırır:

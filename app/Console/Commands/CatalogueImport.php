@@ -9,14 +9,27 @@ use App\Support\Tx;
 use App\Support\Z;
 use App\Support\ZodError;
 use Illuminate\Console\Command;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 use stdClass;
 
-/** packages/server/catalogue-import.ts. Varsayilan kuru calisma veritabanina hic baglanmaz. */
+/**
+ * packages/server/catalogue-import.ts. Varsayilan kuru calisma veritabanina hic baglanmaz.
+ * --batch=N kaynakta yoktur (K194): ayni satirlari N'lik gruplarla, grup basina tek transaction ile yazar.
+ * Uzak veritabaninda satir basina ~20 istek yerine grup basina ~15 istek gider; ustune yazmama kurali aynidir.
+ */
 final class CatalogueImport extends Command
 {
-    protected $signature = 'catalogue:import {path : JSONL dosyasi} {--apply : Veritabanina yazar} {--confirm-count= : --apply icin beklenen satir sayisi}';
+    public const MAX_BATCH = 2000;
+
+    /** MySQL hazir ifade siniri 65.535 yer tutucudur; en genis ekleme 15 kolondur. */
+    private const INSERT_ROWS = 1000;
+
+    /** Tek ifadedeki JSON yuku; sunucunun max_allowed_packet degerinin cok altinda tutulur. */
+    private const INSERT_BYTES = 4_000_000;
+
+    protected $signature = 'catalogue:import {path : JSONL dosyasi} {--apply : Veritabanina yazar} {--confirm-count= : --apply icin beklenen satir sayisi} {--batch=0 : --apply icin grup boyutu (1-2000); 0 satir satir yazar}';
 
     protected $description = 'Kaynak JSONL katalogu dogrular; --apply olmadan yazmaz. Kayitlar published=false olusur, ustune yazilmaz.';
 
@@ -47,11 +60,34 @@ final class CatalogueImport extends Command
 
             return self::FAILURE;
         }
+        $batch = (string) $this->option('batch');
+        if (preg_match('/^(0|[1-9][0-9]{0,3})$/', $batch) !== 1 || (int) $batch > self::MAX_BATCH) {
+            $this->error('--batch 0 ile '.self::MAX_BATCH.' arasinda bir tam sayi olmali.');
+
+            return self::FAILURE;
+        }
         $counts = ['created' => 0, 'skipped' => 0];
         try {
-            foreach ($entries as $entry) {
-                $counts[Tx::run(fn () => $this->importOne($entry))]++;
+            if ((int) $batch === 0) {
+                foreach ($entries as $entry) {
+                    $counts[Tx::run(fn () => $this->importOne($entry))]++;
+                }
+            } else {
+                foreach (array_chunk($entries, (int) $batch) as $index => $chunk) {
+                    $done = Tx::run(fn () => self::importChunk($chunk));
+                    $counts['created'] += $done['created'];
+                    $counts['skipped'] += $done['skipped'];
+                    if (($index + 1) % 10 === 0) {
+                        $this->line("Ilerleme: olusan {$counts['created']}, atlanan {$counts['skipped']}");
+                    }
+                }
             }
+        } catch (QueryException $e) {
+            // Laravel iletisi SQL'i bagli degerlerle (gercek isletme verisi) basar; yalniz surucu iletisi yazilir.
+            $this->error('Veritabani hatasi: '.($e->getPrevious()?->getMessage() ?? 'bilinmiyor'));
+            $this->error("Durduruldu. Olusan: {$counts['created']}, atlanan: {$counts['skipped']}");
+
+            return self::FAILURE;
         } catch (RuntimeException $e) {
             $this->error($e->getMessage());
             $this->error("Durduruldu. Olusan: {$counts['created']}, atlanan: {$counts['skipped']}");
@@ -142,27 +178,129 @@ final class CatalogueImport extends Command
             }
             throw new RuntimeException('Import conflict: existing records will not be overwritten');
         }
-        $known = ['id', 'candidateId', 'sourceRow', 'name', 'city', 'district', 'address', 'phone', 'contactEmail', 'website', 'categoryCandidates', 'specialtyCandidates', 'flags', 'rawSource'];
-        $extra = array_diff_key($s, array_flip($known));
-        $email = ! empty($s['contactEmail']) ? Contact::businessEmail($s['contactEmail']) : null;
-        DB::table('businesses')->insert([
-            'id' => $entry['businessId'], 'name' => $s['name'], 'city' => $s['city'], 'district' => $s['district'], 'address' => $s['address'],
-            'phone' => $s['phone'] ?? '', 'contact_email' => $email, 'website' => $s['website'] ?? '', 'description' => '',
-            'published' => false, 'sample' => false, 'ownership' => 'unclaimed', 'coordinate_status' => 'unverified', 'import_source_id' => $s['id'],
-        ]);
-        DB::table('catalogue_sources')->insert([
-            'id' => $s['id'], 'business_id' => $entry['businessId'], 'candidate_id' => $s['candidateId'], 'source_row' => $s['sourceRow'], 'source_hash' => $entry['sourceHash'],
-            'name' => $s['name'], 'city' => $s['city'], 'district' => $s['district'], 'address' => $s['address'], 'phone' => $s['phone'], 'contact_email' => $s['contactEmail'] ?? null, 'website' => $s['website'],
-            'raw_source' => json_encode($s['rawSource'], JSON_UNESCAPED_UNICODE), 'extra' => $extra === [] ? null : json_encode($extra, JSON_UNESCAPED_UNICODE),
-        ]);
-        foreach (['category' => 'categoryCandidates', 'specialty' => 'specialtyCandidates', 'flag' => 'flags'] as $kind => $field) {
-            foreach ($s[$field] as $i => $value) {
-                DB::table('catalogue_source_values')->insert(['source_id' => $s['id'], 'kind' => $kind, 'position' => $i, 'value' => $value]);
-            }
+        DB::table('businesses')->insert(self::businessRow($entry));
+        DB::table('catalogue_sources')->insert(self::sourceRow($entry));
+        foreach (self::valueRows($entry) as $row) {
+            DB::table('catalogue_source_values')->insert($row);
         }
-        DB::table('business_history')->insert(['business_id' => $entry['businessId'], 'id' => 'source-import', 'kind' => 'source_import', 'details' => json_encode(['sourceId' => $s['id'], 'sourceHash' => $entry['sourceHash']])]);
+        DB::table('business_history')->insert(self::historyRow($entry));
         SearchProjection::sync($entry['businessId']);
 
         return 'created';
+    }
+
+    /**
+     * importOne ile ayni satirlari grup halinde yazar; cagiran tek transaction acar, hata grubun tamamini geri alir.
+     * Yeni kayit yayimlanmamis ve koordinati dogrulanmamis oldugundan arama belgesi olusmaz
+     * (BusinessReader::indexDocument null doner); bu yuzden SearchProjection::sync cagrilmaz.
+     *
+     * @param  list<array<string,mixed>>  $chunk
+     * @return array{created:int,skipped:int}
+     */
+    public static function importChunk(array $chunk): array
+    {
+        $businesses = DB::table('businesses')->whereIn('id', array_column($chunk, 'businessId'))->lockForUpdate()->get(['id', 'import_source_id'])->keyBy('id');
+        $sources = DB::table('catalogue_sources')->whereIn('id', array_map(static fn (array $e): string => $e['source']['id'], $chunk))->lockForUpdate()->get(['id', 'business_id', 'source_hash'])->keyBy('id');
+        $fresh = [];
+        $skipped = 0;
+        foreach ($chunk as $entry) {
+            $id = $entry['source']['id'];
+            $b = $businesses->get($entry['businessId']);
+            $e = $sources->get($id);
+            if ($b === null && $e === null) {
+                $fresh[] = $entry;
+
+                continue;
+            }
+            if ($b?->import_source_id === $id && $e?->source_hash === $entry['sourceHash'] && $e?->business_id === $entry['businessId']) {
+                $skipped++;
+
+                continue;
+            }
+            throw new RuntimeException('Import conflict: existing records will not be overwritten');
+        }
+        self::insertRows('businesses', array_map([self::class, 'businessRow'], $fresh));
+        self::insertRows('catalogue_sources', array_map([self::class, 'sourceRow'], $fresh));
+        self::insertRows('catalogue_source_values', array_merge(...array_map([self::class, 'valueRows'], $fresh)));
+        self::insertRows('business_history', array_map([self::class, 'historyRow'], $fresh));
+
+        return ['created' => count($fresh), 'skipped' => $skipped];
+    }
+
+    /** @param list<array<string,mixed>> $rows */
+    private static function insertRows(string $table, array $rows): void
+    {
+        $part = [];
+        $bytes = 0;
+        foreach ($rows as $row) {
+            $size = array_sum(array_map(static fn (mixed $v): int => is_string($v) ? strlen($v) : 8, $row));
+            if ($part !== [] && (count($part) >= self::INSERT_ROWS || $bytes + $size > self::INSERT_BYTES)) {
+                DB::table($table)->insert($part);
+                $part = [];
+                $bytes = 0;
+            }
+            $part[] = $row;
+            $bytes += $size;
+        }
+        if ($part !== []) {
+            DB::table($table)->insert($part);
+        }
+    }
+
+    /**
+     * @param  array<string,mixed>  $entry
+     * @return array<string,mixed>
+     */
+    private static function businessRow(array $entry): array
+    {
+        $s = $entry['source'];
+
+        return [
+            'id' => $entry['businessId'], 'name' => $s['name'], 'city' => $s['city'], 'district' => $s['district'], 'address' => $s['address'],
+            'phone' => $s['phone'] ?? '', 'contact_email' => ! empty($s['contactEmail']) ? Contact::businessEmail($s['contactEmail']) : null, 'website' => $s['website'] ?? '', 'description' => '',
+            'published' => false, 'sample' => false, 'ownership' => 'unclaimed', 'coordinate_status' => 'unverified', 'import_source_id' => $s['id'],
+        ];
+    }
+
+    /**
+     * @param  array<string,mixed>  $entry
+     * @return array<string,mixed>
+     */
+    private static function sourceRow(array $entry): array
+    {
+        $s = $entry['source'];
+        $known = ['id', 'candidateId', 'sourceRow', 'name', 'city', 'district', 'address', 'phone', 'contactEmail', 'website', 'categoryCandidates', 'specialtyCandidates', 'flags', 'rawSource'];
+        $extra = array_diff_key($s, array_flip($known));
+
+        return [
+            'id' => $s['id'], 'business_id' => $entry['businessId'], 'candidate_id' => $s['candidateId'], 'source_row' => $s['sourceRow'], 'source_hash' => $entry['sourceHash'],
+            'name' => $s['name'], 'city' => $s['city'], 'district' => $s['district'], 'address' => $s['address'], 'phone' => $s['phone'], 'contact_email' => $s['contactEmail'] ?? null, 'website' => $s['website'],
+            'raw_source' => json_encode($s['rawSource'], JSON_UNESCAPED_UNICODE), 'extra' => $extra === [] ? null : json_encode($extra, JSON_UNESCAPED_UNICODE),
+        ];
+    }
+
+    /**
+     * @param  array<string,mixed>  $entry
+     * @return list<array<string,mixed>>
+     */
+    private static function valueRows(array $entry): array
+    {
+        $rows = [];
+        foreach (['category' => 'categoryCandidates', 'specialty' => 'specialtyCandidates', 'flag' => 'flags'] as $kind => $field) {
+            foreach ($entry['source'][$field] as $i => $value) {
+                $rows[] = ['source_id' => $entry['source']['id'], 'kind' => $kind, 'position' => $i, 'value' => $value];
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @param  array<string,mixed>  $entry
+     * @return array<string,mixed>
+     */
+    private static function historyRow(array $entry): array
+    {
+        return ['business_id' => $entry['businessId'], 'id' => 'source-import', 'kind' => 'source_import', 'details' => json_encode(['sourceId' => $entry['source']['id'], 'sourceHash' => $entry['sourceHash']])];
     }
 }
